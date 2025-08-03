@@ -3,6 +3,32 @@ import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { useLenis } from "@studio-freight/react-lenis";
 import {ReactLenis} from "@studio-freight/react-lenis";
+import { BiLogoInstagramAlt } from "react-icons/bi";
+import { BsFacebook } from "react-icons/bs";
+import { TfiYoutube } from "react-icons/tfi";
+import { MdOutlineAlternateEmail } from "react-icons/md";
+import { reviews } from "@/lib/alumni";
+import Link from "next/link";
+const GradientMask = () => (
+  <>
+    <div className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-24 bg-gradient-to-r from-black via-black/80 to-transparent" />
+    <div className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-24 bg-gradient-to-l from-black via-black/80 to-transparent" />
+  </>
+);
+
+const ReviewCard = ({ review }) => (
+  <article className="relative z-10 shrink-0 w-64 sm:w-72 mx-2 bg-white backdrop-blur-md rounded-xl shadow-md p-4 cursor-pointer">
+    <header className="mb-2">
+      <h3 className="font-semibold text-base text-gray-900">{review.name}</h3>
+      <p className="text-xs text-gray-600">{review.position}</p>
+    </header>
+    <p className="text-gray-800 text-sm leading-relaxed mb-3">“{review.text}”</p>
+    <footer className="text-[10px] text-gray-500">{review.date}</footer>
+  </article>
+);
+
+const date = new Date();
+const year = date.getFullYear();
 import Image from "next/image";
 export default function Home() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -79,7 +105,7 @@ export default function Home() {
             <a href="/DebateTimer/index.html" className="hover:text-orange-400 transition" target="_blank" rel="noopener noreferrer">Debate Timer</a>
           </li>
           <li>
-            <a href="/Session-1/index.html" className="hover:text-orange-400 transition" target="_blank" rel="noopener noreferrer">Session</a>
+            <a href="/session" className="hover:text-orange-400 transition">Session</a>
           </li>
           <li>
             <button onClick={() => scrollToSection("equity")} className="hover:text-orange-400 transition">Equity</button>
@@ -188,15 +214,12 @@ export default function Home() {
                   >
                     Debate Timer
                   </a>
-                  <a 
-                    href="/Session-1/index.html" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
+          
+                    <Link href="/session"     
                     onClick={closeMobileMenu} 
-                    className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2"
-                  >
-                    Session
-                  </a>
+                    className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2">
+                      Session
+                    </Link>                 
                   <a 
                     href="/Gallery/index.html" 
                     target="_blank" 
@@ -261,6 +284,97 @@ export default function Home() {
         </p>
       </div>
     </div>
+    {/* Alumni */}
+     <div  id='alumini'className="bg-black overflow-x-hidden">
+      <section className="relative isolate min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex flex-col justify-center space-y-12 py-10">
+        <h1 className="text-2xl sm:text-3xl text-orange-600 text-center font-extrabold">ALUMNI</h1>
+
+        <div className="relative">
+          <GradientMask />
+          <div className="flex w-max animate-marquee">
+            {reviews.map((r, idx) => (
+              <ReviewCard key={`top-${idx}`} review={r} />
+            ))}
+          </div>
+        </div>
+
+        <div className="relative">
+          <GradientMask />
+          <div className="flex w-max animate-marquee-reverse">
+            {reviews.map((r, idx) => (
+              <ReviewCard key={`bottom-${idx}`} review={r} />
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+    {/* Footer */}
+        <footer className="bg-gray-900 text-gray-300 px-6 py-8">
+        <div className="max-w-7xl mx-auto relative">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            
+            <p className="text-sm text-center md:text-left">
+              © {year} <span className="text-orange-400 font-semibold">SMVIT DEBSOC</span>. All rights reserved.
+            </p>
+
+            {/* This is the new, unified heading */}
+            <h5 className="text-sm uppercase tracking-wide text-center md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2">
+              Follow us on social media
+            </h5>
+
+            <div className="flex space-x-5 text-2xl">
+              <a
+                href="https://www.instagram.com/smvit_debsoc/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-orange-400 transition-colors duration-300"
+              >
+                <BiLogoInstagramAlt />
+              </a>
+              <a
+                href="https://www.facebook.com/people/SMVIT-DEBSOC/100085129608350/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-orange-400 transition-colors duration-300"
+              >
+                <BsFacebook />
+              </a>
+              <a
+                href="https://www.youtube.com/@smvitdebsoc738"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-orange-400 transition-colors duration-300"
+              >
+                <TfiYoutube />
+              </a>
+              <a
+                href="mailto:smvitdebsoc12@gmail.com"
+                className="hover:text-orange-400 transition-colors duration-300"
+              >
+                <MdOutlineAlternateEmail />
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      <section className="bg-gray-950 text-gray-400 px-6 py-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <a
+            href="/founder/index.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-orange-400 hover:text-orange-500 underline text-lg md:text-xl font-semibold"
+          >
+            Click here to Meet the Creators
+          </a>
+          <p className="text-sm md:text-base mt-3">
+            This website was lovingly crafted by the development team of SMVIT Debating Society.
+            From clean design to smooth functionality, everything you see is built by passionate minds who love tech and debates.
+          </p>
+          <p className="mt-2 text-sm">Want to collaborate or have suggestions? Reach out through our socials!</p>
+        </div>
+      </section>
     </>
 
   );
