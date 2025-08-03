@@ -3,6 +3,7 @@
 import { MotionItem } from "@/lib/motion";
 import { motion } from "@/lib/motion";
 import React, { useState, useEffect } from "react";
+import Navbar from "@/components/Navbar";
 
 const getRandomMotions = (count = 1) => {
     const shuffled = [...motion].sort(() => 0.5 - Math.random());
@@ -20,6 +21,7 @@ export default function Session() {
 
     return (
         <>
+        <Navbar />
             <div className="bg-gradient-to-br from-black via-gray-900 to-black font-serif p-4 sm:p-8">
             <div className="w-full pt-6 pb-6 px-6 font-inter relative z-10">
             <div className=" bg-opacity-5 rounded-xl shadow-2xl p-6 md:p-10 lg:p-12 w-full max-w-screen-xl mx-auto">
