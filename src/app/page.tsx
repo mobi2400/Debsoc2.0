@@ -1,103 +1,267 @@
+"use client";
+import React, { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
+import { useLenis } from "@studio-freight/react-lenis";
+import {ReactLenis} from "@studio-freight/react-lenis";
 import Image from "next/image";
-
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const lenis = useLenis();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const scrollToSection = (id) => {
+    const section = document.getElementById(id);
+    if (section && lenis) {
+      lenis.scrollTo(section, { offset: -80 });
+    }
+    closeMobileMenu();
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileOpen((prev) => !prev);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileOpen(false);
+    setIsDropdownOpen(false);
+  };
+
+  useEffect(() => {
+    if (isMobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isMobileOpen]);
+  return (
+
+ <>
+ <ReactLenis
+      root
+      options={{
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: "vertical",
+        gestureDirection: "vertical",
+        smooth: true,
+        mouseMultiplier: 1,
+        smoothTouch: true,
+        touchMultiplier: 2,
+        infinite: false,
+      }}
+    ></ReactLenis>
+      <nav className="bg-gray-900 text-white px-6 py-4 flex items-center justify-between shadow-md fixed top-0 left-0 w-full z-50">
+        <h1
+          onClick={() => scrollToSection("home")}
+          className="text-2xl font-bold cursor-pointer text-orange-400 hover:text-orange-600 transition-colors duration-300"
+        >
+          SMVIT DEBSOC
+        </h1>
+
+        <ul className="hidden md:flex space-x-6 items-center">
+          <li>
+            <button onClick={() => scrollToSection("team")} className="hover:text-orange-400 transition">Team</button>
+          </li>
+          <li>
+            <button onClick={() => scrollToSection("achievements")} className="hover:text-orange-400 transition">Achievements</button>
+          </li>
+          <li>
+            <button onClick={() => scrollToSection("alumini")} className="hover:text-orange-400 transition">Alumni</button>
+          </li>
+          <li>
+            <a href="/DebateTimer/index.html" className="hover:text-orange-400 transition" target="_blank" rel="noopener noreferrer">Debate Timer</a>
+          </li>
+          <li>
+            <a href="/Session-1/index.html" className="hover:text-orange-400 transition" target="_blank" rel="noopener noreferrer">Session</a>
+          </li>
+          <li>
+            <button onClick={() => scrollToSection("equity")} className="hover:text-orange-400 transition">Equity</button>
+          </li>
+          <li>
+            <a href="/Gallery/index.html" className="hover:text-orange-400 transition" target="_blank" rel="noopener noreferrer">Gallery</a>
+          </li>
+          <li
+            className="relative"
+            onMouseEnter={() => setIsDropdownOpen(true)}
+            onMouseLeave={() => setIsDropdownOpen(false)}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <button className="hover:text-orange-400 transition">Login</button>
+            <div
+              className={`absolute top-10 right-0 w-40 bg-gray-800 border border-gray-700 rounded shadow-lg z-20 transition-all duration-300 origin-top ${
+                isDropdownOpen ? "opacity-100 scale-100 visible" : "opacity-0 scale-95 invisible"
+              }`}
+            >
+              <a
+                href="/FormPage/index.html"
+                className="block px-4 py-2 hover:bg-gray-700 hover:text-orange-500"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Admin
+              </a>
+              <a
+                href="/FormPage/index.html"
+                className="block px-4 py-2 hover:bg-gray-700 hover:text-orange-500"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Member
+              </a>
+            </div>
+          </li>
+        </ul>
+
+        <div className="md:hidden">
+          <button onClick={toggleMobileMenu} className="text-orange-400 z-60 relative">
+            {isMobileOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </nav>
+
+      <div
+        className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 md:hidden ${
+          isMobileOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
+        onClick={closeMobileMenu}
+      />
+
+      <div
+        className={`fixed top-0 left-0 h-full w-80 bg-gradient-to-b from-gray-900 via-gray-800 to-black shadow-2xl z-50 transition-transform duration-300 ease-out md:hidden ${
+          isMobileOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="h-full overflow-y-auto">
+          <div className="p-6 pt-20 min-h-full">
+            <div className="space-y-6">
+              <div className="border-b border-gray-700 pb-4">
+                <h2 className="text-orange-400 font-bold text-lg mb-4">Navigation</h2>
+                <div className="space-y-3">
+                  <button 
+                    onClick={() => scrollToSection("home")} 
+                    className="block w-full text-left py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2"
+                  >
+                    Home
+                  </button>
+                  <button 
+                    onClick={() => scrollToSection("team")} 
+                    className="block w-full text-left py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2"
+                  >
+                    Team
+                  </button>
+                  <button 
+                    onClick={() => scrollToSection("achievements")} 
+                    className="block w-full text-left py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2"
+                  >
+                    Achievements
+                  </button>
+                  <button 
+                    onClick={() => scrollToSection("alumini")} 
+                    className="block w-full text-left py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2"
+                  >
+                    Alumni
+                  </button>
+                  <button 
+                    onClick={() => scrollToSection("equity")} 
+                    className="block w-full text-left py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2"
+                  >
+                    Equity
+                  </button>
+                </div>
+              </div>
+
+              <div className="border-b border-gray-700 pb-4">
+                <h2 className="text-orange-400 font-bold text-lg mb-4">Tools & Resources</h2>
+                <div className="space-y-3">
+                  <a 
+                    href="/DebateTimer/index.html" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    onClick={closeMobileMenu} 
+                    className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2"
+                  >
+                    Debate Timer
+                  </a>
+                  <a 
+                    href="/Session-1/index.html" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    onClick={closeMobileMenu} 
+                    className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2"
+                  >
+                    Session
+                  </a>
+                  <a 
+                    href="/Gallery/index.html" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    onClick={closeMobileMenu} 
+                    className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2"
+                  >
+                    Gallery
+                  </a>
+                </div>
+              </div>
+
+              <div className="pb-8">
+                <h2 className="text-orange-400 font-bold text-lg mb-4">Login</h2>
+                <div className="space-y-3">
+                  <a
+                    href="/FormPage/index.html"
+                    className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={closeMobileMenu}
+                  >
+                    Admin Login
+                  </a>
+                  <a
+                    href="/FormPage/index.html"
+                    className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={closeMobileMenu}
+                  >
+                    Member Login
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div  id='home 'className="relative h-[70vh] md:h-screen w-full overflow-hidden">
+ 
+      <Image
+        src="/homepage/M5.jpg"
+        alt="group photo"
+        layout="fill"
+        objectFit="cover"
+        className="absolute inset-0 w-full h-full object-cover object-center"></Image>
+
+      <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center">
+        <h1 className="text-4xl md:text-7xl font-extrabold text-orange-500 font-mono px-4 flex">
+          <span className="overflow-hidden whitespace-nowrap border-r-4 border-orange-500 animate-typewriter">
+            SMVIT DEBSOC 
+          </span>
+          <span className="animate-cursor ml-1"> </span>
+        </h1>
+
+        <p className="text-lg md:text-2xl text-white font-mono mt-4 flex">
+          <span className="overflow-hidden whitespace-nowrap border-r-2 border-white text-2xl font-bold animate-typewriter-slogan">
+            Think | Speak | Listen
+          </span>
+          <span className="animate-cursor ml-1"> </span>
+        </p>
+      </div>
     </div>
+    </>
+
   );
 }

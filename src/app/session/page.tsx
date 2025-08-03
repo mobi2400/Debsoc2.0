@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 import { MotionItem } from "@/lib/motion";
 import { motion } from "@/lib/motion";
@@ -21,7 +22,7 @@ export default function Session() {
         <>
             <div className="bg-gradient-to-br from-black via-gray-900 to-black font-serif p-4 sm:p-8">
             <div className="w-full pt-6 pb-6 px-6 font-inter relative z-10">
-            <div className="bg-gradient-to-br from-gray-800 to-gray-700 bg-opacity-5 rounded-xl shadow-2xl p-6 md:p-10 lg:p-12 w-full max-w-screen-xl mx-auto">
+            <div className=" bg-opacity-5 rounded-xl shadow-2xl p-6 md:p-10 lg:p-12 w-full max-w-screen-xl mx-auto">
                 <h1 className="text-4xl font-extrabold text-center text-white mb-10">
                     Random Motion Exercises
                 </h1>
@@ -31,9 +32,9 @@ export default function Session() {
                         {motions.map((m, i) => (
                             <div
                                 key={i}
-                                className="bg-gradient-to-br from-gray-800 to-gray-700 p-8 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 w-full md:w-[90%] max-w-5xl text-white"
+                                className=" p-8 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 w-full md:w-[90%] max-w-5xl text-white"
                             >
-                                <h2 className="text-2xl font-bold mb-2">{m.type}</h2>
+                                <h2 className="text-2xl font-bold mb-2">{m.types}</h2>
                                 <h3 className="text-xl font-semibold text-indigo-400 mb-4">
                                     {m.motion}
                                 </h3>
@@ -47,9 +48,14 @@ export default function Session() {
                     <p className="text-center text-gray-300 text-lg">Loading random motions...</p>
                 )}
 
-                <p className="text-center text-gray-400 text-sm mt-8">
-                    Refresh the page to see new random Motions!
-                </p>
+                <div className="text-center mt-8">
+                    <button
+                        onClick={() => setMotions(getRandomMotions())}
+                        className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-75 cursor-pointer "
+                    >
+                        New Motion
+                    </button>
+                </div>
             </div>
         </div>
       <div className="max-w-6xl w-full mx-auto bg-gray-900 shadow-xl rounded-lg overflow-hidden border-2 border-gray-700">

@@ -24,3 +24,45 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: orange;
+  }
+}
+
+@keyframes typewriter-slogan {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.animate-typewriter {
+  animation: typewriter 4s steps(44) 1s forwards,
+    blink-caret 0.75s step-end infinite;
+}
+
+.animate-cursor {
+  animation: blink-caret 0.75s step-end infinite;
+}
+
+.animate-typewriter-slogan {
+  animation: typewriter-slogan 3s steps(25) 1s forwards,
+    blink-caret 0.75s step-end infinite;
+}
