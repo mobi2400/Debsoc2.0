@@ -239,7 +239,7 @@ const LoginPage = () => {
               {/* Footer */}
               <div className="text-center mt-4">
                 <p className="text-gray-500 text-xs">
-                  © 2024 SMVIT DEBSOC. All rights reserved.
+                  © 2025 SMVIT DEBSOC. All rights reserved.
                 </p>
               </div>
             </div>
