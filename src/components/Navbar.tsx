@@ -9,7 +9,7 @@ const Navbar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const lenis = useLenis();
 
-  const scrollToSection = (id) => {
+  const scrollToSection = (id: any) => {
     const section = document.getElementById(id);
     if (section && lenis) {
       lenis.scrollTo(section, { offset: -80 });
