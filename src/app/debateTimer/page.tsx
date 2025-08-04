@@ -4,6 +4,8 @@ import toast, {Toaster} from "react-hot-toast";
 import Navbar from "../../components/Navbar";
 import Dropdown from "./components/dropdown";
 import TimerCard from "./components/timecard";
+import ClockDisplay from "./components/clockdisplay";
+import ControlButtons from "./components/controlbutton";
 
 export default function DebateTimer() {
   const [debateStyle, setDebateStyle] = useState("");
