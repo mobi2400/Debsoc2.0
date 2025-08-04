@@ -4,6 +4,8 @@ import React, { useState } from "react";
 
 import Dropdown from "./components/dropdown";
 import TimerCard from "./components/timecard";
+import ClockDisplay from "./components/clockdisplay";
+import ControlButtons from "./components/controlbutton";
 
 
 
