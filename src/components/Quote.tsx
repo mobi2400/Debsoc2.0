@@ -242,7 +242,7 @@ function Quote() {
           </h2>
 
           <blockquote className="text-white text-xl italic leading-relaxed border-l-4 border-orange-500 pl-4 mb-4">
-            "{quote}"
+            {quote}
           </blockquote>
 
           {author && (
@@ -265,6 +265,7 @@ function Quote() {
             alt="Quote"
             className="w-full h-64 object-cover rounded-xl border border-orange-500"
           />
+          
         </div>
       </div>
     </section>
