@@ -73,7 +73,7 @@ const Footer = () => {
         </div>
       ),
       {
-        duration: 7000, // 7 seconds
+        duration: 4000, // 4 seconds
       }
     );
 

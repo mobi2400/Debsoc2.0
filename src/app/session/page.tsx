@@ -85,9 +85,10 @@ export default function Session() {
         }}
       />
       <Navbar />
-      <div className="bg-gradient-to-br from-black via-gray-900 to-black font-serif p-4 sm:p-8">
-        <div className="w-full pt-6 pb-6 px-6 font-inter relative z-10">
-          <div className=" bg-opacity-5 rounded-xl shadow-2xl p-6 md:p-10 lg:p-12 w-full max-w-screen-xl mx-auto">
+
+      <div className="bg-gradient-to-br from-black via-gray-900 to-black font-serif p-2 sm:p-4 md:p-8 mt-14">
+        <div className="w-full pt-4 pb-4 px-2 sm:px-4 md:px-6 font-inter relative z-10">
+          <div className="bg-opacity-5 rounded-xl shadow-2xl p-3 sm:p-6 md:p-10 lg:p-12 w-full max-w-screen-xl mx-auto">
             <h1 className="text-4xl font-extrabold text-center text-white mb-10">
               Random Motion Exercises
             </h1>
@@ -126,12 +127,12 @@ export default function Session() {
           </div>
         </div>
         <div className="max-w-6xl w-full mx-auto bg-gray-900 shadow-xl rounded-lg overflow-hidden border-2 border-gray-700">
-          <main className="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-white">
+          <main className="p-2 sm:p-4 md:p-6 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 text-white">
             <section className="md:col-span-3 pb-4 border-b border-gray-700 mb-4">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-red-400 font-sans">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-red-400 font-sans">
                 Introduction to University Debating
               </h2>
-              <p className="leading-relaxed text-gray-200 text-lg">
+              <p className="leading-relaxed text-gray-200 text-base sm:text-lg">
                 University debating encompasses various formats, with British
                 Parliamentary and Asian Parliamentary debating being prominent
                 styles. These formats provide platforms for students to hone
@@ -139,12 +140,12 @@ export default function Session() {
               </p>
             </section>
 
-            <section className="md:col-span-2 border-r md:border-b-0 border-gray-700 pr-4 md:pr-6 pb-4 md:pb-0">
-              <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-white font-sans">
+            <section className="md:col-span-2 border-r md:border-b-0 border-gray-700 pr-0 md:pr-4 lg:pr-6 pb-4 md:pb-0">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-white font-sans">
                 British Parliamentary Debating: A Deeper Dive
               </h2>
-              <div className="mb-6">
-                <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-red-400">
+              <div className="mb-4 sm:mb-6">
+                <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-red-400">
                   Structure:
                 </h3>
                 <ul className="list-disc list-inside ml-4 text-gray-200 leading-relaxed">
@@ -156,29 +157,29 @@ export default function Session() {
                 </ul>
               </div>
 
-              <div className="mb-6">
-                <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-red-400">
+              <div className="mb-4 sm:mb-6">
+                <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-red-400">
                   Speeches:
                 </h3>
-                <ul className="list-disc list-inside ml-4 text-gray-200 leading-relaxed">
+                <ul className="list-disc list-inside ml-4 text-gray-200 leading-relaxed text-sm sm:text-base">
                   <li>8 x 7 minute speeches</li>
                 </ul>
               </div>
 
-              <div className="mb-6">
-                <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-red-400">
+              <div className="mb-4 sm:mb-6">
+                <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-red-400">
                   Preparation Time:
                 </h3>
-                <ul className="list-disc list-inside ml-4 text-gray-200 leading-relaxed">
+                <ul className="list-disc list-inside ml-4 text-gray-200 leading-relaxed text-sm sm:text-base">
                   <li>15 minutes</li>
                 </ul>
               </div>
 
-              <div className="mb-6">
-                <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-red-400">
+              <div className="mb-4 sm:mb-6">
+                <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-red-400">
                   Speaker Order (Government vs. Opposition):
                 </h3>
-                <ol className="list-decimal list-inside ml-4 text-gray-200 leading-relaxed">
+                <ol className="list-decimal list-inside ml-4 text-gray-200 leading-relaxed text-sm sm:text-base">
                   <li>Prime Minister</li>
                   <li>Leader of Opposition</li>
                   <li>Deputy Prime Minister</li>
@@ -191,48 +192,48 @@ export default function Session() {
               </div>
             </section>
             <section className="md:col-span-1 pb-4 md:pb-0">
-              <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-white font-sans">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-white font-sans">
                 Asian Parliamentary Debating
               </h2>
-              <div className="mb-6">
-                <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-red-400">
+              <div className="mb-4 sm:mb-6">
+                <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-red-400">
                   Structure:
                 </h3>
-                <ul className="list-disc list-inside ml-4 text-gray-200 leading-relaxed">
+                <ul className="list-disc list-inside ml-4 text-gray-200 leading-relaxed text-sm sm:text-base">
                   <li>3v3 - Government vs Opposition</li>
                 </ul>
               </div>
 
-              <div className="mb-6">
-                <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-red-400">
+              <div className="mb-4 sm:mb-6">
+                <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-red-400">
                   Speeches:
                 </h3>
-                <ul className="list-disc list-inside ml-4 text-gray-200 leading-relaxed">
+                <ul className="list-disc list-inside ml-4 text-gray-200 leading-relaxed text-sm sm:text-base">
                   <li>6 x 7 minute speeches + 2 x 4 minute reply speeches</li>
                 </ul>
               </div>
 
-              <div className="mb-6">
-                <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-red-400">
+              <div className="mb-4 sm:mb-6">
+                <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2 text-red-400">
                   Preparation Time:
                 </h3>
-                <ul className="list-disc list-inside ml-4 text-gray-200 leading-relaxed">
+                <ul className="list-disc list-inside ml-4 text-gray-200 leading-relaxed text-sm sm:text-base">
                   <li>25 + 5 minute preparation time</li>
                 </ul>
               </div>
             </section>
 
             <section className="md:col-span-3 pt-4 border-t border-gray-700 mt-4">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-red-400 font-sans">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-red-400 font-sans">
                 Common Elements & Strategic Features
               </h2>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
                 <div>
-                  <h3 className="text-2xl font-semibold mb-3 text-white">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3 text-white">
                     Points of Information (POIs):
                   </h3>
-                  <ul className="list-disc list-inside ml-4 text-gray-200 leading-relaxed">
+                  <ul className="list-disc list-inside ml-4 text-gray-200 leading-relaxed text-sm sm:text-base">
                     <li>
                       Questions that the opposite bench can ask speakers during
                       their speech.
@@ -254,10 +255,10 @@ export default function Session() {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-semibold mb-3 text-white">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3 text-white">
                     Vetoes (for motions/topics):
                   </h3>
-                  <ul className="list-disc list-inside ml-4 text-gray-200 leading-relaxed">
+                  <ul className="list-disc list-inside ml-4 text-gray-200 leading-relaxed text-sm sm:text-base">
                     <li>Each round has 3 topics.</li>
                     <li>Teams rank motions based on strategic preferences.</li>
                     <li>
@@ -295,22 +296,22 @@ export default function Session() {
             </section>
           </main>
         </div>
-        <article className="max-w-6xl mx-auto p-10 text-white  leading-relaxed space-y-12">
-          <header className="text-center border-b border-gray-300 pb-6 mb-10">
-            <h1 className="text-5xl font-bold uppercase tracking-wider">
+        <article className="max-w-6xl mx-auto p-4 sm:p-6 md:p-10 text-white leading-relaxed space-y-8 sm:space-y-12">
+          <header className="text-center border-b border-gray-300 pb-4 sm:pb-6 mb-6 sm:mb-10">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-wider">
               Types of Motions
             </h1>
-            <p className="text-lg italic mt-2 text-gray-600">
+            <p className="text-base sm:text-lg italic mt-2 text-gray-600">
               A classical overview for debaters
             </p>
           </header>
 
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="grid md:grid-cols-2 gap-8 sm:gap-12">
             <section>
-              <h2 className="text-2xl font-bold mb-3">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-3">
                 This House regrets (THR):
               </h2>
-              <ul className="list-disc list-inside space-y-2">
+              <ul className="list-disc list-inside space-y-2 text-sm sm:text-base">
                 <li>
                   The proposition is required to present the negative
                   consequences of a particular event or trend and then present
@@ -324,10 +325,10 @@ export default function Session() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-3">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-3">
                 This House Believes (THB):
               </h2>
-              <ul className="list-disc list-inside space-y-2">
+              <ul className="list-disc list-inside space-y-2 text-sm sm:text-base">
                 <li>This is an analysis motion.</li>
                 <li>A mechanism is generally not required.</li>
                 <li>
@@ -338,10 +339,10 @@ export default function Session() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-3">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-3">
                 This House Supports/Opposes:
               </h2>
-              <ul className="list-disc list-inside space-y-2">
+              <ul className="list-disc list-inside space-y-2 text-sm sm:text-base">
                 <li>
                   <strong>This House Supports:</strong> Policy motions
                 </li>
@@ -353,8 +354,10 @@ export default function Session() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-3">This House as X:</h2>
-              <ul className="list-disc list-inside space-y-2">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-3">
+                This House as X:
+              </h2>
+              <ul className="list-disc list-inside space-y-2 text-sm sm:text-base">
                 <li>Actor motions</li>
                 <li>
                   This motion requires all teams to look at the
@@ -368,10 +371,10 @@ export default function Session() {
             </section>
 
             <section className="md:col-span-2">
-              <h2 className="text-2xl font-bold mb-3">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-3">
                 This House Would (THW):
               </h2>
-              <ul className="list-disc list-inside space-y-2">
+              <ul className="list-disc list-inside space-y-2 text-sm sm:text-base">
                 <li>This is a policy motion.</li>
                 <li>
                   The proposition is arguing for the passing of specific policy.
@@ -388,12 +391,12 @@ export default function Session() {
             </section>
           </div>
         </article>
-        <main className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <section className="md:col-span-2 bg-gray-800 p-6 rounded-lg shadow-md border border-gray-700">
-            <h2 className="text-4xl font-bold mb-4 text-blue-400">
+        <main className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 px-2 sm:px-4 md:px-0">
+          <section className="md:col-span-2 bg-gray-800 p-3 sm:p-4 md:p-6 rounded-lg shadow-md border border-gray-700">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-blue-400">
               Understanding Debate Motions
             </h2>
-            <p className="mb-4 text-lg leading-relaxed">
+            <p className="mb-4 text-sm sm:text-base md:text-lg leading-relaxed">
               This article delves into the intricacies of debate motions,
               specifically dissecting "This House Believes That" (THBT) and
               "This House Would" (THW) formats. We'll also explore crucial
@@ -401,11 +404,11 @@ export default function Session() {
               argumentation.
             </p>
 
-            <div className="mb-6">
-              <h3 className="text-2xl font-semibold mb-3 border-b border-gray-600 pb-2">
+            <div className="mb-4 sm:mb-6">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3 border-b border-gray-600 pb-2">
                 1. Types of Motions
               </h3>
-              <ul className="list-disc list-inside ml-4">
+              <ul className="list-disc list-inside ml-4 text-sm sm:text-base">
                 <li className="mb-1">
                   <strong className="text-red-400">
                     THBT = This House Believes That
@@ -419,11 +422,11 @@ export default function Session() {
               </ul>
             </div>
 
-            <div className="mb-6">
-              <h3 className="text-2xl font-semibold mb-3 border-b border-gray-600 pb-2">
+            <div className="mb-4 sm:mb-6">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3 border-b border-gray-600 pb-2">
                 2. THBT = This House Believes That
               </h3>
-              <ul className="list-disc list-inside ml-4 leading-relaxed">
+              <ul className="list-disc list-inside ml-4 leading-relaxed text-sm sm:text-base">
                 <li className="mb-2">
                   <strong>Basic motion type:</strong> Argue for or against a
                   given action/policy.
@@ -440,11 +443,11 @@ export default function Session() {
               </ul>
             </div>
 
-            <div className="mb-6">
-              <h3 className="text-2xl font-semibold mb-3 border-b border-gray-600 pb-2">
+            <div className="mb-4 sm:mb-6">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3 border-b border-gray-600 pb-2">
                 3. THW = This House Would
               </h3>
-              <ul className="list-disc list-inside ml-4 leading-relaxed">
+              <ul className="list-disc list-inside ml-4 leading-relaxed text-sm sm:text-base">
                 <li className="mb-2">
                   <strong>Would = Action:</strong> In 'THBT' motions you argue
                   if a notion/value is right or wrong. A 'THW' motion requires
@@ -459,15 +462,15 @@ export default function Session() {
             </div>
 
             <div className="">
-              <h3 className="text-2xl font-semibold mb-3 border-b border-gray-600 pb-2">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3 border-b border-gray-600 pb-2">
                 4. What is Fiat?
               </h3>
-              <p className="mb-2 leading-relaxed">
+              <p className="mb-2 leading-relaxed text-sm sm:text-base">
                 <strong className="text-red-400">Fiat</strong> = scope of the
                 assumptions and claims that each side can make within reasonable
                 boundaries.
               </p>
-              <ul className="list-disc list-inside ml-4 leading-relaxed">
+              <ul className="list-disc list-inside ml-4 leading-relaxed text-sm sm:text-base">
                 <li className="mb-2">
                   While drafting policies, both sides make reasonable
                   assumptions about how much they can change and how different
@@ -487,13 +490,13 @@ export default function Session() {
             </div>
           </section>
 
-          <aside className="md:col-span-1 space-y-8">
-            <div className="bg-gray-800 p-6 rounded-lg shadow-md border border-gray-700">
-              <h3 className="text-2xl font-semibold mb-3 text-green-400">
+          <aside className="md:col-span-1 space-y-4 sm:space-y-6 md:space-y-8">
+            <div className="bg-gray-800 p-3 sm:p-4 md:p-6 rounded-lg shadow-md border border-gray-700">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3 text-green-400">
                 5. Example Motion: THBT all professional sports teams should be
                 majority fan-owned
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm leading-relaxed">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm leading-relaxed">
                 <div>
                   <h4 className="font-bold mb-1">What should gov prove?</h4>
                   <ul className="list-disc list-inside ml-4">
@@ -523,11 +526,11 @@ export default function Session() {
               </div>
             </div>
 
-            <div className="bg-gray-800 p-6 rounded-lg shadow-md border border-gray-700">
-              <h3 className="text-2xl font-semibold mb-3 text-purple-400">
+            <div className="bg-gray-800 p-3 sm:p-4 md:p-6 rounded-lg shadow-md border border-gray-700">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3 text-purple-400">
                 6. Example Motion: THW legalise all class C drugs
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm leading-relaxed">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm leading-relaxed">
                 <div>
                   <h4 className="font-bold mb-1">Government Model:</h4>
                   <ul className="list-disc list-inside ml-4">
@@ -569,13 +572,15 @@ export default function Session() {
               </div>
             </div>
 
-            <div className="bg-gray-800 p-6 rounded-lg shadow-md border border-gray-700">
-              <h3 className="text-2xl font-semibold mb-3 text-orange-400">
+            <div className="bg-gray-800 p-3 sm:p-4 md:p-6 rounded-lg shadow-md border border-gray-700">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3 text-orange-400">
                 7. Motions to think about!
               </h3>
               <div className="mb-4">
-                <h4 className="font-bold mb-1">THBT motions:</h4>
-                <ul className="list-disc list-inside ml-4 text-sm leading-relaxed">
+                <h4 className="font-bold mb-1 text-sm sm:text-base">
+                  THBT motions:
+                </h4>
+                <ul className="list-disc list-inside ml-4 text-xs sm:text-sm leading-relaxed">
                   <li className="mb-1">
                     THBT environmental activists should advocate for nuclear
                     power
@@ -592,8 +597,10 @@ export default function Session() {
                 </ul>
               </div>
               <div>
-                <h4 className="font-bold mb-1">THW motions:</h4>
-                <ul className="list-disc list-inside ml-4 text-sm leading-relaxed">
+                <h4 className="font-bold mb-1 text-sm sm:text-base">
+                  THW motions:
+                </h4>
+                <ul className="list-disc list-inside ml-4 text-xs sm:text-sm leading-relaxed">
                   <li className="mb-1">
                     THW allow companies to buy the rights to economically
                     failing cities
@@ -611,12 +618,12 @@ export default function Session() {
             </div>
           </aside>
         </main>
-        <main className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <section className="md:col-span-2 bg-gray-800 p-6 rounded-lg shadow-md border border-gray-700">
-            <h2 className="text-4xl font-bold mb-4 text-blue-400">
+        <main className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 px-2 sm:px-4 md:px-0">
+          <section className="md:col-span-2 bg-gray-800 p-3 sm:p-4 md:p-6 rounded-lg shadow-md border border-gray-700">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-blue-400">
               Understanding More Debate Motion Types
             </h2>
-            <p className="mb-4 text-lg leading-relaxed">
+            <p className="mb-4 text-sm sm:text-base md:text-lg leading-relaxed">
               This article expands on debate motions, introducing "This House,
               as X" (TH, as X), "This House Regrets" (THR), and "This House
               Supports/Opposes" (THS/THO) formats, providing deeper insights

@@ -139,14 +139,14 @@ const Navbar = () => {
       </nav>
 
       <div
-        className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 bg-black bg-opacity-50 z-[60] transition-opacity duration-300 md:hidden ${
           isMobileOpen ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
         onClick={closeMobileMenu}
       />
 
       <div
-        className={`fixed top-0 left-0 h-full w-80 bg-gradient-to-b from-gray-900 via-gray-800 to-black shadow-2xl z-50 transition-transform duration-300 ease-out md:hidden ${
+        className={`fixed top-0 left-0 h-full w-80 bg-gradient-to-b from-gray-900 via-gray-800 to-black shadow-2xl z-[70] transition-transform duration-300 ease-out md:hidden ${
           isMobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
