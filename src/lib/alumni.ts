@@ -1,4 +1,12 @@
-export const reviews = [
+
+
+export type Review = {
+  name: string;
+  position: string;
+  text: string;
+};
+
+export const reviews: Review[] = [
   {
     name: "UJJWAL KUMAR",
     position: "Batch of 2021 Alumni",

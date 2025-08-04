@@ -1,5 +1,6 @@
 import React from "react";
-import { reviews } from "@/lib/alumni";
+import { reviews, Review } from "@/lib/alumni";
+
 
 const GradientMask = () => (
   <>
@@ -8,14 +9,13 @@ const GradientMask = () => (
   </>
 );
 
-const ReviewCard = ({ review:any }) => (
+const ReviewCard = ({ review }: { review: Review }) => (
   <article className="relative z-10 shrink-0 w-64 sm:w-72 mx-2 bg-white backdrop-blur-md rounded-xl shadow-md p-4 cursor-pointer">
     <header className="mb-2">
       <h3 className="font-semibold text-base text-gray-900">{review.name}</h3>
       <p className="text-xs text-gray-600">{review.position}</p>
     </header>
     <p className="text-gray-800 text-sm leading-relaxed mb-3">“{review.text}”</p>
-    <footer className="text-[10px] text-gray-500">{review.date}</footer>
   </article>
 );
 
