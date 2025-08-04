@@ -2,7 +2,7 @@ import React from "react";
 import {BiLogoInstagramAlt} from "react-icons/bi";
 import {BsFacebook} from "react-icons/bs";
 import {TfiYoutube} from "react-icons/tfi";
-import {MdOutlineAlternateEmail} from "react-icons/md";
+import {HiOutlineEnvelope} from "react-icons/hi2";
 import {AiFillLinkedin, AiFillGithub} from "react-icons/ai";
 import toast from "react-hot-toast";
 
@@ -11,7 +11,6 @@ const Footer = () => {
   const year = date.getFullYear();
 
   const showDevToast = () => {
-    // First toast for Ayush Kumar
     toast.custom(
       (t) => (
         <div
@@ -96,7 +95,7 @@ const Footer = () => {
                 </div>
                 <div className="ml-3 flex-1">
                   <p className="text-sm font-medium text-white">
-                    Mobasshir Khan
+                    Md. Mobasshir Shakil Khan
                   </p>
                   <p className="mt-1 text-sm text-gray-300">
                     Lead Developer | Got a query? Connect below!
@@ -193,7 +192,7 @@ const Footer = () => {
                 href="mailto:smvitdebsoc12@gmail.com"
                 className="hover:text-orange-400 transition-colors duration-300"
               >
-                <MdOutlineAlternateEmail />
+                <HiOutlineEnvelope />
               </a>
             </div>
           </div>
