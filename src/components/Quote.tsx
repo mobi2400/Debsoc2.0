@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 function Quote() {
   const [quote, setQuote] = useState("Loading...");
@@ -148,49 +149,89 @@ function Quote() {
   ];
 
   useEffect(() => {
-    async function fetchQuote() {
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 5000);
-
-        const response = await fetch("https://api.quotable.io/random", {
-          signal: controller.signal,
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-          },
-        });
-
-        clearTimeout(timeoutId);
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data && data.content && data.author) {
-          setQuote(data.content);
-          setAuthor(data.author);
-          setError(false);
-        } else {
-          throw new Error("Invalid data format");
-        }
-      } catch (err) {
-        const errorMessage =
-          err instanceof Error ? err.message : "Unknown error occurred";
-        console.log("API fetch failed, using static quote:", errorMessage);
-
-        const randomQuote =
-          staticQuotes[Math.floor(Math.random() * staticQuotes.length)];
-        setQuote(randomQuote.content);
-        setAuthor(randomQuote.author);
-        setError(true);
-      }
-    }
-
     fetchQuote();
   }, []);
+
+  async function fetchQuote() {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+      const response = await fetch("https://api.quotable.io/random", {
+        signal: controller.signal,
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data && data.content && data.author) {
+        setQuote(data.content);
+        setAuthor(data.author);
+        setError(false);
+      } else {
+        throw new Error("Invalid data format");
+      }
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Unknown error occurred";
+      console.log("API fetch failed, using static quote:", errorMessage);
+
+      const randomQuote =
+        staticQuotes[Math.floor(Math.random() * staticQuotes.length)];
+      setQuote(randomQuote.content);
+      setAuthor(randomQuote.author);
+      setError(true);
+    }
+  }
+
+  const generateNewQuote = () => {
+    toast.promise(
+      fetchQuote(),
+      {
+        loading: "Generating new quote...",
+        success: <b>New quote generated!</b>,
+        error: <b>Could not fetch quote.</b>,
+      },
+      {
+        style: {
+          background: "#1f2937",
+          color: "#fff",
+          border: "1px solid #374151",
+        },
+        success: {
+          style: {
+            background: "#1f2937",
+            color: "#10b981",
+            border: "1px solid #10b981",
+          },
+          iconTheme: {
+            primary: "#10b981",
+            secondary: "#1f2937",
+          },
+        },
+        error: {
+          style: {
+            background: "#1f2937",
+            color: "#ef4444",
+            border: "1px solid #ef4444",
+          },
+          iconTheme: {
+            primary: "#ef4444",
+            secondary: "#1f2937",
+          },
+        },
+      }
+    );
+  };
 
   return (
     <section className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center px-6">
@@ -210,11 +251,12 @@ function Quote() {
             </p>
           )}
 
-          {error && (
-            <p className="text-red-400 mt-4 text-sm">
-              API limit reached. Showing cached content.
-            </p>
-          )}
+          <button
+            onClick={generateNewQuote}
+            className="mt-6 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-900 cursor-pointer"
+          >
+            New Quote
+          </button>
         </div>
 
         <div className="hidden md:block">
