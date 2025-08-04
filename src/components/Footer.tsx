@@ -12,111 +12,49 @@ const Footer = () => {
 
   const showDevToast = () => {
     // First toast for Ayush Kumar
-    toast.custom((t) => (
-      <div
-        className={`${
-          t.visible ? "animate-enter" : "animate-leave"
-        } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
-      >
-        <div className="flex-1 w-0 p-4">
-          <div className="flex items-start">
-            <div className="flex-shrink-0 pt-0.5">
-              <img
-                className="h-10 w-10 rounded-full"
-                src="/Ayush.jpg"
-                alt="Ayush Kumar"
-              />
-            </div>
-            <div className="ml-3 flex-1">
-              <p className="text-sm font-medium text-gray-900">Ayush Kumar</p>
-              <p className="mt-1 text-sm text-gray-500">
-                Assistant Developer | Got a query? Connect below!
-              </p>
-              <div className="flex space-x-3 mt-2">
-                <a
-                  href="https://www.instagram.com/ayushnotkumar/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
-                >
-                  <BiLogoInstagramAlt className="w-4 h-4" />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/ayushnotkumar/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
-                >
-                  <AiFillLinkedin className="w-4 h-4" />
-                </a>
-                <a
-                  href="https://github.com/ayushkumar320"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
-                >
-                  <AiFillGithub className="w-4 h-4" />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="flex border-l border-gray-200">
-          <button
-            onClick={() => toast.dismiss(t.id)}
-            className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer"
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    ));
-
-    setTimeout(() => {
-      toast.custom((t) => (
+    toast.custom(
+      (t) => (
         <div
           className={`${
             t.visible ? "animate-enter" : "animate-leave"
-          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          } max-w-md w-full bg-gray-800 shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-gray-600 ring-opacity-50`}
         >
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
               <div className="flex-shrink-0 pt-0.5">
                 <img
                   className="h-10 w-10 rounded-full"
-                  src="/media/Mobi.jpg"
-                  alt="Mobasshir Khan"
+                  src="/Ayush.jpg"
+                  alt="Ayush Kumar"
                 />
               </div>
               <div className="ml-3 flex-1">
-                <p className="text-sm font-medium text-gray-900">
-                  Mobasshir Khan
-                </p>
-                <p className="mt-1 text-sm text-gray-500">
-                  Lead Developer | Got a query? Connect below!
+                <p className="text-sm font-medium text-white">Ayush Kumar</p>
+                <p className="mt-1 text-sm text-gray-300">
+                  Assistant Developer | Got a query? Connect below!
                 </p>
                 <div className="flex space-x-3 mt-2">
                   <a
-                    href="https://www.instagram.com/mobi__2400/"
+                    href="https://www.instagram.com/ayushnotkumar/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
+                    className="text-gray-400 hover:text-gray-200 transition-colors duration-200"
                   >
                     <BiLogoInstagramAlt className="w-4 h-4" />
                   </a>
                   <a
-                    href="https://www.linkedin.com/in/md-mobasshir-shakil-khan-8ba835326/"
+                    href="https://www.linkedin.com/in/ayushnotkumar/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
+                    className="text-gray-400 hover:text-gray-200 transition-colors duration-200"
                   >
                     <AiFillLinkedin className="w-4 h-4" />
                   </a>
                   <a
-                    href="https://github.com/mobi2400"
+                    href="https://github.com/ayushkumar320"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
+                    className="text-gray-400 hover:text-gray-200 transition-colors duration-200"
                   >
                     <AiFillGithub className="w-4 h-4" />
                   </a>
@@ -124,16 +62,88 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          <div className="flex border-l border-gray-200">
+          <div className="flex border-l border-gray-600">
             <button
               onClick={() => toast.dismiss(t.id)}
-              className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+              className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-orange-400 hover:text-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer"
             >
               Close
             </button>
           </div>
         </div>
-      ));
+      ),
+      {
+        duration: 7000, // 7 seconds
+      }
+    );
+
+    setTimeout(() => {
+      toast.custom(
+        (t) => (
+          <div
+            className={`${
+              t.visible ? "animate-enter" : "animate-leave"
+            } max-w-md w-full bg-gray-800 shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-gray-600 ring-opacity-50`}
+          >
+            <div className="flex-1 w-0 p-4">
+              <div className="flex items-start">
+                <div className="flex-shrink-0 pt-0.5">
+                  <img
+                    className="h-10 w-10 rounded-full"
+                    src="/Mobi-toast.jpg"
+                    alt="Mobasshir Khan"
+                  />
+                </div>
+                <div className="ml-3 flex-1">
+                  <p className="text-sm font-medium text-white">
+                    Mobasshir Khan
+                  </p>
+                  <p className="mt-1 text-sm text-gray-300">
+                    Lead Developer | Got a query? Connect below!
+                  </p>
+                  <div className="flex space-x-3 mt-2">
+                    <a
+                      href="https://www.instagram.com/mobi__2400/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-400 hover:text-gray-200 transition-colors duration-200"
+                    >
+                      <BiLogoInstagramAlt className="w-4 h-4" />
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/in/md-mobasshir-shakil-khan-8ba835326/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-400 hover:text-gray-200 transition-colors duration-200"
+                    >
+                      <AiFillLinkedin className="w-4 h-4" />
+                    </a>
+                    <a
+                      href="https://github.com/mobi2400"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-400 hover:text-gray-200 transition-colors duration-200"
+                    >
+                      <AiFillGithub className="w-4 h-4" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex border-l border-gray-600">
+              <button
+                onClick={() => toast.dismiss(t.id)}
+                className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-orange-400 hover:text-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-pointer"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        ),
+        {
+          duration: 7000, // 7 seconds
+        }
+      );
     }, 300); // 300ms delay for the second toast
   };
 
