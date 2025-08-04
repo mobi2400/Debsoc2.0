@@ -10,6 +10,12 @@ const Navbar = () => {
   const lenis = useLenis();
 
   const scrollToSection = (id: string) => {
+    // If we're not on the home page, navigate to home first
+    if (window.location.pathname !== "/") {
+      window.location.href = `/#${id}`;
+      return;
+    }
+
     const section = document.getElementById(id);
     if (section && lenis) {
       lenis.scrollTo(section, {offset: -80});
