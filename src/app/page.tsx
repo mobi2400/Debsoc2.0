@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import ReviewSection from "../components/ReviewSection";
 import HomeSection from "../components/HomeSection";
 import TeamGrid from "../components/TeamGrid";
+
 export default function Home() {
   return (
     <>

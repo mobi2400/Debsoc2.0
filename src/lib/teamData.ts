@@ -25,6 +25,7 @@ const KripaChhajer = "/media/KripaChhajer.jpg";
 const PranathiNP = "/media/PranathiNP.jpg";
 const MohammedRayyanKhaleel = "/media/MohammedRayyanKhaleel.jpg";
 const Nainika = "/media/Nainika.jpg";
+
 export const teamMembers = [
   {
     name: "Kanishk Chaudhary",

@@ -41,6 +41,7 @@ function TeamGrid() {
     document.body.style.touchAction = "auto";
     document.body.style.paddingRight = "0px"; // Remove padding compensation
     document.documentElement.style.overflow = "auto"; // Restore document overflow
+    
     if (lenis) lenis.start();
     setActiveMember(null);
   };
