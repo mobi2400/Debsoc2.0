@@ -118,45 +118,20 @@ const Navbar = () => {
               Gallery
             </a>
           </li>
-          <li
-            className="relative"
-            onMouseEnter={() => setIsDropdownOpen(true)}
-            onMouseLeave={() => setIsDropdownOpen(false)}
-          >
-            <button className="hover:text-orange-400 transition cursor-pointer">
-              Login
-            </button>
-            <div
-              className={`absolute top-10 right-0 w-40 bg-gray-800 border border-gray-700 rounded shadow-lg z-20 transition-all duration-300 origin-top ${
-                isDropdownOpen
-                  ? "opacity-100 scale-100 visible"
-                  : "opacity-0 scale-95 invisible"
-              }`}
+          <li>
+            <Link
+              href="/login"
+              className="hover:text-orange-400 transition cursor-pointer"
             >
-              <a
-                href="/FormPage/index.html"
-                className="block px-4 py-2 hover:bg-gray-700 hover:text-orange-500 cursor-pointer"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Admin
-              </a>
-              <a
-                href="/FormPage/index.html"
-                className="block px-4 py-2 hover:bg-gray-700 hover:text-orange-500 cursor-pointer"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Member
-              </a>
-            </div>
+              Login
+            </Link>
           </li>
         </ul>
 
         <div className="md:hidden">
           <button
             onClick={toggleMobileMenu}
-            className="text-orange-400 z-60 relative"
+            className="text-orange-400 z-[60] relative"
           >
             {isMobileOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
@@ -256,24 +231,13 @@ const Navbar = () => {
                   Login
                 </h2>
                 <div className="space-y-3">
-                  <a
-                    href="/FormPage/index.html"
+                  <Link
+                    href="/login"
                     className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2 cursor-pointer"
-                    target="_blank"
-                    rel="noopener noreferrer"
                     onClick={closeMobileMenu}
                   >
-                    Admin Login
-                  </a>
-                  <a
-                    href="/FormPage/index.html"
-                    className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2 cursor-pointer"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={closeMobileMenu}
-                  >
-                    Member Login
-                  </a>
+                    Login
+                  </Link>
                 </div>
               </div>
             </div>
