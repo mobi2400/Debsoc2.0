@@ -59,14 +59,11 @@ const Footer = () => {
 
       <section className="bg-gray-950 text-gray-400 px-6 py-6">
         <div className="max-w-4xl mx-auto text-center">
-          <a
-            href="/founder/index.html"
-            target="_blank"
-            rel="noopener noreferrer"
+          <p    
             className="text-orange-400 hover:text-orange-500 underline text-lg md:text-xl font-semibold"
           >
-            Click here to Meet the Creators
-          </a>
+            Meet the devs!
+          </p>
           <p className="text-sm md:text-base mt-3">
             This website was lovingly crafted by the development team of SMVIT Debating Society.
             From clean design to smooth functionality, everything you see is built by passionate minds who love tech and debates.
