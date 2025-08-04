@@ -79,14 +79,12 @@ const Navbar = () => {
             </button>
           </li>
           <li>
-            <a
-              href="/DebateTimer/index.html"
+            <Link
+              href="/debateTimer"
               className="hover:text-orange-400 transition cursor-pointer"
-              target="_blank"
-              rel="noopener noreferrer"
             >
               Debate Timer
-            </a>
+            </Link>
           </li>
           <li>
             <a
@@ -217,15 +215,15 @@ const Navbar = () => {
                   Tools & Resources
                 </h2>
                 <div className="space-y-3">
-                  <a
-                    href="/DebateTimer/index.html"
-                    target="_blank"
+                  <Link
+                    href="/debateTimer"
+                    // target="_blank"
                     rel="noopener noreferrer"
                     onClick={closeMobileMenu}
                     className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2 cursor-pointer"
                   >
                     Debate Timer
-                  </a>
+                  </Link>
 
                   <Link
                     href="/session"
