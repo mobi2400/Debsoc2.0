@@ -8,7 +8,7 @@ const GradientMask = () => (
   </>
 );
 
-const ReviewCard = ({ review }) => (
+const ReviewCard = ({ review:any }) => (
   <article className="relative z-10 shrink-0 w-64 sm:w-72 mx-2 bg-white backdrop-blur-md rounded-xl shadow-md p-4 cursor-pointer">
     <header className="mb-2">
       <h3 className="font-semibold text-base text-gray-900">{review.name}</h3>
