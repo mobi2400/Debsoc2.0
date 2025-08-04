@@ -259,13 +259,12 @@ function Quote() {
           </button>
         </div>
 
-        <div className="hidden md:block">
+        <div className="w-full md:w-auto">
           <img
-            src="./quote-image.jpg"
+            src="/quote-image.jpg"
             alt="Quote"
-            className="w-full h-64 object-cover rounded-xl border border-orange-500"
+            className="w-full h-auto md:h-64 object-cover rounded-xl border border-orange-500"
           />
-          
         </div>
       </div>
     </section>
