@@ -159,7 +159,10 @@ function TeamGrid() {
   const combinedTeam = [...coreMembers, ...visibleMembers];
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center bg-gradient-to-br from-black via-gray-900 to-black py-12">
+    <section
+      id="team"
+      className="relative min-h-screen flex flex-col items-center bg-gradient-to-br from-black via-gray-900 to-black py-12"
+    >
       <h2 className="text-orange-600 text-2xl md:text-3xl font-semibold mb-4">
         TEAM MEMBERS
       </h2>

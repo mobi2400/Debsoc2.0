@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 import ReviewSection from "../components/ReviewSection";
 import HomeSection from "../components/HomeSection";
 import TeamGrid from "../components/TeamGrid";
-
+import AchievementCarousel from "../components/Achievements";
 export default function Home() {
   return (
     <>
@@ -20,6 +20,7 @@ export default function Home() {
       <Navbar />
       <HomeSection />
       <TeamGrid />
+      <AchievementCarousel />
       <ReviewSection />
       <Footer />
     </>

@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
-import { useLenis } from "@studio-freight/react-lenis";
+import React, {useState, useEffect} from "react";
+import {Menu, X} from "lucide-react";
+import {useLenis} from "@studio-freight/react-lenis";
 import Link from "next/link";
 
 const Navbar = () => {
@@ -9,10 +9,12 @@ const Navbar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const lenis = useLenis();
 
-  const scrollToSection = (id: any) => {
+  const scrollToSection = (id: string) => {
     const section = document.getElementById(id);
     if (section && lenis) {
-      lenis.scrollTo(section, { offset: -80 });
+      lenis.scrollTo(section, {offset: -80});
+    } else {
+      console.warn(`Section with id "${id}" not found`);
     }
     closeMobileMenu();
   };
@@ -48,47 +50,88 @@ const Navbar = () => {
           onClick={() => scrollToSection("home")}
           className="text-2xl font-bold cursor-pointer text-orange-400 hover:text-orange-600 transition-colors duration-300"
         >
-          <Link
-          href="/"
-          >SMVIT DEBSOC</Link>
+          <Link href="/">SMVIT DEBSOC</Link>
         </h1>
 
         <ul className="hidden md:flex space-x-6 items-center">
           <li>
-            <button onClick={() => scrollToSection("team")} className="hover:text-orange-400 transition">Team</button>
+            <button
+              onClick={() => scrollToSection("team")}
+              className="hover:text-orange-400 transition cursor-pointer"
+            >
+              Team
+            </button>
           </li>
           <li>
-            <button onClick={() => scrollToSection("achievements")} className="hover:text-orange-400 transition">Achievements</button>
+            <button
+              onClick={() => scrollToSection("achievements")}
+              className="hover:text-orange-400 transition cursor-pointer"
+            >
+              Achievements
+            </button>
           </li>
           <li>
-            <button onClick={() => scrollToSection("alumini")} className="hover:text-orange-400 transition">Alumni</button>
+            <button
+              onClick={() => scrollToSection("alumini")}
+              className="hover:text-orange-400 transition cursor-pointer"
+            >
+              Alumni
+            </button>
           </li>
           <li>
-            <a href="/DebateTimer/index.html" className="hover:text-orange-400 transition" target="_blank" rel="noopener noreferrer">Debate Timer</a>
+            <a
+              href="/DebateTimer/index.html"
+              className="hover:text-orange-400 transition cursor-pointer"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Debate Timer
+            </a>
           </li>
           <li>
-            <a href="/session" className="hover:text-orange-400 transition">Session</a>
+            <a
+              href="/session"
+              className="hover:text-orange-400 transition cursor-pointer"
+            >
+              Session
+            </a>
           </li>
           <li>
-            <button onClick={() => scrollToSection("equity")} className="hover:text-orange-400 transition">Equity</button>
+            <button
+              onClick={() => scrollToSection("equity")}
+              className="hover:text-orange-400 transition cursor-pointer"
+            >
+              Equity
+            </button>
           </li>
           <li>
-            <a href="/Gallery/index.html" className="hover:text-orange-400 transition" target="_blank" rel="noopener noreferrer">Gallery</a>
+            <a
+              href="/Gallery/index.html"
+              className="hover:text-orange-400 transition cursor-pointer"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Gallery
+            </a>
           </li>
           <li
             className="relative"
             onMouseEnter={() => setIsDropdownOpen(true)}
             onMouseLeave={() => setIsDropdownOpen(false)}
           >
-            <button className="hover:text-orange-400 transition">Login</button>
+            <button className="hover:text-orange-400 transition cursor-pointer">
+              Login
+            </button>
             <div
               className={`absolute top-10 right-0 w-40 bg-gray-800 border border-gray-700 rounded shadow-lg z-20 transition-all duration-300 origin-top ${
-                isDropdownOpen ? "opacity-100 scale-100 visible" : "opacity-0 scale-95 invisible"
+                isDropdownOpen
+                  ? "opacity-100 scale-100 visible"
+                  : "opacity-0 scale-95 invisible"
               }`}
             >
               <a
                 href="/FormPage/index.html"
-                className="block px-4 py-2 hover:bg-gray-700 hover:text-orange-500"
+                className="block px-4 py-2 hover:bg-gray-700 hover:text-orange-500 cursor-pointer"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -96,7 +139,7 @@ const Navbar = () => {
               </a>
               <a
                 href="/FormPage/index.html"
-                className="block px-4 py-2 hover:bg-gray-700 hover:text-orange-500"
+                className="block px-4 py-2 hover:bg-gray-700 hover:text-orange-500 cursor-pointer"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -107,7 +150,10 @@ const Navbar = () => {
         </ul>
 
         <div className="md:hidden">
-          <button onClick={toggleMobileMenu} className="text-orange-400 z-60 relative">
+          <button
+            onClick={toggleMobileMenu}
+            className="text-orange-400 z-60 relative"
+          >
             {isMobileOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
@@ -129,35 +175,37 @@ const Navbar = () => {
           <div className="p-6 pt-20 min-h-full">
             <div className="space-y-6">
               <div className="border-b border-gray-700 pb-4">
-                <h2 className="text-orange-400 font-bold text-lg mb-4">Navigation</h2>
+                <h2 className="text-orange-400 font-bold text-lg mb-4">
+                  Navigation
+                </h2>
                 <div className="space-y-3">
-                  <button 
-                    onClick={() => scrollToSection("home")} 
-                    className="block w-full text-left py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2"
+                  <button
+                    onClick={() => scrollToSection("home")}
+                    className="block w-full text-left py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2 cursor-pointer"
                   >
                     Home
                   </button>
-                  <button 
-                    onClick={() => scrollToSection("team")} 
-                    className="block w-full text-left py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2"
+                  <button
+                    onClick={() => scrollToSection("team")}
+                    className="block w-full text-left py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2 cursor-pointer"
                   >
                     Team
                   </button>
-                  <button 
-                    onClick={() => scrollToSection("achievements")} 
-                    className="block w-full text-left py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2"
+                  <button
+                    onClick={() => scrollToSection("achievements")}
+                    className="block w-full text-left py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2 cursor-pointer"
                   >
                     Achievements
                   </button>
-                  <button 
-                    onClick={() => scrollToSection("alumini")} 
-                    className="block w-full text-left py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2"
+                  <button
+                    onClick={() => scrollToSection("alumini")}
+                    className="block w-full text-left py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2 cursor-pointer"
                   >
                     Alumni
                   </button>
-                  <button 
-                    onClick={() => scrollToSection("equity")} 
-                    className="block w-full text-left py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2"
+                  <button
+                    onClick={() => scrollToSection("equity")}
+                    className="block w-full text-left py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2 cursor-pointer"
                   >
                     Equity
                   </button>
@@ -165,30 +213,34 @@ const Navbar = () => {
               </div>
 
               <div className="border-b border-gray-700 pb-4">
-                <h2 className="text-orange-400 font-bold text-lg mb-4">Tools & Resources</h2>
+                <h2 className="text-orange-400 font-bold text-lg mb-4">
+                  Tools & Resources
+                </h2>
                 <div className="space-y-3">
-                  <a 
-                    href="/DebateTimer/index.html" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    onClick={closeMobileMenu} 
-                    className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2"
+                  <a
+                    href="/DebateTimer/index.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={closeMobileMenu}
+                    className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2 cursor-pointer"
                   >
                     Debate Timer
                   </a>
-          
-                    <Link href="/session"  
-                    rel="noopener noreferrer" 
-                    onClick={closeMobileMenu} 
-                    className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2">
-                      Session
-                    </Link>                 
-                  <a 
-                    href="/Gallery/index.html" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    onClick={closeMobileMenu} 
-                    className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2"
+
+                  <Link
+                    href="/session"
+                    rel="noopener noreferrer"
+                    onClick={closeMobileMenu}
+                    className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2 cursor-pointer"
+                  >
+                    Session
+                  </Link>
+                  <a
+                    href="/Gallery/index.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={closeMobileMenu}
+                    className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2 cursor-pointer"
                   >
                     Gallery
                   </a>
@@ -196,11 +248,13 @@ const Navbar = () => {
               </div>
 
               <div className="pb-8">
-                <h2 className="text-orange-400 font-bold text-lg mb-4">Login</h2>
+                <h2 className="text-orange-400 font-bold text-lg mb-4">
+                  Login
+                </h2>
                 <div className="space-y-3">
                   <a
                     href="/FormPage/index.html"
-                    className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2"
+                    className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2 cursor-pointer"
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={closeMobileMenu}
@@ -209,7 +263,7 @@ const Navbar = () => {
                   </a>
                   <a
                     href="/FormPage/index.html"
-                    className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2"
+                    className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2 cursor-pointer"
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={closeMobileMenu}
