@@ -44,13 +44,78 @@ body {
   }
 }
 
-@keyframes typewriter-slogan {
-  from {
+@keyframes typewriter-main {
+  0% {
     width: 0;
   }
-  to {
+  20% {
     width: 100%;
   }
+  40% {
+    width: 100%;
+  }
+  50% {
+    width: 0;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+@keyframes typewriter-slogan {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 0;
+  }
+  70% {
+    width: 100%;
+  }
+  90% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-typewriter-main {
+  animation: typewriter-main 8s linear infinite;
+  font-family: "Courier New", monospace;
+  letter-spacing: 0.15em;
+  font-weight: bold;
+  white-space: nowrap;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.animate-typewriter-slogan {
+  animation: typewriter-slogan 8s linear infinite;
+  font-family: "Courier New", monospace;
+  letter-spacing: 0.08em;
+  font-weight: bold;
+  white-space: nowrap;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.animate-blink {
+  animation: blink 0.9s steps(1, end) infinite;
+  font-family: "Courier New", monospace;
+  color: inherit;
+  font-weight: 300;
 }
 
 @keyframes marquee {
@@ -78,11 +143,6 @@ body {
 
 .animate-cursor {
   animation: blink-caret 0.75s step-end infinite;
-}
-
-.animate-typewriter-slogan {
-  animation: typewriter-slogan 3s steps(25) 1s infinite,
-    blink-caret 0.75s step-end infinite;
 }
 
 .animate-marquee {
