@@ -15,10 +15,12 @@ function TeamGrid() {
   const [activeMember, setActiveMember] = useState<TeamMember | null>(null);
   const [showAllMembers, setShowAllMembers] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalAnimating, setIsModalAnimating] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const lenis = useLenis();
 
-  // Add CSS to hide scrollbars
+  // Add CSS to hide scrollbars and smooth animations
   React.useEffect(() => {
     const style = document.createElement("style");
     style.innerHTML = `
@@ -29,6 +31,36 @@ function TeamGrid() {
         -ms-overflow-style: none;
         scrollbar-width: none;
       }
+      .modal-backdrop {
+        transition: opacity 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out;
+      }
+      .modal-backdrop.entering {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+      }
+      .modal-backdrop.entered {
+        opacity: 1;
+        backdrop-filter: blur(12px);
+      }
+      .modal-backdrop.exiting {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+      }
+      .modal-container {
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease-in-out;
+      }
+      .modal-container.entering {
+        transform: scale(0.7) translateY(50px);
+        opacity: 0;
+      }
+      .modal-container.entered {
+        transform: scale(1) translateY(0px);
+        opacity: 1;
+      }
+      .modal-container.exiting {
+        transform: scale(0.8) translateY(30px);
+        opacity: 0;
+      }
     `;
     document.head.appendChild(style);
     return () => {
@@ -36,16 +68,33 @@ function TeamGrid() {
     };
   }, []);
 
-  const close = () => {
-    document.body.style.overflow = "auto";
-    document.body.style.touchAction = "auto";
-    document.body.style.paddingRight = "0px"; // Remove padding compensation
-    document.documentElement.style.overflow = "auto"; // Restore document overflow
-    
-    if (lenis) lenis.start();
-    setActiveMember(null);
+  const openModal = (member: TeamMember) => {
+    setActiveMember(member);
+    setIsModalVisible(true);
+    setIsModalAnimating(true);
+
+    // Small delay to ensure the modal is rendered before animation
+    setTimeout(() => {
+      setIsModalAnimating(false);
+    }, 50);
   };
 
+  const close = () => {
+    setIsModalAnimating(true);
+
+    // Wait for exit animation to complete
+    setTimeout(() => {
+      document.body.style.overflow = "auto";
+      document.body.style.touchAction = "auto";
+      document.body.style.paddingRight = "0px";
+      document.documentElement.style.overflow = "auto";
+
+      if (lenis) lenis.start();
+      setActiveMember(null);
+      setIsModalVisible(false);
+      setIsModalAnimating(false);
+    }, 300); // Match the CSS transition duration
+  };
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 768);
     handleResize();
@@ -64,7 +113,7 @@ function TeamGrid() {
   }, []);
 
   useEffect(() => {
-    if (activeMember) {
+    if (activeMember && isModalVisible) {
       // Get scrollbar width before hiding it
       const scrollbarWidth =
         window.innerWidth - document.documentElement.clientWidth;
@@ -95,14 +144,8 @@ function TeamGrid() {
           modalNode.removeEventListener("touchmove", preventLenisWheel);
         }
       };
-    } else {
-      document.body.style.overflow = "auto";
-      document.body.style.touchAction = "auto";
-      document.body.style.paddingRight = "0px";
-      document.documentElement.style.overflow = "auto";
-      if (lenis) lenis.start();
     }
-  }, [activeMember, lenis]);
+  }, [activeMember, isModalVisible, lenis]);
 
   const coreMembers = teamMembers.filter(
     (m: TeamMember) => m.position !== "Member"
@@ -129,8 +172,8 @@ function TeamGrid() {
         {combinedTeam.map((m, i) => (
           <div
             key={i}
-            onClick={() => setActiveMember(m)}
-            className="flex flex-col items-center bg-white/10 backdrop-blur-md border border-orange-600 rounded-2xl p-6 transition-all duration-300 hover:shadow-[0_0_25px_#f97316] cursor-pointer"
+            onClick={() => openModal(m)}
+            className="flex flex-col items-center bg-white/10 backdrop-blur-md border border-orange-600 rounded-2xl p-6 transition-all duration-300 hover:shadow-[0_0_25px_#f97316] cursor-pointer transform hover:scale-105"
           >
             <img
               src={m.avatar}
@@ -154,15 +197,19 @@ function TeamGrid() {
         </button>
       )}
 
-      {activeMember && (
+      {activeMember && isModalVisible && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div
-            className="absolute inset-0 bg-black/70 backdrop-blur-md animate-overlayFade"
+            className={`modal-backdrop absolute inset-0 bg-black/70 ${
+              isModalAnimating ? "entering" : "entered"
+            }`}
             onClick={close}
           />
           <div
             ref={modalRef}
-            className="modal-content relative w-11/12 sm:w-2/3 lg:w-1/3 max-h-[85vh] overflow-y-auto overscroll-contain bg-gradient-to-b from-gray-900 to-black border border-orange-600 rounded-3xl p-8 shadow-[0_0_40px_#f97316] animate-cardDrop"
+            className={`modal-container modal-content relative w-11/12 sm:w-2/3 lg:w-1/3 max-h-[85vh] overflow-y-auto overscroll-contain bg-gradient-to-b from-gray-900 to-black border border-orange-600 rounded-3xl p-8 shadow-[0_0_40px_#f97316] ${
+              isModalAnimating ? "entering" : "entered"
+            }`}
             style={{
               scrollbarWidth: "none", // Firefox
               msOverflowStyle: "none", // IE/Edge
