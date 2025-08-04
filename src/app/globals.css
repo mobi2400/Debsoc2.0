@@ -54,13 +54,21 @@ body {
 }
 
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 @keyframes marquee-reverse {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .animate-typewriter {
@@ -83,4 +91,35 @@ body {
 
 .animate-marquee-reverse {
   animation: marquee-reverse 60s linear infinite;
+}
+
+/* Toast animations */
+@keyframes enter {
+  0% {
+    transform: translate3d(0, -200%, 0) scale(0.6);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes leave {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, -200%, 0) scale(0.6);
+    opacity: 0;
+  }
+}
+
+.animate-enter {
+  animation: enter 0.35s ease-out;
+}
+
+.animate-leave {
+  animation: leave 0.4s ease-in forwards;
 }
