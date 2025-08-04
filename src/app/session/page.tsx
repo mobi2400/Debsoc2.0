@@ -86,9 +86,9 @@ export default function Session() {
       />
       <Navbar />
 
-      <div className="bg-gradient-to-br from-black via-gray-900 to-black font-serif p-2 sm:p-4 md:p-8 mt-14">
-        <div className="w-full pt-4 pb-4 px-2 sm:px-4 md:px-6 font-inter relative z-10">
-          <div className="bg-opacity-5 rounded-xl shadow-2xl p-3 sm:p-6 md:p-10 lg:p-12 w-full max-w-screen-xl mx-auto">
+      <div className="bg-gradient-to-br from-black via-gray-900 to-black font-serif p-1 sm:p-4 md:p-8 mt-14">
+        <div className="w-full pt-4 pb-4 px-1 sm:px-4 md:px-6 font-inter relative z-10">
+          <div className="bg-opacity-5 rounded-xl shadow-2xl p-2 sm:p-6 md:p-10 lg:p-12 w-full max-w-screen-xl mx-auto">
             <h1 className="text-4xl font-extrabold text-center text-white mb-10">
               Random Motion Exercises
             </h1>
@@ -98,7 +98,7 @@ export default function Session() {
                 {motions.map((m, i) => (
                   <div
                     key={i}
-                    className=" p-8 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 w-full md:w-[90%] max-w-5xl text-white"
+                    className="p-4 sm:p-8 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 w-full md:w-[90%] max-w-5xl text-white"
                   >
                     <h2 className="text-2xl font-bold mb-2">{m.types}</h2>
                     <h3 className="text-xl font-semibold text-indigo-400 mb-4">

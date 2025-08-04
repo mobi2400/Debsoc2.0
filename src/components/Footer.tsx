@@ -140,10 +140,10 @@ const Footer = () => {
           </div>
         ),
         {
-          duration: 7000, // 7 seconds
+          duration: 4000, 
         }
       );
-    }, 300); // 300ms delay for the second toast
+    }, 500); 
   };
 
   return (
