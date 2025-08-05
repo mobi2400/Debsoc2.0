@@ -150,6 +150,16 @@ const Navbar = () => {
           isMobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
+        {/* Close button inside mobile menu */}
+        <div className="absolute top-4 right-4 z-10">
+          <button
+            onClick={closeMobileMenu}
+            className="text-orange-400 hover:text-orange-300 transition-colors duration-200 p-2 rounded-full hover:bg-gray-700"
+          >
+            <X size={24} />
+          </button>
+        </div>
+
         <div className="h-full overflow-y-auto">
           <div className="p-6 pt-20 min-h-full">
             <div className="space-y-6">
