@@ -1,11 +1,7 @@
 // For Next.js, images in public folder should be referenced as strings
-const AcvAditya = "/media/AcvAditya.jpg";
 const AcvAnanya = "/media/AcvAnanya.jpg";
-const AcvPrachi = "/media/AcvPrachi.jpg";
-const AcvRohan = "/media/AcvRohan.jpg";
 const AcvAnuj = "/media/AcvAnuj.jpg";
 const AcvOwais = "/media/AcvOwais.jpg";
-const AcvPrachiNmit = "/media/AcvPrachiNmit.jpg";
 const AcvSrejoniRohan = "/media/AcvSrejoniRohan.jpg";
 const AcvPuru = "/media/AcvPuru.jpg";
 
