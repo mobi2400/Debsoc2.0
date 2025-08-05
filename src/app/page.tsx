@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 import ReviewSection from "../components/ReviewSection";
 import HomeSection from "../components/HomeSection";
 import TeamGrid from "../components/TeamGrid";
-import AchievementCarousel from "../components/Achievements";
+import ExpandableCardDemo from "../components/Achievements";
 import Quote from "../components/Quote";
 import {Toaster} from "react-hot-toast";
 export default function Home() {
@@ -23,7 +23,7 @@ export default function Home() {
       <HomeSection />
       <TeamGrid />
       <Quote />
-      <AchievementCarousel />
+      <ExpandableCardDemo />
       <ReviewSection />
       <Footer />
       <Toaster />
