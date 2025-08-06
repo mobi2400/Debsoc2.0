@@ -101,12 +101,12 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <button
-              onClick={() => scrollToSection("equity")}
+            <Link
+              href="/equity"
               className="hover:text-orange-400 transition cursor-pointer"
             >
               Equity
-            </button>
+            </Link>
           </li>
           <li>
             <Link
@@ -190,12 +190,6 @@ const Navbar = () => {
                   >
                     Alumni
                   </button>
-                  <button
-                    onClick={() => scrollToSection("equity")}
-                    className="block w-full text-left py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2 cursor-pointer"
-                  >
-                    Equity
-                  </button>
                 </div>
               </div>
 
@@ -206,7 +200,6 @@ const Navbar = () => {
                 <div className="space-y-3">
                   <Link
                     href="/debateTimer"
-                    // target="_blank"
                     rel="noopener noreferrer"
                     onClick={closeMobileMenu}
                     className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2 cursor-pointer"
@@ -222,6 +215,15 @@ const Navbar = () => {
                   >
                     Session
                   </Link>
+
+                  <Link
+                    href="/equity"
+                    onClick={closeMobileMenu}
+                    className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2 cursor-pointer"
+                  >
+                    Equity
+                  </Link>
+
                   <Link
                     href="/gallery"
                     onClick={closeMobileMenu}
