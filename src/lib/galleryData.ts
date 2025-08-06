@@ -11,129 +11,224 @@ export interface GalleryEvent {
   images: GalleryImage[];
 }
 
-// Sample gallery data - replace with your actual event data
-export const galleryEvents: GalleryEvent[] = [
+const galleryEvents: GalleryEvent[] = [
   {
     eventName: "DPL",
     images: [
       {
         id: 1,
-        src: "/gallery/dpl/image1.jpg",
-        alt: "DPL Championship 2024",
-        description: "Intense debate moments from our annual DPL championship",
+        src: "/GalleryPics/DPL2-1.jpg",
+        alt: "DPL",
+        description:
+          "Intense debate competition showcasing brilliant arguments",
       },
       {
         id: 2,
-        src: "/gallery/dpl/image2.jpg",
-        alt: "DPL Participants",
-        description: "Talented participants showcasing their debating skills",
+        src: "/GalleryPics/DPL2-2.jpg",
+        alt: "DPL",
+        description:
+          "Participants demonstrating exceptional public speaking skills",
       },
       {
         id: 3,
-        src: "/gallery/dpl/image3.jpg",
-        alt: "DPL Winner",
-        description:
-          "Celebrating our champions and their outstanding performance",
+        src: "/GalleryPics/DPL3-1.jpg",
+        alt: "DPL",
+        description: "Grand opening of our prestigious debate league",
       },
-      // Add more DPL images here
+      {
+        id: 4,
+        src: "/GalleryPics/DPL3-2.jpg",
+        alt: "DPL",
+        description: "Early rounds featuring emerging debate talents",
+      },
+      {
+        id: 5,
+        src: "/GalleryPics/DPL3-3.jpg",
+        alt: "DPL",
+        description: "Intense quarter-final matches with strategic arguments",
+      },
+      {
+        id: 6,
+        src: "/GalleryPics/DPL3-4.jpg",
+        alt: "DPL",
+        description: "Semi-final showdown between top contenders",
+      },
+      {
+        id: 7,
+        src: "/GalleryPics/DPL3-5.jpg",
+        alt: "DPL",
+        description: "Finalists preparing for the ultimate debate challenge",
+      },
+      {
+        id: 8,
+        src: "/GalleryPics/DPL3-6.jpg",
+        alt: "DPL",
+        description: "The epic final battle of words and wisdom",
+      },
+      {
+        id: 9,
+        src: "/GalleryPics/DPL3-7.jpg",
+        alt: "DPL",
+        description: "Celebrating the champions and outstanding performers",
+      },
+      {
+        id: 10,
+        src: "/GalleryPics/DPL3-8.jpg",
+        alt: "DPL",
+        description: "Our proud champions holding their well-deserved trophies",
+      },
     ],
   },
   {
-    eventName: "Merch",
+    eventName: "Farewell 2022",
     images: [
       {
         id: 11,
-        src: "/gallery/merch/tshirt1.jpg",
-        alt: "SMVIT DEBSOC T-Shirt",
-        description: "Official SMVIT DEBSOC branded t-shirts in various colors",
+        src: "/GalleryPics/Farewell22-1.jpg",
+        alt: "Farewell 2022",
+        description: "Emotional farewell moments with seniors",
       },
       {
         id: 12,
-        src: "/gallery/merch/hoodie1.jpg",
-        alt: "DEBSOC Hoodie",
-        description: "Premium quality hoodies with embroidered logo",
+        src: "/GalleryPics/Farewell22-2.jpg",
+        alt: "Farewell 2022",
+        description: "Group photo with graduating members",
       },
       {
         id: 13,
-        src: "/gallery/merch/accessories.jpg",
-        alt: "DEBSOC Accessories",
-        description: "Badges, stickers, and other branded accessories",
+        src: "/GalleryPics/Farewell22-3.jpg",
+        alt: "Farewell 2022",
+        description: "Farewell ceremony highlights",
       },
-      // Add more Merch images here
+      {
+        id: 14,
+        src: "/GalleryPics/Farewell22-4.jpg",
+        alt: "Farewell 2022",
+        description: "Team bonding during farewell event",
+      },
+      {
+        id: 15,
+        src: "/GalleryPics/Farewell22-5.jpg",
+        alt: "Farewell 2022",
+        description: "Final group celebration",
+      },
     ],
   },
   {
-    eventName: "Workshops",
+    eventName: "Farewell 2023",
     images: [
+      {
+        id: 16,
+        src: "/GalleryPics/Farewell23-1.JPG",
+        alt: "Farewell 2023",
+        description: "Beautiful opening moments of 2023 farewell",
+      },
+      {
+        id: 17,
+        src: "/GalleryPics/Farewell23-2.JPG",
+        alt: "Farewell 2023",
+        description: "Heartfelt speeches from graduating seniors",
+      },
+      {
+        id: 18,
+        src: "/GalleryPics/Farewell23-3.JPG",
+        alt: "Farewell 2023",
+        description: "Walking down memory lane with cherished moments",
+      },
+      {
+        id: 19,
+        src: "/GalleryPics/Farewell23-4.JPG",
+        alt: "Farewell 2023",
+        description: "Joyful group celebrations and bonding",
+      },
+      {
+        id: 20,
+        src: "/GalleryPics/Farewell23-5.JPG",
+        alt: "Farewell 2023",
+        description: "Special awards and recognition ceremony",
+      },
       {
         id: 21,
-        src: "/gallery/workshops/session1.jpg",
-        alt: "Public Speaking Workshop",
-        description: "Interactive sessions on improving public speaking skills",
+        src: "/GalleryPics/Farewell23-6.JPG",
+        alt: "Farewell 2023",
+        description: "Final group photo marking the end of an era",
       },
-      {
-        id: 22,
-        src: "/gallery/workshops/training.jpg",
-        alt: "Debate Training",
-        description:
-          "Comprehensive debate training for beginners and advanced speakers",
-      },
-      {
-        id: 23,
-        src: "/gallery/workshops/group.jpg",
-        alt: "Workshop Group Photo",
-        description: "Participants and trainers at our monthly workshop",
-      },
-      // Add more Workshop images here
-    ],
-  },
-  {
-    eventName: "Events",
-    images: [
-      {
-        id: 31,
-        src: "/gallery/events/inauguration.jpg",
-        alt: "Event Inauguration",
-        description:
-          "Grand inauguration ceremony of our annual debate festival",
-      },
-      {
-        id: 32,
-        src: "/gallery/events/competition.jpg",
-        alt: "Inter-College Competition",
-        description: "Fierce competition between top colleges in the region",
-      },
-      {
-        id: 33,
-        src: "/gallery/events/award.jpg",
-        alt: "Award Ceremony",
-        description: "Recognizing excellence in debate and public speaking",
-      },
-      // Add more Event images here
     ],
   },
   {
     eventName: "Team Moments",
     images: [
       {
-        id: 41,
-        src: "/gallery/team/meeting.jpg",
-        alt: "Team Meeting",
-        description: "Strategic planning session with our core team members",
+        id: 22,
+        src: "/GalleryPics/M1.jpg",
+        alt: "Team Moments",
+        description: "Fun team bonding activities and games",
       },
       {
-        id: 42,
-        src: "/gallery/team/celebration.jpg",
-        alt: "Team Celebration",
-        description: "Celebrating our achievements and milestones together",
+        id: 23,
+        src: "/GalleryPics/M2.jpg",
+        alt: "Team Moments",
+        description: "Relaxed moments with team members",
       },
       {
-        id: 43,
-        src: "/gallery/team/outing.jpg",
-        alt: "Team Outing",
-        description: "Fun team building activities and bonding sessions",
+        id: 24,
+        src: "/GalleryPics/M3.jpg",
+        alt: "Team Moments",
+        description: "Collaborative learning and skill development",
       },
-      // Add more Team images here
+      {
+        id: 25,
+        src: "/GalleryPics/M4.jpg",
+        alt: "Team Moments",
+        description: "Celebrating achievements and milestones together",
+      },
+      {
+        id: 26,
+        src: "/GalleryPics/M5.jpg",
+        alt: "Team Moments",
+        description: "Memorable team outing and adventure",
+      },
+      {
+        id: 27,
+        src: "/GalleryPics/M6.jpg",
+        alt: "Team Moments",
+        description: "Showcasing the strong bond of our debate family",
+      },
+    ],
+  },
+  {
+    eventName: "Recruitment & Training 2023",
+    images: [
+      {
+        id: 28,
+        src: "/GalleryPics/RclPd23-1.jpg",
+        alt: "Recruitment & Training 2023",
+        description: "Active recruitment campaign for new members",
+      },
+      {
+        id: 29,
+        src: "/GalleryPics/RclPd23-2.jpg",
+        alt: "Recruitment & Training 2023",
+        description: "Fundamental training session for newcomers",
+      },
+      {
+        id: 30,
+        src: "/GalleryPics/RclPd23-3.jpg",
+        alt: "Recruitment & Training 2023",
+        description: "Advanced techniques and strategies workshop",
+      },
+      {
+        id: 31,
+        src: "/GalleryPics/RclPd23-4.jpg",
+        alt: "Recruitment & Training 2023",
+        description: "Practice debates to hone skills and confidence",
+      },
+      {
+        id: 32,
+        src: "/GalleryPics/RclPd23-5.jpg",
+        alt: "Recruitment & Training 2023",
+        description: "Welcoming our newest debate society members",
+      },
     ],
   },
 ];

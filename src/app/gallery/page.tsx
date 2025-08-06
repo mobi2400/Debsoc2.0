@@ -24,22 +24,16 @@ const Gallery = () => {
     }));
   };
 
-  const getGridItemClass = (imageId: number, index: number) => {
+  const getGridItemClass = (imageId: number, index: number): string => {
     const aspectRatio = imageAspectRatios[imageId];
 
     if (!aspectRatio) return "col-span-1 row-span-1";
 
-    // Landscape images (wider than tall)
     if (aspectRatio > 1.5) {
       return "col-span-2 row-span-1";
-    }
-    // Portrait images (taller than wide)
-    else if (aspectRatio < 0.7) {
+    } else if (aspectRatio < 0.7) {
       return "col-span-1 row-span-2";
-    }
-    // Square or slightly rectangular images
-    else {
-      // Add some variety for square images
+    } else {
       return index % 3 === 0
         ? "col-span-2 row-span-1"
         : "col-span-1 row-span-1";
@@ -52,7 +46,6 @@ const Gallery = () => {
 
       <div className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          {/* Page Header */}
           <motion.div
             initial={{opacity: 0, y: 20}}
             animate={{opacity: 1, y: 0}}
@@ -68,7 +61,6 @@ const Gallery = () => {
             </p>
           </motion.div>
 
-          {/* Gallery Events */}
           {galleryEvents.map((event: GalleryEvent, eventIndex: number) => (
             <motion.section
               key={event.eventName}
@@ -77,7 +69,6 @@ const Gallery = () => {
               transition={{duration: 0.6, delay: eventIndex * 0.1}}
               className="mb-20"
             >
-              {/* Event Header */}
               <div className="mb-8">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
                   {event.eventName}
@@ -85,7 +76,6 @@ const Gallery = () => {
                 <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full"></div>
               </div>
 
-              {/* Dynamic Grid */}
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px] md:auto-rows-[250px]">
                 {event.images.map((image: GalleryImage, imageIndex: number) => (
                   <motion.div
@@ -115,16 +105,6 @@ const Gallery = () => {
                         }}
                       />
 
-                      {/* Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div className="absolute bottom-0 left-0 right-0 p-4">
-                          <p className="text-white text-sm font-medium line-clamp-2">
-                            {image.description}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Hover Icon */}
                       <div className="absolute top-2 right-2 w-8 h-8 bg-orange-500/80 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <svg
                           className="w-4 h-4 text-white"
@@ -149,14 +129,13 @@ const Gallery = () => {
         </div>
       </div>
 
-      {/* Lightbox Modal */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div
             initial={{opacity: 0}}
             animate={{opacity: 1}}
             exit={{opacity: 0}}
-            className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 cursor-pointer"
             onClick={() => setSelectedImage(null)}
           >
             <motion.div
@@ -164,29 +143,28 @@ const Gallery = () => {
               animate={{scale: 1, opacity: 1}}
               exit={{scale: 0.5, opacity: 0}}
               transition={{type: "spring", damping: 25, stiffness: 300}}
-              className="relative max-w-4xl max-h-[90vh] w-full"
+              className="relative max-w-5xl max-h-[95vh] w-full bg-gray-900/50 backdrop-blur-sm rounded-2xl overflow-hidden shadow-2xl cursor-default"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Close Button */}
               <button
                 onClick={() => setSelectedImage(null)}
-                className="absolute -top-12 right-0 text-white hover:text-orange-500 transition-colors duration-200 z-10"
+                className="absolute top-4 right-4 w-10 h-10 bg-black/60 hover:bg-black/80 text-white hover:text-orange-500 transition-all duration-200 z-20 rounded-full flex items-center justify-center backdrop-blur-sm cursor-pointer"
               >
-                <X size={32} />
+                <X size={20} />
               </button>
 
-              {/* Image */}
-              <img
-                src={selectedImage.src}
-                alt={selectedImage.alt}
-                className="w-full h-auto max-h-[90vh] object-contain rounded-lg"
-              />
+              <div className="relative">
+                <img
+                  src={selectedImage.src}
+                  alt={selectedImage.alt}
+                  className="w-full h-auto max-h-[80vh] object-contain rounded-t-2xl"
+                />
+              </div>
 
-              {/* Description */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 rounded-b-lg">
-                <p className="text-white text-lg font-medium">
-                  {selectedImage.description}
-                </p>
+              <div className="bg-gray-900/80 backdrop-blur-md p-6 border-t border-gray-700/50">
+                <h3 className="text-orange-400 text-xl font-bold">
+                  {selectedImage.alt}
+                </h3>
               </div>
             </motion.div>
           </motion.div>
