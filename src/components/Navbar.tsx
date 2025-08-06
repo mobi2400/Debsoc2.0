@@ -93,12 +93,12 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <a
+            <Link
               href="/session"
               className="hover:text-orange-400 transition cursor-pointer"
             >
               Session
-            </a>
+            </Link>
           </li>
           <li>
             <button
@@ -109,14 +109,12 @@ const Navbar = () => {
             </button>
           </li>
           <li>
-            <a
-              href="/Gallery/index.html"
+            <Link
+              href="/gallery"
               className="hover:text-orange-400 transition cursor-pointer"
-              target="_blank"
-              rel="noopener noreferrer"
             >
               Gallery
-            </a>
+            </Link>
           </li>
           <li>
             <Link
@@ -224,15 +222,13 @@ const Navbar = () => {
                   >
                     Session
                   </Link>
-                  <a
-                    href="/Gallery/index.html"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href="/gallery"
                     onClick={closeMobileMenu}
                     className="block py-2 px-3 rounded-lg text-white hover:bg-gray-700 hover:text-orange-400 active:text-orange-400 transition-all duration-200 transform hover:translate-x-2 cursor-pointer"
                   >
                     Gallery
-                  </a>
+                  </Link>
                 </div>
               </div>
 
