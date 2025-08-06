@@ -32,13 +32,13 @@ export function ExpandableCardDemo() {
   return (
     <div
       id="achievements"
-      className="relative w-full min-h-screen bg-gradient-to-br from-black via-gray-900 to-black px-4 pt-24 pb-12"
+      className="relative w-full min-h-screen md:min-h-screen h-screen md:h-auto bg-gradient-to-br from-black via-gray-900 to-black px-4 pt-24 pb-12 flex flex-col overflow-hidden md:overflow-visible"
     >
-      <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-orange-500 text-center mb-10">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-orange-500 text-center mb-6 md:mb-10 flex-shrink-0">
         ACHIEVEMENTS
       </h1>
 
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto flex-1 flex flex-col min-h-0 md:min-h-auto">
         <AnimatePresence>
           {active && typeof active === "object" && (
             <motion.div
@@ -120,7 +120,7 @@ export function ExpandableCardDemo() {
           ) : null}
         </AnimatePresence>
         <div
-          className="max-w-2xl mx-auto h-[400px] overflow-y-auto scrollbar-hide bg-white/5 backdrop-blur rounded-lg p-4 relative"
+          className="max-w-2xl mx-auto flex-1 overflow-y-auto scrollbar-hide bg-white/5 backdrop-blur rounded-lg p-4 relative md:h-[400px]"
           onWheel={(e) => e.stopPropagation()}
           onTouchMove={(e) => e.stopPropagation()}
           style={{overscrollBehavior: "contain"}}

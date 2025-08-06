@@ -102,7 +102,7 @@ const HomeSection = () => {
     {
       icon: Mail,
       label: "Email",
-      href: "mailto:smvitdebsoc12@gmail",
+      href: "mailto:smvitdebsoc12@gmail.com",
       color: "from-gray-600 to-gray-800",
     },
     {
