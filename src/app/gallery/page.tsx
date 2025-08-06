@@ -3,7 +3,8 @@
 import React, {useState} from "react";
 import {motion, AnimatePresence} from "framer-motion";
 import Navbar from "@/components/Navbar";
-import {X} from "lucide-react";
+import {Fullscreen, X} from "lucide-react";
+import Image from "next/image";
 import galleryEvents, {GalleryImage, GalleryEvent} from "@/lib/galleryData";
 
 const Gallery = () => {
@@ -91,10 +92,25 @@ const Gallery = () => {
                     onClick={() => setSelectedImage(image)}
                   >
                     <div className="relative w-full h-full">
-                      <img
+                      {/* <img
                         src={image.src}
                         alt={image.alt}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        onLoad={(e) => {
+                          const img = e.target as HTMLImageElement;
+                          handleImageLoad(
+                            image.id,
+                            img.naturalWidth,
+                            img.naturalHeight
+                          );
+                        }}
+                      /> */}
+                      <Image
+                        src={image.src}
+                        alt={image.alt}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 pointer-events-none"
                         onLoad={(e) => {
                           const img = e.target as HTMLImageElement;
                           handleImageLoad(
@@ -153,10 +169,12 @@ const Gallery = () => {
                 <X size={20} />
               </button>
 
-              <div className="relative">
-                <img
+              <div className="relative w-full h-full">
+                <Image
                   src={selectedImage.src}
                   alt={selectedImage.alt}
+                  fill
+                  sizes="100vw"
                   className="w-full h-auto max-h-[80vh] object-contain rounded-t-2xl"
                 />
               </div>
