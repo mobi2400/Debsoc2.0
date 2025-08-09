@@ -6,9 +6,15 @@ import {AnimatePresence, motion} from "framer-motion";
 import {useOutsideClick} from "@/hooks/use-outside-click";
 import achievements, {Achievement} from "@/lib/achievements";
 
+// Augment scroll area element with an internal tracking property without using 'any'
+interface TouchTrackElement extends HTMLDivElement {
+  _lastTouchY?: number;
+}
+
 export function ExpandableCardDemo() {
   const [active, setActive] = useState<Achievement | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
   const lastFocused = useRef<HTMLElement | null>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const id = useId();
@@ -98,6 +104,53 @@ export function ExpandableCardDemo() {
                   transition: {duration: 0.18, ease: "easeInOut"},
                 }}
                 className="relative w-full max-w-[650px] h-[90vh] flex flex-col bg-neutral-900/90 backdrop-blur-xl ring-1 ring-white/10 sm:rounded-3xl overflow-hidden shadow-[0_8px_40px_-8px_rgba(0,0,0,0.6)]"
+                onWheel={(e) => {
+                  const area = scrollAreaRef.current;
+                  if (!area) return;
+                  const deltaY = e.deltaY;
+                  const atTop = area.scrollTop <= 0;
+                  const atBottom =
+                    area.scrollHeight - area.clientHeight - area.scrollTop <= 1;
+                  // Scroll inner area manually
+                  area.scrollTop += deltaY;
+                  if ((deltaY < 0 && atTop) || (deltaY > 0 && atBottom)) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }
+                }}
+                onTouchStart={(e) => {
+                  const area =
+                    scrollAreaRef.current as TouchTrackElement | null;
+                  if (!area) return;
+                  area._lastTouchY = e.touches[0].clientY;
+                }}
+                onTouchMove={(e) => {
+                  const area =
+                    scrollAreaRef.current as TouchTrackElement | null;
+                  if (!area) return;
+                  const touchY = e.touches[0].clientY;
+                  const lastY = area._lastTouchY;
+                  if (lastY !== undefined) {
+                    const deltaY = lastY - touchY; // positive when swiping up
+                    const atTop = area.scrollTop <= 0;
+                    const atBottom =
+                      area.scrollHeight - area.clientHeight - area.scrollTop <=
+                      1;
+                    area.scrollTop += deltaY;
+                    if ((deltaY < 0 && atTop) || (deltaY > 0 && atBottom)) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }
+                  }
+                  area._lastTouchY = touchY;
+                }}
+                onTouchEnd={() => {
+                  const area =
+                    scrollAreaRef.current as TouchTrackElement | null;
+                  if (area && area._lastTouchY !== undefined) {
+                    delete area._lastTouchY;
+                  }
+                }}
               >
                 {/* Close button */}
                 <motion.button
@@ -139,8 +192,12 @@ export function ExpandableCardDemo() {
                   </div>
                   <div
                     id={`dialog-desc-${id}`}
-                    className="flex-1 overflow-y-auto px-5 py-4 space-y-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-700/70 hover:scrollbar-thumb-neutral-600/70"
-                    style={{overscrollBehavior: "contain"}}
+                    ref={scrollAreaRef}
+                    className="flex-1 overflow-y-auto px-5 py-4 space-y-4 scrollbar-hide"
+                    style={{
+                      overscrollBehavior: "contain",
+                      WebkitOverflowScrolling: "touch",
+                    }}
                   >
                     <motion.div
                       layout
@@ -160,7 +217,7 @@ export function ExpandableCardDemo() {
 
         {/* List */}
         <div
-          className="max-w-2xl mx-auto flex-1 overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-orange-600/40 hover:scrollbar-thumb-orange-500/70 bg-white/[0.04] backdrop-blur-md rounded-2xl p-5 relative md:h-[420px] ring-1 ring-white/10 shadow-inner"
+          className="max-w-2xl mx-auto flex-1 overflow-y-auto scrollbar-hide bg-white/[0.04] backdrop-blur-md rounded-2xl p-5 relative md:h-[420px] ring-1 ring-white/10 shadow-inner"
           style={{overscrollBehavior: "contain"}}
           aria-label="Achievements list"
         >
