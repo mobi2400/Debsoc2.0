@@ -264,6 +264,7 @@ function Quote() {
             src="/quote-image.jpg"
             alt="Quote"
             fill
+            quality={90}
             className="object-cover rounded-xl border border-orange-500"
             sizes="(max-width:768px) 100vw, 400px"
             priority

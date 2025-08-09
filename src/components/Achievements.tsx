@@ -174,6 +174,7 @@ export function ExpandableCardDemo() {
                     src={active.img}
                     alt={active.title}
                     priority
+                    quality={90}
                     className="w-full h-72 object-cover object-center select-none"
                     draggable={false}
                   />
@@ -244,10 +245,11 @@ export function ExpandableCardDemo() {
                     className="flex-shrink-0 relative"
                   >
                     <Image
-                      width={48}
-                      height={48}
+                      width={64}
+                      height={64}
                       src={achievement.img}
                       alt={achievement.title}
+                      quality={95}
                       className="h-12 w-12 rounded-full object-cover border-2 border-orange-400/50 shadow-sm select-none"
                       draggable={false}
                       sizes="48px"

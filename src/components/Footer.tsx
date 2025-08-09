@@ -26,8 +26,10 @@ const Footer = () => {
                   className="h-10 w-10 rounded-full object-cover"
                   src="/Ayush.jpg"
                   alt="Ayush Kumar"
-                  width={40}
-                  height={40}
+                  width={48}
+                  height={48}
+                  quality={95}
+                  sizes="48px"
                 />
               </div>
               <div className="ml-3 flex-1">
@@ -94,8 +96,10 @@ const Footer = () => {
                     className="h-10 w-10 rounded-full object-cover"
                     src="/Mobi-toast.jpg"
                     alt="Mobasshir Khan"
-                    width={40}
-                    height={40}
+                    width={48}
+                    height={48}
+                    quality={95}
+                    sizes="48px"
                   />
                 </div>
                 <div className="ml-3 flex-1">

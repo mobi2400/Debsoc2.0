@@ -182,8 +182,9 @@ function TeamGrid() {
             <Image
               src={m.avatar}
               alt={m.name}
-              width={128}
-              height={128}
+              width={160}
+              height={160}
+              quality={95}
               className="w-32 h-32 rounded-full object-cover border-4 border-orange-600 mb-6"
               sizes="128px"
               priority={i < 4}
