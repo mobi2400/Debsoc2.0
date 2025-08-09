@@ -259,11 +259,14 @@ function Quote() {
           </button>
         </div>
 
-        <div className="w-full md:w-auto">
-          <img
+        <div className="w-full md:w-auto md:h-64 relative">
+          <Image
             src="/quote-image.jpg"
             alt="Quote"
-            className="w-full h-auto md:h-64 object-cover rounded-xl border border-orange-500"
+            fill
+            className="object-cover rounded-xl border border-orange-500"
+            sizes="(max-width:768px) 100vw, 400px"
+            priority
           />
         </div>
       </div>

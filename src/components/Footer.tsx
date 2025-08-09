@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import {BiLogoInstagramAlt} from "react-icons/bi";
 import {BsFacebook} from "react-icons/bs";
 import {TfiYoutube} from "react-icons/tfi";
@@ -21,10 +22,12 @@ const Footer = () => {
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
               <div className="flex-shrink-0 pt-0.5">
-                <img
-                  className="h-10 w-10 rounded-full"
+                <Image
+                  className="h-10 w-10 rounded-full object-cover"
                   src="/Ayush.jpg"
                   alt="Ayush Kumar"
+                  width={40}
+                  height={40}
                 />
               </div>
               <div className="ml-3 flex-1">
@@ -87,10 +90,12 @@ const Footer = () => {
             <div className="flex-1 w-0 p-4">
               <div className="flex items-start">
                 <div className="flex-shrink-0 pt-0.5">
-                  <img
-                    className="h-10 w-10 rounded-full"
+                  <Image
+                    className="h-10 w-10 rounded-full object-cover"
                     src="/Mobi-toast.jpg"
                     alt="Mobasshir Khan"
+                    width={40}
+                    height={40}
                   />
                 </div>
                 <div className="ml-3 flex-1">
@@ -140,10 +145,10 @@ const Footer = () => {
           </div>
         ),
         {
-          duration: 4000, 
+          duration: 4000,
         }
       );
-    }, 500); 
+    }, 500);
   };
 
   return (

@@ -1,6 +1,7 @@
 "use client";
 
 import React, {useState} from "react";
+import Image from "next/image";
 import {motion, AnimatePresence} from "framer-motion";
 import Navbar from "@/components/Navbar";
 import {X} from "lucide-react";
@@ -91,18 +92,24 @@ const Gallery = () => {
                     onClick={() => setSelectedImage(image)}
                   >
                     <div className="relative w-full h-full">
-                      <img
+                      <Image
                         src={image.src}
                         alt={image.alt}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        sizes="(max-width:768px) 50vw, (max-width:1024px) 33vw, 25vw"
                         onLoad={(e) => {
-                          const img = e.target as HTMLImageElement;
+                          const img = e.currentTarget as HTMLImageElement & {
+                            naturalWidth: number;
+                            naturalHeight: number;
+                          };
                           handleImageLoad(
                             image.id,
                             img.naturalWidth,
                             img.naturalHeight
                           );
                         }}
+                        priority={eventIndex === 0 && imageIndex < 4}
                       />
 
                       <div className="absolute top-2 right-2 w-8 h-8 bg-orange-500/80 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -154,11 +161,16 @@ const Gallery = () => {
               </button>
 
               <div className="relative">
-                <img
-                  src={selectedImage.src}
-                  alt={selectedImage.alt}
-                  className="w-full h-auto max-h-[80vh] object-contain rounded-t-2xl"
-                />
+                <div className="relative w-full h-full max-h-[80vh]">
+                  <Image
+                    src={selectedImage.src}
+                    alt={selectedImage.alt}
+                    fill
+                    className="object-contain rounded-t-2xl"
+                    sizes="90vw"
+                    priority
+                  />
+                </div>
               </div>
 
               <div className="bg-gray-900/80 backdrop-blur-md p-6 border-t border-gray-700/50">

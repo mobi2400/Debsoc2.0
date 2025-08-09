@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useRef} from "react";
+import Image from "next/image";
 import {X, Instagram} from "lucide-react";
 import {teamMembers} from "../lib/teamData";
 import {useLenis} from "@studio-freight/react-lenis";
@@ -178,10 +179,14 @@ function TeamGrid() {
             onClick={() => openModal(m)}
             className="flex flex-col items-center bg-white/10 backdrop-blur-md border border-orange-600 rounded-2xl p-6 transition-all duration-300 hover:shadow-[0_0_25px_#f97316] cursor-pointer transform hover:scale-105"
           >
-            <img
+            <Image
               src={m.avatar}
               alt={m.name}
+              width={128}
+              height={128}
               className="w-32 h-32 rounded-full object-cover border-4 border-orange-600 mb-6"
+              sizes="128px"
+              priority={i < 4}
             />
             <h3 className="text-white text-xl font-bold mb-2">{m.name}</h3>
             <div className="text-orange-500 text-lg border-t border-orange-600 pt-2 w-full text-center">

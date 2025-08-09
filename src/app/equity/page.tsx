@@ -96,7 +96,7 @@ const Equity: React.FC = () => {
                 Equity Data is Processing
               </h2>
               <p className="text-lg text-gray-300 mb-6 max-w-2xl mx-auto">
-                We're currently compiling comprehensive equity data and
+                We&apos;re currently compiling comprehensive equity data and
                 analytics for our debate society. This section will feature
                 detailed insights, performance metrics, and fairness
                 assessments.
