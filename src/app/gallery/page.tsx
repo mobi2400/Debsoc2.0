@@ -1,7 +1,6 @@
 "use client";
 
 import React, {useState} from "react";
-import Image from "next/image";
 import {motion, AnimatePresence} from "framer-motion";
 import Navbar from "@/components/Navbar";
 import {Fullscreen, X} from "lucide-react";
