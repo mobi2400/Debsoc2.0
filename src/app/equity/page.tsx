@@ -8,7 +8,9 @@ const Equity: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex flex-col">
       <Navbar />
-
+      <br></br>
+      <br></br>
+      <br></br>
       <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div

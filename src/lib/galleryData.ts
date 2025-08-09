@@ -197,7 +197,7 @@ const galleryEvents: GalleryEvent[] = [
     ],
   },
   {
-    eventName: "Recruitment & Training 2023",
+    eventName: "Rcl PD 2023",
     images: [
       {
         id: 28,

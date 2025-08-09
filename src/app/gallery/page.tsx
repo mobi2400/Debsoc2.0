@@ -4,7 +4,8 @@ import React, {useState} from "react";
 import Image from "next/image";
 import {motion, AnimatePresence} from "framer-motion";
 import Navbar from "@/components/Navbar";
-import {X} from "lucide-react";
+import {Fullscreen, X} from "lucide-react";
+import Image from "next/image";
 import galleryEvents, {GalleryImage, GalleryEvent} from "@/lib/galleryData";
 
 const Gallery = () => {
