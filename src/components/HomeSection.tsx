@@ -125,8 +125,10 @@ const HomeSection = () => {
       <Image
         src="/homepage/M5.jpg"
         alt="group photo"
-        layout="fill"
-        objectFit="cover"
+        fill
+        priority
+        quality={92}
+        sizes="100vw"
         className="absolute inset-0 w-full h-full object-cover object-center"
       />
 
