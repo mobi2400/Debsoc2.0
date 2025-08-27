@@ -25,6 +25,7 @@ const KripaChhajer = "/media/KripaChhajer.jpg";
 const PranathiNP = "/media/PranathiNP.jpg";
 const MohammedRayyanKhaleel = "/media/MohammedRayyanKhaleel.jpg";
 const Nainika = "/media/Nainika.jpg";
+const AdityaRaj = "/media/AdityaRaj.jpg";
 
 export const teamMembers = [
   {
@@ -195,4 +196,10 @@ export const teamMembers = [
     avatar: MohammedRayyanKhaleel,
     description: "Keep Learning!!!!!",
   },
+  {
+    name: "Aditya Raj",
+    position: "Member",
+    avatar: AdityaRaj,
+    description: "Keep Learning!!!!!",
+  }
 ];
