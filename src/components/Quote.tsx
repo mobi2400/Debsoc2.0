@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useCallback, useMemo} from "react";
 import Image from "next/image";
 import toast from "react-hot-toast";
 
 function Quote() {
   const [quote, setQuote] = useState("Loading...");
   const [author, setAuthor] = useState("");
-  const [error, setError] = useState(false);
+  
 
-  const staticQuotes = [
+  const staticQuotes = useMemo(() => [
     {
       content: "The only way to do great work is to love what you do.",
       author: "Steve Jobs",
@@ -146,13 +146,9 @@ function Quote() {
       content: "You miss 100% of the shots you don't take.",
       author: "Wayne Gretzky",
     },
-  ];
+  ], []);
 
-  useEffect(() => {
-    fetchQuote();
-  }, []);
-
-  async function fetchQuote() {
+  const fetchQuote = useCallback(async () => {
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 5000);
@@ -176,7 +172,6 @@ function Quote() {
       if (data && data.content && data.author) {
         setQuote(data.content);
         setAuthor(data.author);
-        setError(false);
       } else {
         throw new Error("Invalid data format");
       }
@@ -189,9 +184,12 @@ function Quote() {
         staticQuotes[Math.floor(Math.random() * staticQuotes.length)];
       setQuote(randomQuote.content);
       setAuthor(randomQuote.author);
-      setError(true);
     }
-  }
+  }, [staticQuotes]);
+
+  useEffect(() => {
+    fetchQuote();
+  }, [fetchQuote]);
 
   const generateNewQuote = () => {
     toast.promise(

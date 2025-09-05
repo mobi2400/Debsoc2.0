@@ -5,7 +5,7 @@ import {useLenis} from "@studio-freight/react-lenis";
 import Link from "next/link";
 
 const Navbar = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const lenis = useLenis();
 
@@ -25,9 +25,7 @@ const Navbar = () => {
     closeMobileMenu();
   };
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen((prev) => !prev);
-  };
+  
 
   const toggleMobileMenu = () => {
     setIsMobileOpen((prev) => !prev);
@@ -35,7 +33,6 @@ const Navbar = () => {
 
   const closeMobileMenu = () => {
     setIsMobileOpen(false);
-    setIsDropdownOpen(false);
   };
 
   useEffect(() => {

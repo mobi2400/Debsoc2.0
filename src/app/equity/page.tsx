@@ -60,7 +60,7 @@ const EquityPolicy = () => {
                   <div className="space-y-4 text-gray-300">
                     <h3 className="text-2xl font-semibold text-orange-400">1.1 Purpose</h3>
                     <p>This Equity Policy is instituted by the SMVIT Debating Society to ensure a respectful, inclusive, and safe environment for all individuals participating in any activities organized, facilitated, or affiliated with the Society.</p>
-                    <p>This Policy operates as a foundational instrument of governance for the internal conduct of the Society's members and participants, and applies uniformly without exception. The Policy is predicated on the principle that debating, as an intellectual pursuit, must remain free from discrimination, harassment, intimidation, or any conduct that undermines the dignity or equitable participation of any individual.</p>
+                    <p>This Policy operates as a foundational instrument of governance for the internal conduct of the Society&apos;s members and participants, and applies uniformly without exception. The Policy is predicated on the principle that debating, as an intellectual pursuit, must remain free from discrimination, harassment, intimidation, or any conduct that undermines the dignity or equitable participation of any individual.</p>
                   </div>
                 </div>
                 

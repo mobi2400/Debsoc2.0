@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect, useRef, useCallback} from "react";
 import Image from "next/image";
 import {X, Instagram} from "lucide-react";
 import {teamMembers} from "../lib/teamData";
@@ -80,7 +80,7 @@ function TeamGrid() {
     }, 50);
   };
 
-  const close = () => {
+  const close = useCallback(() => {
     setIsModalAnimating(true);
 
     // Wait for exit animation to complete
@@ -95,7 +95,8 @@ function TeamGrid() {
       setIsModalVisible(false);
       setIsModalAnimating(false);
     }, 300); // Match the CSS transition duration
-  };
+  }, [lenis]);
+
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 768);
     handleResize();
@@ -111,7 +112,7 @@ function TeamGrid() {
     const esc = (e: KeyboardEvent) => e.key === "Escape" && close();
     window.addEventListener("keydown", esc);
     return () => window.removeEventListener("keydown", esc);
-  }, []);
+  }, [close]);
 
   useEffect(() => {
     if (activeMember && isModalVisible) {
