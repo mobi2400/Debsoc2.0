@@ -1,4 +1,5 @@
 "use client";
+import { equityTeam } from '@/lib/equityData';
 import Navbar from "@/components/Navbar";
 import React from 'react';
 import { Mail, Phone, ExternalLink } from 'lucide-react';
@@ -24,42 +25,25 @@ const EquityPolicy = () => {
               <section className="mb-10">
                 <h2 className="text-3xl font-bold text-white mb-6 border-b-2 border-orange-500 pb-2">Contact Information</h2>
                 <div className="grid sm:grid-cols-2 gap-6 mb-6">
-                  <div className="bg-gray-900/70 p-6 rounded-xl shadow-lg border border-gray-700 hover:border-orange-500/50 transition-all">
-                    <h3 className="text-xl font-semibold text-orange-400 mb-2">Vittala Chaithanya</h3>
-                    <p className="text-gray-400">Equity Head</p>
-                    <div className="flex items-center text-gray-400 mt-3">
-                      <Mail className="w-4 h-4 mr-2 text-orange-400" />
-                      <a href="mailto:vittalachaithanya@gmail.com" className="hover:underline">vittalachaithanya@gmail.com</a>
+                  {equityTeam.map((member, index) => (
+                    <div 
+                      key={index} 
+                      className={`bg-gray-900/70 p-6 rounded-xl shadow-lg border border-gray-700 hover:border-orange-500/50 transition-all ${
+                        member.name === 'Nainika' ? 'sm:col-span-2' : ''
+                      }`}
+                    >
+                      <h3 className="text-xl font-semibold text-orange-400 mb-2">{member.name}</h3>
+                      <p className="text-gray-400">{member.role}</p>
+                      <div className="flex items-center text-gray-400 mt-3">
+                        <Mail className="w-4 h-4 mr-2 text-orange-400" />
+                        <a href={`mailto:${member.email}`} className="hover:underline">{member.email}</a>
+                      </div>
+                      <div className="flex items-center text-gray-400 mt-1">
+                        <Phone className="w-4 h-4 mr-2 text-orange-400" />
+                        <a href={`tel:${member.phone}`} className="hover:underline">{member.phone}</a>
+                      </div>
                     </div>
-                    <div className="flex items-center text-gray-400 mt-1">
-                      <Phone className="w-4 h-4 mr-2 text-orange-400" />
-                      <a href="tel:7975246745" className="hover:underline">7975246745</a>
-                    </div>
-                  </div>
-                  <div className="bg-gray-900/70 p-6 rounded-xl shadow-lg border border-gray-700 hover:border-orange-500/50 transition-all">
-                    <h3 className="text-xl font-semibold text-orange-400 mb-2">Mohammad Owais</h3>
-                    <p className="text-gray-400">Equity Head</p>
-                    <div className="flex items-center text-gray-400 mt-3">
-                      <Mail className="w-4 h-4 mr-2 text-orange-400" />
-                      <a href="mailto:owaismohammed795@gmail.com" className="hover:underline">owaismohammed795@gmail.com</a>
-                    </div>
-                    <div className="flex items-center text-gray-400 mt-1">
-                      <Phone className="w-4 h-4 mr-2 text-orange-400" />
-                      <a href="tel:9008828640" className="hover:underline">9008828640</a>
-                    </div>
-                  </div>
-                  <div className="bg-gray-900/70 p-6 rounded-xl shadow-lg border border-gray-700 hover:border-orange-500/50 transition-all sm:col-span-2">
-                    <h3 className="text-xl font-semibold text-orange-400 mb-2">Nainika</h3>
-                    <p className="text-gray-400">Member, Equity Committee</p>
-                    <div className="flex items-center text-gray-400 mt-3">
-                      <Mail className="w-4 h-4 mr-2 text-orange-400" />
-                      <a href="mailto:nainika13579@gmail.com" className="hover:underline">nainika13579@gmail.com</a>
-                    </div>
-                    <div className="flex items-center text-gray-400 mt-1">
-                      <Phone className="w-4 h-4 mr-2 text-orange-400" />
-                      <a href="tel:9934109237" className="hover:underline">9934109237</a>
-                    </div>
-                  </div>
+                  ))}
                 </div>
                 <div className="text-center">
                     <a href="https://forms.gle/frVqWMQumrPYKdPL6" target="_blank" rel="noopener noreferrer" 
