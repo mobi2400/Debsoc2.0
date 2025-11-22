@@ -52,7 +52,7 @@ const Gallery = () => {
             className="text-center mb-16"
           >
             <h1 className="text-4xl md:text-6xl font-extrabold text-orange-500 mb-4">
-              GALLERY
+              SMVIT DEBSOC Gallery
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Capturing moments, preserving memories - explore our journey
@@ -61,19 +61,19 @@ const Gallery = () => {
           </motion.div>
 
           {galleryEvents.map((event: GalleryEvent, eventIndex: number) => (
-            <motion.section
+            <motion.article
               key={event.eventName}
               initial={{opacity: 0, y: 30}}
               animate={{opacity: 1, y: 0}}
               transition={{duration: 0.6, delay: eventIndex * 0.1}}
               className="mb-20"
             >
-              <div className="mb-8">
+              <header className="mb-8">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
                   {event.eventName}
                 </h2>
                 <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full"></div>
-              </div>
+              </header>
 
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px] md:auto-rows-[250px]">
                 {event.images.map((image: GalleryImage, imageIndex: number) => (
@@ -91,7 +91,7 @@ const Gallery = () => {
                     <div className="relative w-full h-full">
                       <Image
                         src={image.src}
-                        alt={image.alt}
+                        alt={`${event.eventName} - ${image.alt}`}
                         fill
                         quality={88}
                         className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -113,7 +113,7 @@ const Gallery = () => {
                   </motion.div>
                 ))}
               </div>
-            </motion.section>
+            </motion.article>
           ))}
         </div>
       </div>
