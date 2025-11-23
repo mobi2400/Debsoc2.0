@@ -7,7 +7,6 @@ const VittalaChaithanyaNM = "/media/VittalaChaithanyaNM.jpg";
 const MohammedOwais = "/media/MohammedOwais.jpg";
 const NandiniSharma = "/media/NandiniSharma.jpg";
 const PankhuriSingh = "/media/PankhuriSingh.jpg";
-const ParulMishra = "/media/ParulMishra.jpg";
 const PiyushRatn = "/media/PiyushRatn.jpg";
 const PrachiKumari = "/media/PrachiKumari.jpg";
 const RishikeshChandra = "/media/RishikeshChandra.jpg";
@@ -20,7 +19,6 @@ const KanishkChaudhary = "/media/KanishkChaudhary.jpg";
 const DhruveKumar = "/media/DhruveKumar.jpg";
 const AnanyaSingh = "/media/AnanyaSingh.jpg";
 const StutiPadhi = "/media/StutiPadhi.jpg";
-const SeelamVenkataChaitra = "/media/SeelamVenkataChaitra.jpg";
 const KripaChhajer = "/media/KripaChhajer.jpg";
 const PranathiNP = "/media/PranathiNP.jpg";
 const MohammedRayyanKhaleel = "/media/MohammedRayyanKhaleel.jpg";
@@ -149,12 +147,6 @@ export const teamMembers = [
     description: "Keep Learning!!!!!",
   },
   {
-    name: "Parul Mishra",
-    position: "Member",
-    avatar: ParulMishra,
-    description: "Keep Learning!!!!!",
-  },
-  {
     name: "Tanmay Shankar",
     position: "Member",
     avatar: TanmayShankar,
@@ -170,12 +162,6 @@ export const teamMembers = [
     name: "Stuti Padhi",
     position: "Member",
     avatar: StutiPadhi,
-    description: "Keep Learning!!!!!",
-  },
-  {
-    name: "Seelam Venkata Chaitra",
-    position: "Member",
-    avatar: SeelamVenkataChaitra,
     description: "Keep Learning!!!!!",
   },
   {
