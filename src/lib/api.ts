@@ -216,6 +216,9 @@ export const cabinetApi = {
       body: JSON.stringify({ message, presidentId }),
     });
   },
+  getDashboard: async (): Promise<{ members: User[]; cabinet: User[] }> => {
+    return apiCall<{ members: User[]; cabinet: User[] }>('/cabinet/dashboard');
+  },
 };
 
 // Member API

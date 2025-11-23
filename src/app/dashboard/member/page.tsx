@@ -1,11 +1,11 @@
 "use client";
-import React, {useState, useEffect} from "react";
-import {useRouter} from "next/navigation";
-import {useAuth} from "@/contexts/AuthContext";
-import {memberApi, Task, Attendance, AnonymousFeedback, User} from "@/lib/api";
-import {presidentApi} from "@/lib/api";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import { memberApi, Task, Attendance, AnonymousFeedback, User } from "@/lib/api";
+import { presidentApi } from "@/lib/api";
 import Navbar from "@/components/Navbar";
-import {Toaster} from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
 import {
   User as UserIcon,
@@ -20,7 +20,7 @@ import {
 import UnverifiedView from "@/components/UnverifiedView";
 
 export default function MemberDashboard() {
-  const {user, logout, isAuthenticated, isVerified} = useAuth();
+  const { user, logout, isAuthenticated, isVerified } = useAuth();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<
     "attendance" | "tasks" | "messages" | "feedback"
@@ -37,7 +37,7 @@ export default function MemberDashboard() {
   });
 
   useEffect(() => {
-    if (!isAuthenticated || user?.role !== "Member") {
+    if (!isAuthenticated || (user?.role !== "Member" && user?.role !== "President")) {
       router.push("/login");
       return;
     }
@@ -86,7 +86,7 @@ export default function MemberDashboard() {
       );
       toast.success("Message sent successfully");
       setShowMessageModal(false);
-      setMessageForm({message: "", presidentId: ""});
+      setMessageForm({ message: "", presidentId: "" });
     } catch (error: unknown) {
       toast.error(
         error instanceof Error ? error.message : "Failed to send message"
@@ -102,14 +102,14 @@ export default function MemberDashboard() {
     percentage:
       attendance.length > 0
         ? Math.round(
-            (attendance.filter((a) => a.status === "Present").length /
-              attendance.length) *
-              100
-          )
+          (attendance.filter((a) => a.status === "Present").length /
+            attendance.length) *
+          100
+        )
         : 0,
   };
 
-  if (!isAuthenticated || user?.role !== "Member") {
+  if (!isAuthenticated || (user?.role !== "Member" && user?.role !== "President")) {
     return null;
   }
 
@@ -161,10 +161,10 @@ export default function MemberDashboard() {
           {/* Tabs */}
           <div className="flex space-x-2 mb-6 flex-wrap">
             {[
-              {id: "attendance", label: "Attendance", icon: Calendar},
-              {id: "tasks", label: "Tasks", icon: FileText},
-              {id: "messages", label: "Messages", icon: MessageSquare},
-              {id: "feedback", label: "Feedback", icon: MessageSquare},
+              { id: "attendance", label: "Attendance", icon: Calendar },
+              { id: "tasks", label: "Tasks", icon: FileText },
+              { id: "messages", label: "Messages", icon: MessageSquare },
+              { id: "feedback", label: "Feedback", icon: MessageSquare },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -173,11 +173,10 @@ export default function MemberDashboard() {
                     tab.id as "attendance" | "tasks" | "messages" | "feedback"
                   )
                 }
-                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 mb-2 ${
-                  activeTab === tab.id
+                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 mb-2 ${activeTab === tab.id
                     ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white"
                     : "bg-gray-800/50 text-gray-400 hover:text-white"
-                }`}
+                  }`}
               >
                 <tab.icon className="w-4 h-4" />
                 <span>{tab.label}</span>
@@ -253,8 +252,8 @@ export default function MemberDashboard() {
                                 <p className="text-gray-500 text-xs mt-1">
                                   {record.session?.sessionDate
                                     ? new Date(
-                                        record.session.sessionDate
-                                      ).toLocaleDateString()
+                                      record.session.sessionDate
+                                    ).toLocaleDateString()
                                     : "Date not available"}
                                 </p>
                               </div>
@@ -304,16 +303,15 @@ export default function MemberDashboard() {
                               {task.name}
                             </h3>
                             <span
-                              className={`px-2 py-1 rounded text-xs ${
-                                new Date(task.deadline) < new Date()
+                              className={`px-2 py-1 rounded text-xs ${new Date(task.deadline) < new Date()
                                   ? "bg-red-600/20 text-red-400"
                                   : new Date(task.deadline) <
                                     new Date(
                                       Date.now() + 7 * 24 * 60 * 60 * 1000
                                     )
-                                  ? "bg-yellow-600/20 text-yellow-400"
-                                  : "bg-green-600/20 text-green-400"
-                              }`}
+                                    ? "bg-yellow-600/20 text-yellow-400"
+                                    : "bg-green-600/20 text-green-400"
+                                }`}
                             >
                               {new Date(task.deadline).toLocaleDateString()}
                             </span>
@@ -448,11 +446,10 @@ export default function MemberDashboard() {
                             <div className="flex-1">
                               <div className="flex items-center space-x-2 mb-2">
                                 <span
-                                  className={`px-2 py-1 rounded text-xs ${
-                                    feedback.senderType === "President"
+                                  className={`px-2 py-1 rounded text-xs ${feedback.senderType === "President"
                                       ? "bg-yellow-600/20 text-yellow-400"
                                       : "bg-blue-600/20 text-blue-400"
-                                  }`}
+                                    }`}
                                 >
                                   From: {feedback.senderType}
                                 </span>
