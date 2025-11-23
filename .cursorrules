@@ -1,0 +1,84 @@
+# Cursor Rules for Debsoc2.0
+
+## Code Optimization
+- All code must be optimized for performance, readability, and maintainability
+- Use React best practices: memoization, proper hooks usage, and efficient re-renders
+- Leverage Next.js features (server components, static generation, etc.) when appropriate
+- Minimize bundle size by avoiding unnecessary dependencies
+- Use TypeScript strictly - no `any` types unless absolutely necessary
+- Follow DRY (Don't Repeat Yourself) principles
+- Optimize images and assets appropriately
+
+## Preserve Existing Functionality
+- **NEVER override or break existing code and functionality**
+- Before making changes, thoroughly understand the existing codebase structure
+- When modifying files, preserve all existing features, logic, and behavior
+- Maintain backward compatibility with existing APIs and components
+- Test that existing functionality still works after any changes
+- If refactoring is needed, do it incrementally without breaking changes
+- Preserve existing prop interfaces, function signatures, and data structures
+- Keep existing state management patterns and data flow
+
+## Design Consistency
+- **Maintain and match the existing website design**
+- Follow the established design system, color palette, and typography
+- Use existing Tailwind CSS classes and custom CSS variables
+- Match existing component styles, spacing, and layout patterns
+- Preserve animation patterns (Framer Motion, GSAP) and timing
+- Maintain responsive design breakpoints and mobile-first approach
+- Keep consistent with existing UI/UX patterns and interactions
+- Follow the same visual hierarchy and component structure
+- Use existing design tokens from globals.css and theme configuration
+
+## Responsive Design
+- **ALL code must be fully responsive and work across all standard screen sizes**
+- Test and ensure compatibility with:
+  - Mobile devices (320px - 768px): phones and small tablets
+  - Tablets (768px - 1024px): iPad and similar devices
+  - Laptops (1024px - 1440px): standard laptop screens
+  - Desktops (1440px+): large desktop monitors
+- Use Tailwind CSS responsive breakpoints (sm, md, lg, xl, 2xl) consistently
+- Implement mobile-first approach: design for mobile, then enhance for larger screens
+- Ensure all components, layouts, and UI elements adapt properly to different screen sizes
+- Test text readability and font sizes across all breakpoints
+- Ensure images and media scale appropriately without breaking layouts
+- Verify touch targets are appropriately sized for mobile devices (minimum 44x44px)
+- Maintain consistent spacing and padding across all screen sizes
+- Ensure navigation and menus work seamlessly on mobile and desktop
+- Test horizontal scrolling is avoided on all screen sizes
+- Use flexible layouts (flexbox, grid) that adapt to container sizes
+- Ensure modals, dropdowns, and overlays work correctly on all screen sizes
+
+## Code Style & Standards
+- Follow the existing code style and formatting conventions
+- Use the same naming conventions (camelCase for variables, PascalCase for components)
+- Maintain consistent file structure and organization
+- Use existing patterns for imports, exports, and module organization
+- Follow TypeScript best practices as used in the project
+- Adhere to ESLint configuration and fix any linting errors
+
+## Best Practices
+- Read existing code before writing new code to understand patterns
+- Prefer extending existing components over creating new ones
+- Reuse existing utilities, hooks, and helper functions
+- Maintain existing error handling and validation patterns
+- Keep accessibility standards consistent with the rest of the codebase
+- Preserve SEO optimizations and metadata structures
+- Maintain existing performance optimizations
+
+## When Making Changes
+1. **Analyze first**: Understand the existing code structure and design patterns
+2. **Preserve**: Keep all existing functionality intact
+3. **Match**: Follow the existing design system and visual style
+4. **Optimize**: Write efficient, clean, and maintainable code
+5. **Test**: Ensure changes don't break existing features
+
+## Project-Specific Notes
+- **This is the official debating society club page (Debsoc)**
+- This is a Next.js 15 project with TypeScript
+- Uses Tailwind CSS v4 for styling
+- Uses Framer Motion and GSAP for animations
+- Follows the App Router structure
+- Maintains existing component patterns and data structures
+- Content and features should reflect the debating society's activities, events, and community
+
