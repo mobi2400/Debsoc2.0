@@ -110,19 +110,19 @@ export const techHeadApi = {
       body: JSON.stringify({ email, password }),
     });
   },
-  verifyPresident: async (presidentId: string): Promise<{ message: string; president: any }> => {
+  verifyPresident: async (presidentId: string): Promise<{ message: string; president: { id: string; name: string; isVerified: boolean } }> => {
     return apiCall(`/techhead/verify/president`, {
       method: 'POST',
       body: JSON.stringify({ presidentId }),
     });
   },
-  verifyCabinet: async (cabinetId: string): Promise<{ message: string; cabinet: any }> => {
+  verifyCabinet: async (cabinetId: string): Promise<{ message: string; cabinet: { id: string; name: string; isVerified: boolean } }> => {
     return apiCall(`/techhead/verify/cabinet`, {
       method: 'POST',
       body: JSON.stringify({ cabinetId }),
     });
   },
-  verifyMember: async (memberId: string): Promise<{ message: string; member: any }> => {
+  verifyMember: async (memberId: string): Promise<{ message: string; member: { id: string; name: string; isVerified: boolean } }> => {
     return apiCall(`/techhead/verify/member`, {
       method: 'POST',
       body: JSON.stringify({ memberId }),

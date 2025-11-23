@@ -33,16 +33,16 @@ export default function MemberDashboard() {
       toast.error("Your account is not verified. Please contact TechHead.");
     }
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, user, isVerified]);
 
   const loadData = async () => {
     try {
       setLoading(true);
-      const [attendanceData, tasksData, feedbacksData, dashboardData] = await Promise.all([
+      const [attendanceData, tasksData, feedbacksData] = await Promise.all([
         memberApi.getAttendance(),
         memberApi.getTasks(),
         memberApi.getFeedback(),
-        presidentApi.getDashboard(),
       ]);
       setAttendance(attendanceData.attendance);
       setTasks(tasksData.tasks);
@@ -57,8 +57,8 @@ export default function MemberDashboard() {
         role: "President", 
         isVerified: true 
       }]);
-    } catch (error: any) {
-      toast.error(error.message || "Failed to load data");
+    } catch (error: unknown) {
+      toast.error(error instanceof Error ? error.message : "Failed to load data");
     } finally {
       setLoading(false);
     }
@@ -71,8 +71,8 @@ export default function MemberDashboard() {
       toast.success("Message sent successfully");
       setShowMessageModal(false);
       setMessageForm({ message: "", presidentId: "" });
-    } catch (error: any) {
-      toast.error(error.message || "Failed to send message");
+    } catch (error: unknown) {
+      toast.error(error instanceof Error ? error.message : "Failed to send message");
     }
   };
 
@@ -137,7 +137,7 @@ export default function MemberDashboard() {
             ].map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => setActiveTab(tab.id as "attendance" | "tasks" | "messages" | "feedback")}
                 className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 mb-2 ${
                   activeTab === tab.id
                     ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white"

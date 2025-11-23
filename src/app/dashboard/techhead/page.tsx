@@ -6,7 +6,7 @@ import { techHeadApi, UnverifiedUsers } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
-import { Settings, Users, CheckCircle, XCircle, LogOut, Crown, User } from "lucide-react";
+import { Settings, Users, CheckCircle, LogOut, Crown, User } from "lucide-react";
 
 export default function TechHeadDashboard() {
   const { user, logout, isAuthenticated } = useAuth();
@@ -21,6 +21,7 @@ export default function TechHeadDashboard() {
       return;
     }
     loadUnverifiedUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, user]);
 
   const loadUnverifiedUsers = async () => {
@@ -28,8 +29,8 @@ export default function TechHeadDashboard() {
       setLoading(true);
       const data = await techHeadApi.getUnverifiedUsers();
       setUnverifiedUsers(data);
-    } catch (error: any) {
-      toast.error(error.message || "Failed to load unverified users");
+    } catch (error: unknown) {
+      toast.error(error instanceof Error ? error.message : "Failed to load unverified users");
     } finally {
       setLoading(false);
     }
@@ -49,8 +50,8 @@ export default function TechHeadDashboard() {
         toast.success("Member verified successfully");
       }
       await loadUnverifiedUsers();
-    } catch (error: any) {
-      toast.error(error.message || "Failed to verify user");
+    } catch (error: unknown) {
+      toast.error(error instanceof Error ? error.message : "Failed to verify user");
     } finally {
       setVerifying(null);
     }

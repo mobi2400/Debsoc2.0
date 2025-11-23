@@ -55,7 +55,7 @@ const RandomFeedback: React.FC = () => {
             </div>
             <div className="flex-1">
               <p className="text-white text-lg leading-relaxed mb-4 italic">
-                "{currentFeedback.message}"
+                &ldquo;{currentFeedback.message}&rdquo;
               </p>
               <div className="flex items-center justify-between pt-4 border-t border-gray-600/50">
                 <p className="text-gray-400 text-sm">

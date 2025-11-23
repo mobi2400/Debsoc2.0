@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useMemo } from "react";
-import { Calendar, Filter, TrendingUp } from "lucide-react";
-import { mockAttendance, AttendanceRecord } from "@/lib/dashboardData";
+import { Calendar, Filter } from "lucide-react";
+import { mockAttendance } from "@/lib/dashboardData";
 
 const AttendanceOverview: React.FC = () => {
   const [filterType, setFilterType] = useState<"all" | "session" | "spar" | "meeting">("all");
@@ -76,7 +76,7 @@ const AttendanceOverview: React.FC = () => {
           <span className="text-gray-400 text-sm">Type:</span>
           <select
             value={filterType}
-            onChange={(e) => setFilterType(e.target.value as any)}
+            onChange={(e) => setFilterType(e.target.value as "all" | "session" | "spar" | "meeting")}
             className="bg-gray-700 border border-gray-600 rounded-lg px-3 py-1.5 text-white text-sm focus:outline-none focus:border-orange-500"
           >
             <option value="all">All</option>
@@ -89,7 +89,7 @@ const AttendanceOverview: React.FC = () => {
           <span className="text-gray-400 text-sm">Status:</span>
           <select
             value={filterStatus}
-            onChange={(e) => setFilterStatus(e.target.value as any)}
+            onChange={(e) => setFilterStatus(e.target.value as "all" | "present" | "absent" | "late")}
             className="bg-gray-700 border border-gray-600 rounded-lg px-3 py-1.5 text-white text-sm focus:outline-none focus:border-orange-500"
           >
             <option value="all">All</option>

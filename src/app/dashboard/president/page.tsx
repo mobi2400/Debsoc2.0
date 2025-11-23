@@ -14,7 +14,6 @@ export default function PresidentDashboard() {
   const [activeTab, setActiveTab] = useState<"dashboard" | "tasks" | "feedback" | "sessions">("dashboard");
   const [members, setMembers] = useState<User[]>([]);
   const [cabinet, setCabinet] = useState<User[]>([]);
-  const [tasks, setTasks] = useState<Task[]>([]);
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState(true);
   const [showTaskModal, setShowTaskModal] = useState(false);
@@ -41,6 +40,7 @@ export default function PresidentDashboard() {
       toast.error("Your account is not verified. Please contact TechHead.");
     }
     loadDashboard();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, user, isVerified]);
 
   const loadDashboard = async () => {
@@ -51,8 +51,8 @@ export default function PresidentDashboard() {
       setCabinet(dashboardData.cabinet);
       const sessionsData = await presidentApi.getSessions();
       setSessions(sessionsData.sessions);
-    } catch (error: any) {
-      toast.error(error.message || "Failed to load dashboard data");
+    } catch (error: unknown) {
+      toast.error(error instanceof Error ? error.message : "Failed to load dashboard data");
     } finally {
       setLoading(false);
     }
@@ -78,8 +78,8 @@ export default function PresidentDashboard() {
         assignedToMemberId: "",
         assignType: "cabinet",
       });
-    } catch (error: any) {
-      toast.error(error.message || "Failed to assign task");
+    } catch (error: unknown) {
+      toast.error(error instanceof Error ? error.message : "Failed to assign task");
     }
   };
 
@@ -90,8 +90,8 @@ export default function PresidentDashboard() {
       toast.success("Feedback sent successfully");
       setShowFeedbackModal(false);
       setFeedbackForm({ feedback: "", memberId: "" });
-    } catch (error: any) {
-      toast.error(error.message || "Failed to send feedback");
+    } catch (error: unknown) {
+      toast.error(error instanceof Error ? error.message : "Failed to send feedback");
     }
   };
 
@@ -146,7 +146,7 @@ export default function PresidentDashboard() {
             ].map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => setActiveTab(tab.id as "dashboard" | "tasks" | "feedback" | "sessions")}
                 className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 ${
                   activeTab === tab.id
                     ? "bg-gradient-to-r from-yellow-500 to-yellow-600 text-white"

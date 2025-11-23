@@ -7,7 +7,7 @@ import { presidentApi } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
-import { Users, LogOut, Calendar, CheckCircle, MessageSquare, FileText, Plus } from "lucide-react";
+import { Users, LogOut, Calendar, MessageSquare, FileText, Plus } from "lucide-react";
 
 export default function CabinetDashboard() {
   const { user, logout, isAuthenticated, isVerified } = useAuth();
@@ -45,6 +45,7 @@ export default function CabinetDashboard() {
       toast.error("Your account is not verified. Please contact TechHead.");
     }
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, user, isVerified]);
 
   const loadData = async () => {
@@ -68,8 +69,8 @@ export default function CabinetDashboard() {
         role: "President", 
         isVerified: true 
       }]);
-    } catch (error: any) {
-      toast.error(error.message || "Failed to load data");
+    } catch (error: unknown) {
+      toast.error(error instanceof Error ? error.message : "Failed to load data");
     } finally {
       setLoading(false);
     }
@@ -88,8 +89,8 @@ export default function CabinetDashboard() {
         attendanceData: [],
       });
       loadData();
-    } catch (error: any) {
-      toast.error(error.message || "Failed to mark attendance");
+    } catch (error: unknown) {
+      toast.error(error instanceof Error ? error.message : "Failed to mark attendance");
     }
   };
 
@@ -100,8 +101,8 @@ export default function CabinetDashboard() {
       toast.success("Feedback sent successfully");
       setShowFeedbackModal(false);
       setFeedbackForm({ feedback: "", memberId: "" });
-    } catch (error: any) {
-      toast.error(error.message || "Failed to send feedback");
+    } catch (error: unknown) {
+      toast.error(error instanceof Error ? error.message : "Failed to send feedback");
     }
   };
 
@@ -112,8 +113,8 @@ export default function CabinetDashboard() {
       toast.success("Message sent successfully");
       setShowMessageModal(false);
       setMessageForm({ message: "", presidentId: "" });
-    } catch (error: any) {
-      toast.error(error.message || "Failed to send message");
+    } catch (error: unknown) {
+      toast.error(error instanceof Error ? error.message : "Failed to send message");
     }
   };
 
@@ -188,7 +189,7 @@ export default function CabinetDashboard() {
             ].map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => setActiveTab(tab.id as "tasks" | "attendance" | "feedback" | "messages" | "sessions")}
                 className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 mb-2 ${
                   activeTab === tab.id
                     ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white"
