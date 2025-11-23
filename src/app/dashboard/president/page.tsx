@@ -19,7 +19,7 @@ import {
 import UnverifiedView from "@/components/UnverifiedView";
 
 export default function PresidentDashboard() {
-  const {user, logout, isAuthenticated, isVerified} = useAuth();
+  const {user, logout, isAuthenticated, isVerified, isLoading} = useAuth();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<
     "dashboard" | "tasks" | "feedback" | "sessions"
@@ -44,14 +44,14 @@ export default function PresidentDashboard() {
   });
 
   useEffect(() => {
+    if (isLoading) return;
     if (!isAuthenticated || user?.role !== "President") {
       router.push("/login");
       return;
     }
-    
     loadDashboard();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated, user, isVerified]);
+  }, [isAuthenticated, user, isVerified, isLoading]);
 
   const loadDashboard = async () => {
     try {
@@ -117,6 +117,14 @@ export default function PresidentDashboard() {
       );
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500"></div>
+      </div>
+    );
+  }
 
   if (!isAuthenticated || user?.role !== "President") {
     return null;

@@ -10,7 +10,7 @@ import {Settings, Users, CheckCircle, LogOut, Crown, User} from "lucide-react";
 import UnverifiedView from "@/components/UnverifiedView";
 
 export default function TechHeadDashboard() {
-  const {user, logout, isAuthenticated, isVerified} = useAuth();
+  const {user, logout, isAuthenticated, isVerified, isLoading} = useAuth();
   const router = useRouter();
   const [unverifiedUsers, setUnverifiedUsers] =
     useState<UnverifiedUsers | null>(null);
@@ -18,13 +18,14 @@ export default function TechHeadDashboard() {
   const [verifying, setVerifying] = useState<string | null>(null);
 
   useEffect(() => {
+    if (isLoading) return;
     if (!isAuthenticated || user?.role !== "TechHead") {
       router.push("/login");
       return;
     }
     loadUnverifiedUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user, isLoading]);
 
   const loadUnverifiedUsers = async () => {
     try {
@@ -67,6 +68,14 @@ export default function TechHeadDashboard() {
       setVerifying(null);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
+      </div>
+    );
+  }
 
   if (!isAuthenticated || user?.role !== "TechHead") {
     return null;
