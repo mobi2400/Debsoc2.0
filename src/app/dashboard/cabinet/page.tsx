@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import { cabinetApi, Task, Session, User } from "@/lib/api";
-
+import { cabinetApi, Task, Session, User, AnonymousMessage, AnonymousFeedback } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
@@ -27,6 +26,8 @@ export default function CabinetDashboard() {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [members, setMembers] = useState<User[]>([]);
   const [presidents, setPresidents] = useState<User[]>([]);
+  const [sentMessages, setSentMessages] = useState<AnonymousMessage[]>([]);
+  const [sentFeedback, setSentFeedback] = useState<AnonymousFeedback[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAttendanceModal, setShowAttendanceModal] = useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
@@ -65,15 +66,19 @@ export default function CabinetDashboard() {
   const loadData = async () => {
     try {
       setLoading(true);
-      const [tasksData, sessionsData, dashboardData] = await Promise.all([
+      const [tasksData, sessionsData, dashboardData, sentMessagesData, sentFeedbackData] = await Promise.all([
         cabinetApi.getTasks(),
         cabinetApi.getSessions(),
         cabinetApi.getDashboard(),
+        cabinetApi.getSentMessages(),
+        cabinetApi.getSentFeedback(),
       ]);
       setTasks(tasksData.tasks);
       setSessions(sessionsData.sessions);
       setMembers(dashboardData.members);
       setPresidents(dashboardData.presidents);
+      setSentMessages(sentMessagesData.messages);
+      setSentFeedback(sentFeedbackData.feedbacks);
     } catch (error: unknown) {
       toast.error(
         error instanceof Error ? error.message : "Failed to load data"
@@ -243,8 +248,8 @@ export default function CabinetDashboard() {
                   )
                 }
                 className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 mb-2 ${activeTab === tab.id
-                    ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white"
-                    : "bg-gray-800/50 text-gray-400 hover:text-white"
+                  ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white"
+                  : "bg-gray-800/50 text-gray-400 hover:text-white"
                   }`}
               >
                 <tab.icon className="w-4 h-4" />
@@ -281,8 +286,8 @@ export default function CabinetDashboard() {
                             </h3>
                             <span
                               className={`px-2 py-1 rounded text-xs ${new Date(task.deadline) < new Date()
-                                  ? "bg-red-600/20 text-red-400"
-                                  : "bg-green-600/20 text-green-400"
+                                ? "bg-red-600/20 text-red-400"
+                                : "bg-green-600/20 text-green-400"
                                 }`}
                             >
                               {new Date(task.deadline).toLocaleDateString()}
@@ -406,10 +411,10 @@ export default function CabinetDashboard() {
                                         toggleMemberAttendance(member.id)
                                       }
                                       className={`px-4 py-2 rounded-lg font-medium transition-colors ${attendance?.status === "Present"
-                                          ? "bg-green-600 text-white"
-                                          : attendance?.status === "Absent"
-                                            ? "bg-red-600 text-white"
-                                            : "bg-gray-600 text-gray-300"
+                                        ? "bg-green-600 text-white"
+                                        : attendance?.status === "Absent"
+                                          ? "bg-red-600 text-white"
+                                          : "bg-gray-600 text-gray-300"
                                         }`}
                                     >
                                       {attendance?.status || "Mark"}

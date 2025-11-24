@@ -1,10 +1,10 @@
 "use client";
-import React, {useState, useEffect} from "react";
-import {useRouter} from "next/navigation";
-import {useAuth} from "@/contexts/AuthContext";
-import {memberApi, Task, Attendance, AnonymousFeedback, User} from "@/lib/api";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import { memberApi, Task, Attendance, AnonymousFeedback, User, AnonymousMessage } from "@/lib/api";
 import Navbar from "@/components/Navbar";
-import {Toaster} from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
 import {
   User as UserIcon,
@@ -19,7 +19,7 @@ import {
 import UnverifiedView from "@/components/UnverifiedView";
 
 export default function MemberDashboard() {
-  const {user, logout, isAuthenticated, isVerified} = useAuth();
+  const { user, logout, isAuthenticated, isVerified } = useAuth();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<
     "attendance" | "tasks" | "messages" | "feedback"
@@ -27,6 +27,7 @@ export default function MemberDashboard() {
   const [attendance, setAttendance] = useState<Attendance[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [feedbacks, setFeedbacks] = useState<AnonymousFeedback[]>([]);
+  const [sentMessages, setSentMessages] = useState<AnonymousMessage[]>([]);
   const [presidents, setPresidents] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [showMessageModal, setShowMessageModal] = useState(false);
@@ -50,26 +51,21 @@ export default function MemberDashboard() {
   const loadData = async () => {
     try {
       setLoading(true);
-      const [attendanceData, tasksData, feedbacksData] = await Promise.all([
+      const [attendanceData, tasksData, feedbacksData, sentMessagesData] = await Promise.all([
         memberApi.getAttendance(),
         memberApi.getTasks(),
         memberApi.getFeedback(),
+        memberApi.getSentMessages(),
       ]);
       setAttendance(attendanceData.attendance);
       setTasks(tasksData.tasks);
       setFeedbacks(feedbacksData.feedbacks);
-      // Note: Since there's no API endpoint to get all presidents,
-      // we'll use a placeholder. In production, you may want to add an endpoint
-      // or store the current president ID in the user context
-      setPresidents([
-        {
-          id: "current-president",
-          name: "Current President",
-          email: "president@debsoc.com",
-          role: "President",
-          isVerified: true,
-        },
-      ]);
+      setSentMessages(sentMessagesData.messages);
+
+      setSentMessages(sentMessagesData.messages);
+
+      const presidentsData = await memberApi.getPresidents();
+      setPresidents(presidentsData.presidents);
     } catch (error: unknown) {
       toast.error(
         error instanceof Error ? error.message : "Failed to load data"
@@ -88,7 +84,8 @@ export default function MemberDashboard() {
       );
       toast.success("Message sent successfully");
       setShowMessageModal(false);
-      setMessageForm({message: "", presidentId: ""});
+      setMessageForm({ message: "", presidentId: "" });
+      loadData(); // Reload to see the sent message
     } catch (error: unknown) {
       toast.error(
         error instanceof Error ? error.message : "Failed to send message"
@@ -104,10 +101,10 @@ export default function MemberDashboard() {
     percentage:
       attendance.length > 0
         ? Math.round(
-            (attendance.filter((a) => a.status === "Present").length /
-              attendance.length) *
-              100
-          )
+          (attendance.filter((a) => a.status === "Present").length /
+            attendance.length) *
+          100
+        )
         : 0,
   };
 
@@ -166,10 +163,10 @@ export default function MemberDashboard() {
           {/* Tabs */}
           <div className="flex space-x-2 mb-6 flex-wrap">
             {[
-              {id: "attendance", label: "Attendance", icon: Calendar},
-              {id: "tasks", label: "Tasks", icon: FileText},
-              {id: "messages", label: "Messages", icon: MessageSquare},
-              {id: "feedback", label: "Feedback", icon: MessageSquare},
+              { id: "attendance", label: "Attendance", icon: Calendar },
+              { id: "tasks", label: "Tasks", icon: FileText },
+              { id: "messages", label: "Messages", icon: MessageSquare },
+              { id: "feedback", label: "Feedback", icon: MessageSquare },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -178,11 +175,10 @@ export default function MemberDashboard() {
                     tab.id as "attendance" | "tasks" | "messages" | "feedback"
                   )
                 }
-                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 mb-2 ${
-                  activeTab === tab.id
-                    ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white"
-                    : "bg-gray-800/50 text-gray-400 hover:text-white"
-                }`}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 mb-2 ${activeTab === tab.id
+                  ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white"
+                  : "bg-gray-800/50 text-gray-400 hover:text-white"
+                  }`}
               >
                 <tab.icon className="w-4 h-4" />
                 <span>{tab.label}</span>
@@ -258,8 +254,8 @@ export default function MemberDashboard() {
                                 <p className="text-gray-500 text-xs mt-1">
                                   {record.session?.sessionDate
                                     ? new Date(
-                                        record.session.sessionDate
-                                      ).toLocaleDateString()
+                                      record.session.sessionDate
+                                    ).toLocaleDateString()
                                     : "Date not available"}
                                 </p>
                               </div>
@@ -309,16 +305,15 @@ export default function MemberDashboard() {
                               {task.name}
                             </h3>
                             <span
-                              className={`px-2 py-1 rounded text-xs ${
-                                new Date(task.deadline) < new Date()
-                                  ? "bg-red-600/20 text-red-400"
-                                  : new Date(task.deadline) <
-                                    new Date(
-                                      Date.now() + 7 * 24 * 60 * 60 * 1000
-                                    )
+                              className={`px-2 py-1 rounded text-xs ${new Date(task.deadline) < new Date()
+                                ? "bg-red-600/20 text-red-400"
+                                : new Date(task.deadline) <
+                                  new Date(
+                                    Date.now() + 7 * 24 * 60 * 60 * 1000
+                                  )
                                   ? "bg-yellow-600/20 text-yellow-400"
                                   : "bg-green-600/20 text-green-400"
-                              }`}
+                                }`}
                             >
                               {new Date(task.deadline).toLocaleDateString()}
                             </span>
@@ -431,6 +426,33 @@ export default function MemberDashboard() {
                       Contact TechHead if you need assistance.
                     </p>
                   </div>
+                  <div className="mt-8">
+                    <h3 className="text-lg font-bold text-white mb-4">
+                      Sent Messages History
+                    </h3>
+                    <div className="space-y-4">
+                      {sentMessages.length === 0 ? (
+                        <p className="text-gray-400">No messages sent yet</p>
+                      ) : (
+                        sentMessages.map((msg) => (
+                          <div
+                            key={msg.id}
+                            className="bg-gray-700/50 rounded-lg p-4"
+                          >
+                            <div className="flex items-center justify-between mb-2">
+                              <p className="text-white font-medium">
+                                To: {presidents.find(p => p.id === msg.presidentId)?.name || 'Unknown President'}
+                              </p>
+                              <p className="text-gray-400 text-sm">
+                                {new Date(msg.createdAt).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <p className="text-gray-300">{msg.message}</p>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
                 </div>
               )}
 
@@ -453,11 +475,10 @@ export default function MemberDashboard() {
                             <div className="flex-1">
                               <div className="flex items-center space-x-2 mb-2">
                                 <span
-                                  className={`px-2 py-1 rounded text-xs ${
-                                    feedback.senderType === "President"
-                                      ? "bg-yellow-600/20 text-yellow-400"
-                                      : "bg-blue-600/20 text-blue-400"
-                                  }`}
+                                  className={`px-2 py-1 rounded text-xs ${feedback.senderType === "President"
+                                    ? "bg-yellow-600/20 text-yellow-400"
+                                    : "bg-blue-600/20 text-blue-400"
+                                    }`}
                                 >
                                   From: {feedback.senderType}
                                 </span>

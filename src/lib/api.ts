@@ -177,6 +177,7 @@ export const techHeadApi = {
   },
 };
 
+
 // President API
 export const presidentApi = {
   register: async (
@@ -224,6 +225,9 @@ export const presidentApi = {
   },
   getMessages: async (): Promise<{ messages: AnonymousMessage[] }> => {
     return apiCall<{ messages: AnonymousMessage[] }>("/president/messages");
+  },
+  getSentFeedback: async (): Promise<{ feedbacks: AnonymousFeedback[] }> => {
+    return apiCall<{ feedbacks: AnonymousFeedback[] }>("/president/feedback/sent");
   },
 };
 
@@ -290,6 +294,12 @@ export const cabinetApi = {
       "/cabinet/dashboard"
     );
   },
+  getSentMessages: async (): Promise<{ messages: AnonymousMessage[] }> => {
+    return apiCall<{ messages: AnonymousMessage[] }>("/cabinet/messages/sent");
+  },
+  getSentFeedback: async (): Promise<{ feedbacks: AnonymousFeedback[] }> => {
+    return apiCall<{ feedbacks: AnonymousFeedback[] }>("/cabinet/feedback/sent");
+  },
 };
 
 // Member API
@@ -327,5 +337,11 @@ export const memberApi = {
   },
   getFeedback: async (): Promise<{ feedbacks: AnonymousFeedback[] }> => {
     return apiCall<{ feedbacks: AnonymousFeedback[] }>("/member/feedback");
+  },
+  getSentMessages: async (): Promise<{ messages: AnonymousMessage[] }> => {
+    return apiCall<{ messages: AnonymousMessage[] }>("/member/messages/sent");
+  },
+  getPresidents: async (): Promise<{ presidents: User[] }> => {
+    return apiCall<{ presidents: User[] }>("/member/presidents");
   },
 };

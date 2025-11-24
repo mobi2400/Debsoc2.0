@@ -2,19 +2,19 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import { presidentApi, User, Session, AnonymousMessage } from "@/lib/api";
+import { presidentApi, Task, Session, User, AnonymousMessage, AnonymousFeedback } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
 import {
-  Crown,
-  LogOut,
-  Plus,
-  CheckCircle,
-  Calendar,
   Users,
-  FileText,
+  LogOut,
+  Calendar,
   MessageSquare,
+  FileText,
+  Plus,
+  Crown,
+  CheckCircle,
 } from "lucide-react";
 import UnverifiedView from "@/components/UnverifiedView";
 
@@ -24,10 +24,12 @@ export default function PresidentDashboard() {
   const [activeTab, setActiveTab] = useState<
     "dashboard" | "tasks" | "feedback" | "sessions" | "messages"
   >("dashboard");
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [sessions, setSessions] = useState<Session[]>([]);
   const [members, setMembers] = useState<User[]>([]);
   const [cabinet, setCabinet] = useState<User[]>([]);
-  const [sessions, setSessions] = useState<Session[]>([]);
   const [messages, setMessages] = useState<AnonymousMessage[]>([]);
+  const [sentFeedback, setSentFeedback] = useState<AnonymousFeedback[]>([]);
   const [loading, setLoading] = useState(true);
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
@@ -37,7 +39,7 @@ export default function PresidentDashboard() {
     deadline: "",
     assignedToId: "",
     assignedToMemberId: "",
-    assignType: "cabinet" as "cabinet" | "member",
+    assignType: "cabinet",
   });
   const [feedbackForm, setFeedbackForm] = useState({
     feedback: "",
@@ -57,19 +59,20 @@ export default function PresidentDashboard() {
   const loadDashboard = async () => {
     try {
       setLoading(true);
-      const dashboardData = await presidentApi.getDashboard();
-      setMembers(dashboardData.members);
-      setCabinet(dashboardData.cabinet);
-
-      const [sessionsData, messagesData] = await Promise.all([
+      const [dashboardData, sessionsData, messagesData, sentFeedbackData] = await Promise.all([
+        presidentApi.getDashboard(),
         presidentApi.getSessions(),
         presidentApi.getMessages(),
+        presidentApi.getSentFeedback(),
       ]);
+      setMembers(dashboardData.members);
+      setCabinet(dashboardData.cabinet);
       setSessions(sessionsData.sessions);
       setMessages(messagesData.messages);
+      setSentFeedback(sentFeedbackData.feedbacks);
     } catch (error: unknown) {
       toast.error(
-        error instanceof Error ? error.message : "Failed to load dashboard data"
+        error instanceof Error ? error.message : "Failed to load dashboard"
       );
     } finally {
       setLoading(false);
@@ -117,6 +120,7 @@ export default function PresidentDashboard() {
       toast.success("Feedback sent successfully");
       setShowFeedbackModal(false);
       setFeedbackForm({ feedback: "", memberId: "" });
+      loadDashboard(); // Reload to see the new sent feedback
     } catch (error: unknown) {
       toast.error(
         error instanceof Error ? error.message : "Failed to send feedback"
@@ -180,7 +184,7 @@ export default function PresidentDashboard() {
           </div>
 
           {/* Tabs */}
-          <div className="flex space-x-2 mb-6">
+          <div className="flex space-x-2 mb-6 flex-wrap">
             {[
               { id: "dashboard", label: "Dashboard", icon: FileText },
               { id: "tasks", label: "Assign Tasks", icon: Plus },
@@ -200,7 +204,7 @@ export default function PresidentDashboard() {
                     | "messages"
                   )
                 }
-                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 ${activeTab === tab.id
+                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 mb-2 ${activeTab === tab.id
                   ? "bg-gradient-to-r from-yellow-500 to-yellow-600 text-white"
                   : "bg-gray-800/50 text-gray-400 hover:text-white"
                   }`}
@@ -525,6 +529,33 @@ export default function PresidentDashboard() {
                       </div>
                     </div>
                   )}
+                  <div className="mt-8">
+                    <h3 className="text-lg font-bold text-white mb-4">
+                      Sent Feedback History
+                    </h3>
+                    <div className="space-y-4">
+                      {sentFeedback.length === 0 ? (
+                        <p className="text-gray-400">No feedback sent yet</p>
+                      ) : (
+                        sentFeedback.map((fb) => (
+                          <div
+                            key={fb.id}
+                            className="bg-gray-700/50 rounded-lg p-4"
+                          >
+                            <div className="flex items-center justify-between mb-2">
+                              <p className="text-white font-medium">
+                                To: {members.find(m => m.id === fb.memberId)?.name || 'Unknown Member'}
+                              </p>
+                              <p className="text-gray-400 text-sm">
+                                {new Date(fb.createdAt).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <p className="text-gray-300">{fb.feedback}</p>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
                 </div>
               )}
 
