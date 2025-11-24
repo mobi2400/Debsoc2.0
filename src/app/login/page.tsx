@@ -55,16 +55,9 @@ const LoginPage = () => {
       let response;
       if (mode === "register") {
         if (selectedRole === "TechHead") {
-          if (!formData.name || !formData.email || !formData.password) {
-            toast.error("Please fill all fields");
-            setLoading(false);
-            return;
-          }
-          response = await techHeadApi.register(
-            formData.name,
-            formData.email,
-            formData.password
-          );
+          toast.error("TechHead accounts cannot be registered here.");
+          setLoading(false);
+          return;
         } else if (selectedRole === "President") {
           if (!formData.name || !formData.email || !formData.password) {
             toast.error("Please fill all fields");

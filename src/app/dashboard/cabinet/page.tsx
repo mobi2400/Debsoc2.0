@@ -561,39 +561,35 @@ export default function CabinetDashboard() {
                       </div>
                     </div>
                   )}
-<<<<<<< HEAD
-  <div className="mt-8">
-    <h3 className="text-lg font-bold text-white mb-4">
-      Sent Feedback History
-    </h3>
-    <div className="space-y-4">
-      {sentFeedback.length === 0 ? (
-        <p className="text-gray-400">No feedback sent yet</p>
-      ) : (
-        sentFeedback.map((fb) => (
-          <div
-            key={fb.id}
-            className="bg-gray-700/50 rounded-lg p-4"
-          >
-            <div className="flex items-center justify-between mb-2">
-              <p className="text-white font-medium">
-                To: {members.find(m => m.id === fb.memberId)?.name || 'Unknown Member'}
-              </p>
-              <p className="text-gray-400 text-sm">
-                {new Date(fb.createdAt).toLocaleDateString()}
-              </p>
-            </div>
-            <p className="text-gray-300">{fb.feedback}</p>
-          </div>
-        ))
-      )}
-    </div>
-  </div>
-=======
->>>>>>> 1456dd95e32777a8bf8f6f5f04537a05533d63a3
-                </div >
-              )
-}
+                  <div className="mt-8">
+                    <h3 className="text-lg font-bold text-white mb-4">
+                      Sent Feedback History
+                    </h3>
+                    <div className="space-y-4">
+                      {sentFeedback.length === 0 ? (
+                        <p className="text-gray-400">No feedback sent yet</p>
+                      ) : (
+                        sentFeedback.map((fb) => (
+                          <div
+                            key={fb.id}
+                            className="bg-gray-700/50 rounded-lg p-4"
+                          >
+                            <div className="flex items-center justify-between mb-2">
+                              <p className="text-white font-medium">
+                                To: {members.find((m) => m.id === fb.memberId)?.name || "Unknown Member"}
+                              </p>
+                              <p className="text-gray-400 text-sm">
+                                {new Date(fb.createdAt).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <p className="text-gray-300">{fb.feedback}</p>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
 
 {/* Messages Tab */ }
 {
