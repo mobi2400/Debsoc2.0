@@ -7,10 +7,9 @@ import Navbar from "@/components/Navbar";
 import {Toaster} from "react-hot-toast";
 import toast from "react-hot-toast";
 import {Settings, Users, CheckCircle, LogOut, Crown, User} from "lucide-react";
-import UnverifiedView from "@/components/UnverifiedView";
 
 export default function TechHeadDashboard() {
-  const {user, logout, isAuthenticated, isVerified, isLoading} = useAuth();
+  const {user, logout, isAuthenticated, isLoading} = useAuth();
   const router = useRouter();
   const [unverifiedUsers, setUnverifiedUsers] =
     useState<UnverifiedUsers | null>(null);
