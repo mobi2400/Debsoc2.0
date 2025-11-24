@@ -26,6 +26,8 @@ export interface Task {
   deadline: string;
   assignedToId?: string;
   assignedToMemberId?: string;
+  assignedTo?: { name: string; position: string };
+  assignedToMember?: { name: string };
   createdAt: string;
   updatedAt: string;
 }
@@ -207,6 +209,9 @@ export const presidentApi = {
       method: "POST",
       body: JSON.stringify(task),
     });
+  },
+  getTasks: async (): Promise<{ tasks: Task[] }> => {
+    return apiCall<{ tasks: Task[] }>("/president/tasks");
   },
   giveFeedback: async (
     feedback: string,

@@ -59,17 +59,19 @@ export default function PresidentDashboard() {
   const loadDashboard = async () => {
     try {
       setLoading(true);
-      const [dashboardData, sessionsData, messagesData, sentFeedbackData] = await Promise.all([
+      const [dashboardData, sessionsData, messagesData, sentFeedbackData, tasksData] = await Promise.all([
         presidentApi.getDashboard(),
         presidentApi.getSessions(),
         presidentApi.getMessages(),
         presidentApi.getSentFeedback(),
+        presidentApi.getTasks(),
       ]);
       setMembers(dashboardData.members);
       setCabinet(dashboardData.cabinet);
       setSessions(sessionsData.sessions);
       setMessages(messagesData.messages);
       setSentFeedback(sentFeedbackData.feedbacks);
+      setTasks(tasksData.tasks);
     } catch (error: unknown) {
       toast.error(
         error instanceof Error ? error.message : "Failed to load dashboard"
@@ -442,6 +444,49 @@ export default function PresidentDashboard() {
                       </div>
                     </div>
                   )}
+
+                  <div className="mt-8">
+                    <h3 className="text-lg font-bold text-white mb-4">
+                      Assigned Tasks
+                    </h3>
+                    <div className="space-y-4">
+                      {tasks.length === 0 ? (
+                        <p className="text-gray-400">No tasks assigned yet</p>
+                      ) : (
+                        tasks.map((task) => (
+                          <div
+                            key={task.id}
+                            className="bg-gray-700/50 rounded-lg p-4"
+                          >
+                            <div className="flex items-start justify-between mb-2">
+                              <h3 className="text-white font-medium text-lg">
+                                {task.name}
+                              </h3>
+                              <span
+                                className={`px-2 py-1 rounded text-xs ${new Date(task.deadline) < new Date()
+                                  ? "bg-red-600/20 text-red-400"
+                                  : new Date(task.deadline) <
+                                    new Date(
+                                      Date.now() + 7 * 24 * 60 * 60 * 1000
+                                    )
+                                    ? "bg-yellow-600/20 text-yellow-400"
+                                    : "bg-green-600/20 text-green-400"
+                                  }`}
+                              >
+                                {new Date(task.deadline).toLocaleDateString()}
+                              </span>
+                            </div>
+                            <p className="text-gray-400 text-sm mb-2">
+                              {task.description}
+                            </p>
+                            <p className="text-gray-500 text-xs">
+                              Assigned To: {task.assignedTo ? `${task.assignedTo.name} (${task.assignedTo.position})` : task.assignedToMember ? task.assignedToMember.name : 'Unknown'}
+                            </p>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
                 </div>
               )}
 
@@ -643,7 +688,7 @@ export default function PresidentDashboard() {
             </>
           )}
         </div>
-      </div>
+      </div >
       <Toaster
         position="top-right"
         toastOptions={{
