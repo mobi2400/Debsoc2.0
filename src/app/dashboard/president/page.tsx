@@ -59,6 +59,7 @@ export default function PresidentDashboard() {
   const loadDashboard = async () => {
     try {
       setLoading(true);
+<<<<<<< HEAD
 
       // Load core data
       try {
@@ -88,6 +89,21 @@ export default function PresidentDashboard() {
         console.error("Failed to load history data", error);
       }
 
+=======
+      const [dashboardData, sessionsData, messagesData, sentFeedbackData, tasksData] = await Promise.all([
+        presidentApi.getDashboard(),
+        presidentApi.getSessions(),
+        presidentApi.getMessages(),
+        presidentApi.getSentFeedback(),
+        presidentApi.getTasks(),
+      ]);
+      setMembers(dashboardData.members);
+      setCabinet(dashboardData.cabinet);
+      setSessions(sessionsData.sessions);
+      setMessages(messagesData.messages);
+      setSentFeedback(sentFeedbackData.feedbacks);
+      setTasks(tasksData.tasks);
+>>>>>>> 1456dd95e32777a8bf8f6f5f04537a05533d63a3
     } catch (error: unknown) {
       toast.error(
         error instanceof Error ? error.message : "Failed to load dashboard"
