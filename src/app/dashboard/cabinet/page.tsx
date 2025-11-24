@@ -628,6 +628,33 @@ export default function CabinetDashboard() {
                       Contact TechHead if you need assistance.
                     </p>
                   </div>
+                  <div className="mt-8">
+                    <h3 className="text-lg font-bold text-white mb-4">
+                      Sent Messages History
+                    </h3>
+                    <div className="space-y-4">
+                      {sentMessages.length === 0 ? (
+                        <p className="text-gray-400">No messages sent yet</p>
+                      ) : (
+                        sentMessages.map((msg) => (
+                          <div
+                            key={msg.id}
+                            className="bg-gray-700/50 rounded-lg p-4"
+                          >
+                            <div className="flex items-center justify-between mb-2">
+                              <p className="text-white font-medium">
+                                To: {presidents.find(p => p.id === msg.presidentId)?.name || 'Unknown President'}
+                              </p>
+                              <p className="text-gray-400 text-sm">
+                                {new Date(msg.createdAt).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <p className="text-gray-300">{msg.message}</p>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
                 </div>
               )}
 

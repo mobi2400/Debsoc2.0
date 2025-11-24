@@ -62,7 +62,7 @@ export default function MemberDashboard() {
       setFeedbacks(feedbacksData.feedbacks);
       setSentMessages(sentMessagesData.messages);
 
-      setSentMessages(sentMessagesData.messages);
+
 
       const presidentsData = await memberApi.getPresidents();
       setPresidents(presidentsData.presidents);
