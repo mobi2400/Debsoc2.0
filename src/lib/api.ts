@@ -102,7 +102,7 @@ const apiCall = async <T>(
   const token = getToken();
   const headers: HeadersInit = {
     "Content-Type": "application/json",
-    ...(token && {Authorization: `Bearer ${token}`}),
+    ...(token && { Authorization: `Bearer ${token}` }),
     ...options.headers,
   };
 
@@ -114,7 +114,7 @@ const apiCall = async <T>(
   if (!response.ok) {
     const error = await response
       .json()
-      .catch(() => ({message: "An error occurred"}));
+      .catch(() => ({ message: "An error occurred" }));
     throw new Error(error.message || `HTTP error! status: ${response.status}`);
   }
 
@@ -130,46 +130,46 @@ export const techHeadApi = {
   ): Promise<AuthResponse> => {
     return apiCall<AuthResponse>("/techhead/register", {
       method: "POST",
-      body: JSON.stringify({name, email, password}),
+      body: JSON.stringify({ name, email, password }),
     });
   },
   login: async (email: string, password: string): Promise<AuthResponse> => {
     return apiCall<AuthResponse>("/techhead/login", {
       method: "POST",
-      body: JSON.stringify({email, password}),
+      body: JSON.stringify({ email, password }),
     });
   },
   verifyPresident: async (
     presidentId: string
   ): Promise<{
     message: string;
-    president: {id: string; name: string; isVerified: boolean};
+    president: { id: string; name: string; isVerified: boolean };
   }> => {
     return apiCall(`/techhead/verify/president`, {
       method: "POST",
-      body: JSON.stringify({presidentId}),
+      body: JSON.stringify({ presidentId }),
     });
   },
   verifyCabinet: async (
     cabinetId: string
   ): Promise<{
     message: string;
-    cabinet: {id: string; name: string; isVerified: boolean};
+    cabinet: { id: string; name: string; isVerified: boolean };
   }> => {
     return apiCall(`/techhead/verify/cabinet`, {
       method: "POST",
-      body: JSON.stringify({cabinetId}),
+      body: JSON.stringify({ cabinetId }),
     });
   },
   verifyMember: async (
     memberId: string
   ): Promise<{
     message: string;
-    member: {id: string; name: string; isVerified: boolean};
+    member: { id: string; name: string; isVerified: boolean };
   }> => {
     return apiCall(`/techhead/verify/member`, {
       method: "POST",
-      body: JSON.stringify({memberId}),
+      body: JSON.stringify({ memberId }),
     });
   },
   getUnverifiedUsers: async (): Promise<UnverifiedUsers> => {
@@ -186,13 +186,13 @@ export const presidentApi = {
   ): Promise<AuthResponse> => {
     return apiCall<AuthResponse>("/president/register", {
       method: "POST",
-      body: JSON.stringify({name, email, password}),
+      body: JSON.stringify({ name, email, password }),
     });
   },
   login: async (email: string, password: string): Promise<AuthResponse> => {
     return apiCall<AuthResponse>("/president/login", {
       method: "POST",
-      body: JSON.stringify({email, password}),
+      body: JSON.stringify({ email, password }),
     });
   },
   assignTask: async (task: {
@@ -201,7 +201,7 @@ export const presidentApi = {
     deadline: string;
     assignedToId?: string;
     assignedToMemberId?: string;
-  }): Promise<{message: string; task: Task}> => {
+  }): Promise<{ message: string; task: Task }> => {
     return apiCall("/president/tasks/assign", {
       method: "POST",
       body: JSON.stringify(task),
@@ -210,17 +210,20 @@ export const presidentApi = {
   giveFeedback: async (
     feedback: string,
     memberId: string
-  ): Promise<{message: string; feedback: AnonymousFeedback}> => {
+  ): Promise<{ message: string; feedback: AnonymousFeedback }> => {
     return apiCall("/president/feedback/give", {
       method: "POST",
-      body: JSON.stringify({feedback, memberId}),
+      body: JSON.stringify({ feedback, memberId }),
     });
   },
-  getSessions: async (): Promise<{sessions: Session[]}> => {
-    return apiCall<{sessions: Session[]}>("/president/sessions");
+  getSessions: async (): Promise<{ sessions: Session[] }> => {
+    return apiCall<{ sessions: Session[] }>("/president/sessions");
   },
-  getDashboard: async (): Promise<{members: User[]; cabinet: User[]}> => {
-    return apiCall<{members: User[]; cabinet: User[]}>("/president/dashboard");
+  getDashboard: async (): Promise<{ members: User[]; cabinet: User[] }> => {
+    return apiCall<{ members: User[]; cabinet: User[] }>("/president/dashboard");
+  },
+  getMessages: async (): Promise<{ messages: AnonymousMessage[] }> => {
+    return apiCall<{ messages: AnonymousMessage[] }>("/president/messages");
   },
 };
 
@@ -234,52 +237,58 @@ export const cabinetApi = {
   ): Promise<AuthResponse> => {
     return apiCall<AuthResponse>("/cabinet/register", {
       method: "POST",
-      body: JSON.stringify({name, email, password, position}),
+      body: JSON.stringify({ name, email, password, position }),
     });
   },
   login: async (email: string, password: string): Promise<AuthResponse> => {
     return apiCall<AuthResponse>("/cabinet/login", {
       method: "POST",
-      body: JSON.stringify({email, password}),
+      body: JSON.stringify({ email, password }),
     });
   },
   markAttendance: async (data: {
     sessionDate: string;
     motiontype: string;
     Chair: string;
-    attendanceData: Array<{memberId: string; status: "Present" | "Absent"}>;
-  }): Promise<{message: string; session: Session}> => {
+    attendanceData: Array<{ memberId: string; status: "Present" | "Absent" }>;
+  }): Promise<{ message: string; session: Session }> => {
     return apiCall("/cabinet/attendance/mark", {
       method: "POST",
       body: JSON.stringify(data),
     });
   },
-  getTasks: async (): Promise<{tasks: Task[]}> => {
-    return apiCall<{tasks: Task[]}>("/cabinet/tasks");
+  getTasks: async (): Promise<{ tasks: Task[] }> => {
+    return apiCall<{ tasks: Task[] }>("/cabinet/tasks");
   },
   giveFeedback: async (
     feedback: string,
     memberId: string
-  ): Promise<{message: string; feedback: AnonymousFeedback}> => {
+  ): Promise<{ message: string; feedback: AnonymousFeedback }> => {
     return apiCall("/cabinet/feedback/give", {
       method: "POST",
-      body: JSON.stringify({feedback, memberId}),
+      body: JSON.stringify({ feedback, memberId }),
     });
   },
-  getSessions: async (): Promise<{sessions: Session[]}> => {
-    return apiCall<{sessions: Session[]}>("/cabinet/sessions");
+  getSessions: async (): Promise<{ sessions: Session[] }> => {
+    return apiCall<{ sessions: Session[] }>("/cabinet/sessions");
   },
   sendMessageToPresident: async (
     message: string,
     presidentId: string
-  ): Promise<{message: string; data: AnonymousMessage}> => {
+  ): Promise<{ message: string; data: AnonymousMessage }> => {
     return apiCall("/cabinet/messages/president", {
       method: "POST",
-      body: JSON.stringify({message, presidentId}),
+      body: JSON.stringify({ message, presidentId }),
     });
   },
-  getDashboard: async (): Promise<{members: User[]; cabinet: User[]}> => {
-    return apiCall<{members: User[]; cabinet: User[]}>("/cabinet/dashboard");
+  getDashboard: async (): Promise<{
+    members: User[];
+    cabinet: User[];
+    presidents: User[];
+  }> => {
+    return apiCall<{ members: User[]; cabinet: User[]; presidents: User[] }>(
+      "/cabinet/dashboard"
+    );
   },
 };
 
@@ -292,31 +301,31 @@ export const memberApi = {
   ): Promise<AuthResponse> => {
     return apiCall<AuthResponse>("/member/register", {
       method: "POST",
-      body: JSON.stringify({name, email, password}),
+      body: JSON.stringify({ name, email, password }),
     });
   },
   login: async (email: string, password: string): Promise<AuthResponse> => {
     return apiCall<AuthResponse>("/member/login", {
       method: "POST",
-      body: JSON.stringify({email, password}),
+      body: JSON.stringify({ email, password }),
     });
   },
-  getAttendance: async (): Promise<{attendance: Attendance[]}> => {
-    return apiCall<{attendance: Attendance[]}>("/member/attendance");
+  getAttendance: async (): Promise<{ attendance: Attendance[] }> => {
+    return apiCall<{ attendance: Attendance[] }>("/member/attendance");
   },
-  getTasks: async (): Promise<{tasks: Task[]}> => {
-    return apiCall<{tasks: Task[]}>("/member/tasks");
+  getTasks: async (): Promise<{ tasks: Task[] }> => {
+    return apiCall<{ tasks: Task[] }>("/member/tasks");
   },
   sendMessageToPresident: async (
     message: string,
     presidentId: string
-  ): Promise<{message: string; data: AnonymousMessage}> => {
+  ): Promise<{ message: string; data: AnonymousMessage }> => {
     return apiCall("/member/messages/president", {
       method: "POST",
-      body: JSON.stringify({message, presidentId}),
+      body: JSON.stringify({ message, presidentId }),
     });
   },
-  getFeedback: async (): Promise<{feedbacks: AnonymousFeedback[]}> => {
-    return apiCall<{feedbacks: AnonymousFeedback[]}>("/member/feedback");
+  getFeedback: async (): Promise<{ feedbacks: AnonymousFeedback[] }> => {
+    return apiCall<{ feedbacks: AnonymousFeedback[] }>("/member/feedback");
   },
 };

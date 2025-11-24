@@ -1,10 +1,10 @@
 "use client";
-import React, {useState, useEffect} from "react";
-import {useRouter} from "next/navigation";
-import {useAuth} from "@/contexts/AuthContext";
-import {presidentApi, User, Session} from "@/lib/api";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import { presidentApi, User, Session, AnonymousMessage } from "@/lib/api";
 import Navbar from "@/components/Navbar";
-import {Toaster} from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
 import {
   Crown,
@@ -19,14 +19,15 @@ import {
 import UnverifiedView from "@/components/UnverifiedView";
 
 export default function PresidentDashboard() {
-  const {user, logout, isAuthenticated, isVerified, isLoading} = useAuth();
+  const { user, logout, isAuthenticated, isVerified, isLoading } = useAuth();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<
-    "dashboard" | "tasks" | "feedback" | "sessions"
+    "dashboard" | "tasks" | "feedback" | "sessions" | "messages"
   >("dashboard");
   const [members, setMembers] = useState<User[]>([]);
   const [cabinet, setCabinet] = useState<User[]>([]);
   const [sessions, setSessions] = useState<Session[]>([]);
+  const [messages, setMessages] = useState<AnonymousMessage[]>([]);
   const [loading, setLoading] = useState(true);
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
@@ -59,8 +60,13 @@ export default function PresidentDashboard() {
       const dashboardData = await presidentApi.getDashboard();
       setMembers(dashboardData.members);
       setCabinet(dashboardData.cabinet);
-      const sessionsData = await presidentApi.getSessions();
+
+      const [sessionsData, messagesData] = await Promise.all([
+        presidentApi.getSessions(),
+        presidentApi.getMessages(),
+      ]);
       setSessions(sessionsData.sessions);
+      setMessages(messagesData.messages);
     } catch (error: unknown) {
       toast.error(
         error instanceof Error ? error.message : "Failed to load dashboard data"
@@ -110,7 +116,7 @@ export default function PresidentDashboard() {
       );
       toast.success("Feedback sent successfully");
       setShowFeedbackModal(false);
-      setFeedbackForm({feedback: "", memberId: ""});
+      setFeedbackForm({ feedback: "", memberId: "" });
     } catch (error: unknown) {
       toast.error(
         error instanceof Error ? error.message : "Failed to send feedback"
@@ -176,23 +182,28 @@ export default function PresidentDashboard() {
           {/* Tabs */}
           <div className="flex space-x-2 mb-6">
             {[
-              {id: "dashboard", label: "Dashboard", icon: FileText},
-              {id: "tasks", label: "Assign Tasks", icon: Plus},
-              {id: "feedback", label: "Give Feedback", icon: MessageSquare},
-              {id: "sessions", label: "Sessions", icon: Calendar},
+              { id: "dashboard", label: "Dashboard", icon: FileText },
+              { id: "tasks", label: "Assign Tasks", icon: Plus },
+              { id: "feedback", label: "Give Feedback", icon: MessageSquare },
+              { id: "sessions", label: "Sessions", icon: Calendar },
+              { id: "messages", label: "Messages", icon: MessageSquare },
             ].map((tab) => (
               <button
                 key={tab.id}
                 onClick={() =>
                   setActiveTab(
-                    tab.id as "dashboard" | "tasks" | "feedback" | "sessions"
+                    tab.id as
+                    | "dashboard"
+                    | "tasks"
+                    | "feedback"
+                    | "sessions"
+                    | "messages"
                   )
                 }
-                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 ${
-                  activeTab === tab.id
-                    ? "bg-gradient-to-r from-yellow-500 to-yellow-600 text-white"
-                    : "bg-gray-800/50 text-gray-400 hover:text-white"
-                }`}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 ${activeTab === tab.id
+                  ? "bg-gradient-to-r from-yellow-500 to-yellow-600 text-white"
+                  : "bg-gray-800/50 text-gray-400 hover:text-white"
+                  }`}
               >
                 <tab.icon className="w-4 h-4" />
                 <span>{tab.label}</span>
@@ -305,7 +316,7 @@ export default function PresidentDashboard() {
                               type="text"
                               value={taskForm.name}
                               onChange={(e) =>
-                                setTaskForm({...taskForm, name: e.target.value})
+                                setTaskForm({ ...taskForm, name: e.target.value })
                               }
                               className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
                               required
@@ -397,15 +408,15 @@ export default function PresidentDashboard() {
                               <option value="">Select...</option>
                               {taskForm.assignType === "cabinet"
                                 ? cabinet.map((cab) => (
-                                    <option key={cab.id} value={cab.id}>
-                                      {cab.name} - {cab.position}
-                                    </option>
-                                  ))
+                                  <option key={cab.id} value={cab.id}>
+                                    {cab.name} - {cab.position}
+                                  </option>
+                                ))
                                 : members.map((member) => (
-                                    <option key={member.id} value={member.id}>
-                                      {member.name}
-                                    </option>
-                                  ))}
+                                  <option key={member.id} value={member.id}>
+                                    {member.name}
+                                  </option>
+                                ))}
                             </select>
                           </div>
                           <div className="flex space-x-3">
@@ -562,6 +573,36 @@ export default function PresidentDashboard() {
                               absent
                             </p>
                           )}
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+              )}
+              {/* Messages Tab */}
+              {activeTab === "messages" && (
+                <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6">
+                  <h2 className="text-xl font-bold text-white mb-4">
+                    Anonymous Messages
+                  </h2>
+                  <div className="space-y-4">
+                    {messages.length === 0 ? (
+                      <p className="text-gray-400">No messages found</p>
+                    ) : (
+                      messages.map((msg) => (
+                        <div
+                          key={msg.id}
+                          className="bg-gray-700/50 rounded-lg p-4"
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs uppercase font-bold">
+                              From {msg.senderType}
+                            </span>
+                            <p className="text-gray-400 text-sm">
+                              {new Date(msg.createdAt).toLocaleDateString()}
+                            </p>
+                          </div>
+                          <p className="text-white">{msg.message}</p>
                         </div>
                       ))
                     )}

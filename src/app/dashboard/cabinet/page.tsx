@@ -1,11 +1,11 @@
 "use client";
-import React, {useState, useEffect} from "react";
-import {useRouter} from "next/navigation";
-import {useAuth} from "@/contexts/AuthContext";
-import {cabinetApi, Task, Session, User} from "@/lib/api";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import { cabinetApi, Task, Session, User } from "@/lib/api";
 
 import Navbar from "@/components/Navbar";
-import {Toaster} from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
 import {
   Users,
@@ -18,7 +18,7 @@ import {
 import UnverifiedView from "@/components/UnverifiedView";
 
 export default function CabinetDashboard() {
-  const {user, logout, isAuthenticated, isVerified, isLoading} = useAuth();
+  const { user, logout, isAuthenticated, isVerified, isLoading } = useAuth();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<
     "tasks" | "attendance" | "feedback" | "messages" | "sessions"
@@ -73,18 +73,7 @@ export default function CabinetDashboard() {
       setTasks(tasksData.tasks);
       setSessions(sessionsData.sessions);
       setMembers(dashboardData.members);
-      // Note: Since there's no API endpoint to get all presidents,
-      // we'll use a placeholder. In production, you may want to add an endpoint
-      // or store the current president ID in the user context
-      setPresidents([
-        {
-          id: "current-president",
-          name: "Current President",
-          email: "president@debsoc.com",
-          role: "President",
-          isVerified: true,
-        },
-      ]);
+      setPresidents(dashboardData.presidents);
     } catch (error: unknown) {
       toast.error(
         error instanceof Error ? error.message : "Failed to load data"
@@ -123,7 +112,7 @@ export default function CabinetDashboard() {
       );
       toast.success("Feedback sent successfully");
       setShowFeedbackModal(false);
-      setFeedbackForm({feedback: "", memberId: ""});
+      setFeedbackForm({ feedback: "", memberId: "" });
     } catch (error: unknown) {
       toast.error(
         error instanceof Error ? error.message : "Failed to send feedback"
@@ -140,7 +129,7 @@ export default function CabinetDashboard() {
       );
       toast.success("Message sent successfully");
       setShowMessageModal(false);
-      setMessageForm({message: "", presidentId: ""});
+      setMessageForm({ message: "", presidentId: "" });
     } catch (error: unknown) {
       toast.error(
         error instanceof Error ? error.message : "Failed to send message"
@@ -156,7 +145,7 @@ export default function CabinetDashboard() {
           ...prev,
           attendanceData: prev.attendanceData.map((a) =>
             a.memberId === memberId
-              ? {...a, status: a.status === "Present" ? "Absent" : "Present"}
+              ? { ...a, status: a.status === "Present" ? "Absent" : "Present" }
               : a
           ),
         };
@@ -165,7 +154,7 @@ export default function CabinetDashboard() {
           ...prev,
           attendanceData: [
             ...prev.attendanceData,
-            {memberId, status: "Present"},
+            { memberId, status: "Present" },
           ],
         };
       }
@@ -235,29 +224,28 @@ export default function CabinetDashboard() {
           {/* Tabs */}
           <div className="flex space-x-2 mb-6 flex-wrap">
             {[
-              {id: "tasks", label: "Tasks", icon: FileText},
-              {id: "attendance", label: "Mark Attendance", icon: Calendar},
-              {id: "feedback", label: "Give Feedback", icon: MessageSquare},
-              {id: "messages", label: "Messages", icon: MessageSquare},
-              {id: "sessions", label: "Sessions", icon: Calendar},
+              { id: "tasks", label: "Tasks", icon: FileText },
+              { id: "attendance", label: "Mark Attendance", icon: Calendar },
+              { id: "feedback", label: "Give Feedback", icon: MessageSquare },
+              { id: "messages", label: "Messages", icon: MessageSquare },
+              { id: "sessions", label: "Sessions", icon: Calendar },
             ].map((tab) => (
               <button
                 key={tab.id}
                 onClick={() =>
                   setActiveTab(
                     tab.id as
-                      | "tasks"
-                      | "attendance"
-                      | "feedback"
-                      | "messages"
-                      | "sessions"
+                    | "tasks"
+                    | "attendance"
+                    | "feedback"
+                    | "messages"
+                    | "sessions"
                   )
                 }
-                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 mb-2 ${
-                  activeTab === tab.id
+                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 mb-2 ${activeTab === tab.id
                     ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white"
                     : "bg-gray-800/50 text-gray-400 hover:text-white"
-                }`}
+                  }`}
               >
                 <tab.icon className="w-4 h-4" />
                 <span>{tab.label}</span>
@@ -292,11 +280,10 @@ export default function CabinetDashboard() {
                               {task.name}
                             </h3>
                             <span
-                              className={`px-2 py-1 rounded text-xs ${
-                                new Date(task.deadline) < new Date()
+                              className={`px-2 py-1 rounded text-xs ${new Date(task.deadline) < new Date()
                                   ? "bg-red-600/20 text-red-400"
                                   : "bg-green-600/20 text-green-400"
-                              }`}
+                                }`}
                             >
                               {new Date(task.deadline).toLocaleDateString()}
                             </span>
@@ -418,13 +405,12 @@ export default function CabinetDashboard() {
                                       onClick={() =>
                                         toggleMemberAttendance(member.id)
                                       }
-                                      className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                                        attendance?.status === "Present"
+                                      className={`px-4 py-2 rounded-lg font-medium transition-colors ${attendance?.status === "Present"
                                           ? "bg-green-600 text-white"
                                           : attendance?.status === "Absent"
-                                          ? "bg-red-600 text-white"
-                                          : "bg-gray-600 text-gray-300"
-                                      }`}
+                                            ? "bg-red-600 text-white"
+                                            : "bg-gray-600 text-gray-300"
+                                        }`}
                                     >
                                       {attendance?.status || "Mark"}
                                     </button>
