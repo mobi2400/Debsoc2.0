@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from "react";
 import {useRouter} from "next/navigation";
 import {useAuth} from "@/contexts/AuthContext";
-import {presidentApi, User, Task, Session} from "@/lib/api";
+import {presidentApi, User, Session} from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import {Toaster} from "react-hot-toast";
 import toast from "react-hot-toast";

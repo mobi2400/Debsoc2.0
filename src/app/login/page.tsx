@@ -1,6 +1,6 @@
 "use client";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, {useState} from "react";
+import {useRouter} from "next/navigation";
 import {
   ChevronLeft,
   User,
@@ -12,8 +12,8 @@ import {
   Settings,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import { useAuth } from "@/contexts/AuthContext";
-import { techHeadApi, presidentApi, cabinetApi, memberApi } from "@/lib/api";
+import {useAuth} from "@/contexts/AuthContext";
+import {techHeadApi, presidentApi, cabinetApi, memberApi} from "@/lib/api";
 import toast from "react-hot-toast";
 
 type Role = "TechHead" | "President" | "cabinet" | "Member" | null;
@@ -21,7 +21,7 @@ type Mode = "login" | "register";
 
 const LoginPage = () => {
   const router = useRouter();
-  const { login } = useAuth();
+  const {login} = useAuth();
   const [selectedRole, setSelectedRole] = useState<Role>(null);
   const [mode, setMode] = useState<Mode>("login");
   const [showPassword, setShowPassword] = useState(false);
@@ -35,7 +35,7 @@ const LoginPage = () => {
 
   const handleRoleSelect = (role: Role) => {
     setSelectedRole(role);
-    setFormData({ email: "", password: "", name: "", position: "" });
+    setFormData({email: "", password: "", name: "", position: ""});
     setShowPassword(false);
     setMode("login");
   };
@@ -54,29 +54,58 @@ const LoginPage = () => {
     try {
       let response;
       if (mode === "register") {
-        if (selectedRole === "President") {
+        if (selectedRole === "TechHead") {
           if (!formData.name || !formData.email || !formData.password) {
             toast.error("Please fill all fields");
             setLoading(false);
             return;
           }
-          response = await presidentApi.register(formData.name, formData.email, formData.password);
+          response = await techHeadApi.register(
+            formData.name,
+            formData.email,
+            formData.password
+          );
+        } else if (selectedRole === "President") {
+          if (!formData.name || !formData.email || !formData.password) {
+            toast.error("Please fill all fields");
+            setLoading(false);
+            return;
+          }
+          response = await presidentApi.register(
+            formData.name,
+            formData.email,
+            formData.password
+          );
         } else if (selectedRole === "cabinet") {
-          if (!formData.name || !formData.email || !formData.password || !formData.position) {
+          if (
+            !formData.name ||
+            !formData.email ||
+            !formData.password ||
+            !formData.position
+          ) {
             toast.error("Please fill all fields including position");
             setLoading(false);
             return;
           }
-          response = await cabinetApi.register(formData.name, formData.email, formData.password, formData.position);
+          response = await cabinetApi.register(
+            formData.name,
+            formData.email,
+            formData.password,
+            formData.position
+          );
         } else if (selectedRole === "Member") {
           if (!formData.name || !formData.email || !formData.password) {
             toast.error("Please fill all fields");
             setLoading(false);
             return;
           }
-          response = await memberApi.register(formData.name, formData.email, formData.password);
+          response = await memberApi.register(
+            formData.name,
+            formData.email,
+            formData.password
+          );
         } else {
-          toast.error("Registration not available for TechHead");
+          toast.error("Invalid role selected");
           setLoading(false);
           return;
         }
@@ -90,7 +119,10 @@ const LoginPage = () => {
         if (selectedRole === "TechHead") {
           response = await techHeadApi.login(formData.email, formData.password);
         } else if (selectedRole === "President") {
-          response = await presidentApi.login(formData.email, formData.password);
+          response = await presidentApi.login(
+            formData.email,
+            formData.password
+          );
         } else if (selectedRole === "cabinet") {
           response = await cabinetApi.login(formData.email, formData.password);
         } else if (selectedRole === "Member") {
@@ -161,20 +193,40 @@ const LoginPage = () => {
             <div className="w-full max-w-2xl">
               <div className="bg-gray-900/95 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-8">
                 <div className="text-center mb-8">
-                  <h1 className="text-3xl font-bold text-white mb-2">SMVIT DEBSOC</h1>
+                  <h1 className="text-3xl font-bold text-white mb-2">
+                    SMVIT DEBSOC
+                  </h1>
                   <p className="text-gray-400">Select your role to continue</p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {[
-                    { role: "TechHead" as Role, label: "Tech Head", desc: "System Administrator" },
-                    { role: "President" as Role, label: "President", desc: "Society Leader" },
-                    { role: "cabinet" as Role, label: "Cabinet", desc: "Administrative Member" },
-                    { role: "Member" as Role, label: "Member", desc: "Regular Member" },
-                  ].map(({ role, label, desc }) => (
+                    {
+                      role: "TechHead" as Role,
+                      label: "Tech Head",
+                      desc: "System Administrator",
+                    },
+                    {
+                      role: "President" as Role,
+                      label: "President",
+                      desc: "Society Leader",
+                    },
+                    {
+                      role: "cabinet" as Role,
+                      label: "Cabinet",
+                      desc: "Administrative Member",
+                    },
+                    {
+                      role: "Member" as Role,
+                      label: "Member",
+                      desc: "Regular Member",
+                    },
+                  ].map(({role, label, desc}) => (
                     <button
                       key={role}
                       onClick={() => handleRoleSelect(role)}
-                      className={`p-6 bg-gradient-to-br ${getRoleColor(role)} rounded-lg hover:scale-105 transition-all duration-200 text-white text-left group`}
+                      className={`p-6 bg-gradient-to-br ${getRoleColor(
+                        role
+                      )} rounded-lg hover:scale-105 transition-all duration-200 text-white text-left group`}
                     >
                       <div className="flex items-center space-x-3 mb-2">
                         <div className="p-2 bg-white/20 rounded-lg group-hover:bg-white/30 transition">
@@ -204,14 +256,24 @@ const LoginPage = () => {
           <div className="w-full max-w-sm">
             <div className="bg-gray-900/95 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 overflow-hidden">
               <div className="p-4 pb-3 text-center border-b border-gray-700/50">
-                <div className={`inline-flex items-center justify-center w-10 h-10 bg-gradient-to-br ${getRoleColor(selectedRole)} rounded-full mb-2`}>
+                <div
+                  className={`inline-flex items-center justify-center w-10 h-10 bg-gradient-to-br ${getRoleColor(
+                    selectedRole
+                  )} rounded-full mb-2`}
+                >
                   {getRoleIcon(selectedRole)}
                 </div>
                 <h1 className="text-lg font-bold text-white mb-1">
-                  {selectedRole === "TechHead" ? "Tech Head" : selectedRole === "cabinet" ? "Cabinet" : selectedRole}
+                  {selectedRole === "TechHead"
+                    ? "Tech Head"
+                    : selectedRole === "cabinet"
+                    ? "Cabinet"
+                    : selectedRole}
                 </h1>
                 <p className="text-gray-400 text-xs">
-                  {mode === "login" ? "Login to your account" : "Create a new account"}
+                  {mode === "login"
+                    ? "Login to your account"
+                    : "Create a new account"}
                 </p>
               </div>
 
@@ -288,20 +350,22 @@ const LoginPage = () => {
                     </button>
                   </div>
 
-                  {selectedRole === "TechHead" && mode === "register" && (
-                    <div className="bg-red-900/20 border border-red-700/50 rounded-lg p-2">
-                      <p className="text-red-300 text-xs">
-                        TechHead accounts cannot be registered. Please contact system administrator.
-                      </p>
-                    </div>
-                  )}
-
                   <button
                     type="submit"
-                    disabled={loading || (selectedRole === "TechHead" && mode === "register")}
-                    className={`w-full bg-gradient-to-r ${getRoleColor(selectedRole)} hover:opacity-90 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-900 text-xs cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed`}
+                    disabled={loading}
+                    className={`w-full bg-gradient-to-r ${getRoleColor(
+                      selectedRole
+                    )} hover:opacity-90 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-900 text-xs cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed`}
                   >
-                    {loading ? "Processing..." : mode === "login" ? `Sign In as ${selectedRole === "cabinet" ? "Cabinet" : selectedRole}` : `Register as ${selectedRole === "cabinet" ? "Cabinet" : selectedRole}`}
+                    {loading
+                      ? "Processing..."
+                      : mode === "login"
+                      ? `Sign In as ${
+                          selectedRole === "cabinet" ? "Cabinet" : selectedRole
+                        }`
+                      : `Register as ${
+                          selectedRole === "cabinet" ? "Cabinet" : selectedRole
+                        }`}
                   </button>
                 </form>
 
@@ -309,22 +373,37 @@ const LoginPage = () => {
                   <button
                     onClick={() => {
                       setMode(mode === "login" ? "register" : "login");
-                      setFormData({ email: "", password: "", name: "", position: "" });
+                      setFormData({
+                        email: "",
+                        password: "",
+                        name: "",
+                        position: "",
+                      });
                     }}
                     className="text-orange-400 hover:text-orange-300 text-xs font-medium transition-colors duration-200 cursor-pointer"
                   >
-                    {mode === "login" ? "Don't have an account? Register" : "Already have an account? Login"}
+                    {mode === "login"
+                      ? "Don't have an account? Register"
+                      : "Already have an account? Login"}
                   </button>
                   <div>
                     <button
                       onClick={() => {
                         setSelectedRole(null);
-                        setFormData({ email: "", password: "", name: "", position: "" });
+                        setFormData({
+                          email: "",
+                          password: "",
+                          name: "",
+                          position: "",
+                        });
                         setMode("login");
                       }}
                       className="text-gray-400 hover:text-gray-300 text-xs font-medium transition-colors duration-200 flex items-center justify-center mx-auto group cursor-pointer"
                     >
-                      <ChevronLeft size={12} className="mr-1 group-hover:-translate-x-1 transition-transform duration-200" />
+                      <ChevronLeft
+                        size={12}
+                        className="mr-1 group-hover:-translate-x-1 transition-transform duration-200"
+                      />
                       Back to role selection
                     </button>
                   </div>

@@ -81,10 +81,6 @@ export default function TechHeadDashboard() {
     return null;
   }
 
-  if (!isVerified) {
-    return <UnverifiedView />;
-  }
-
   return (
     <>
       <Navbar />
