@@ -155,11 +155,11 @@ export default function CabinetDashboard() {
       if (error instanceof Error) {
         errorMessage = error.message;
         // Check if there are additional details
-        if ((error as any).details) {
-          const details = (error as any).details;
-          if (details.error) {
-            errorMessage = `${errorMessage}: ${details.error}`;
-          }
+        type ErrorDetails = { error?: string };
+        type ErrorWithDetails = Error & { details?: ErrorDetails };
+        const errorWithDetails = error as ErrorWithDetails;
+        if (errorWithDetails.details?.error) {
+          errorMessage = `${errorMessage}: ${errorWithDetails.details.error}`;
         }
       }
 
