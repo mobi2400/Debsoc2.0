@@ -1,6 +1,6 @@
 "use client";
-import React, {useState} from "react";
-import {useRouter} from "next/navigation";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   ChevronLeft,
   User,
@@ -12,16 +12,16 @@ import {
   Settings,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import {useAuth} from "@/contexts/AuthContext";
-import {techHeadApi, presidentApi, cabinetApi, memberApi} from "@/lib/api";
-import toast from "react-hot-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { techHeadApi, presidentApi, cabinetApi, memberApi } from "@/lib/api";
+import toast, { Toaster } from "react-hot-toast";
 
 type Role = "TechHead" | "President" | "cabinet" | "Member" | null;
 type Mode = "login" | "register";
 
 const LoginPage = () => {
   const router = useRouter();
-  const {login} = useAuth();
+  const { login } = useAuth();
   const [selectedRole, setSelectedRole] = useState<Role>(null);
   const [mode, setMode] = useState<Mode>("login");
   const [showPassword, setShowPassword] = useState(false);
@@ -35,7 +35,7 @@ const LoginPage = () => {
 
   const handleRoleSelect = (role: Role) => {
     setSelectedRole(role);
-    setFormData({email: "", password: "", name: "", position: ""});
+    setFormData({ email: "", password: "", name: "", position: "" });
     setShowPassword(false);
     setMode("login");
   };
@@ -213,7 +213,7 @@ const LoginPage = () => {
                       label: "Member",
                       desc: "Regular Member",
                     },
-                  ].map(({role, label, desc}) => (
+                  ].map(({ role, label, desc }) => (
                     <button
                       key={role}
                       onClick={() => handleRoleSelect(role)}
@@ -237,6 +237,17 @@ const LoginPage = () => {
             </div>
           </div>
         </div>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            style: {
+              borderRadius: "10px",
+              background: "#374151",
+              color: "#fff",
+              border: "1px solid #4B5563",
+            },
+          }}
+        />
       </div>
     );
   }
@@ -260,8 +271,8 @@ const LoginPage = () => {
                   {selectedRole === "TechHead"
                     ? "Tech Head"
                     : selectedRole === "cabinet"
-                    ? "Cabinet"
-                    : selectedRole}
+                      ? "Cabinet"
+                      : selectedRole}
                 </h1>
                 <p className="text-gray-400 text-xs">
                   {mode === "login"
@@ -353,11 +364,9 @@ const LoginPage = () => {
                     {loading
                       ? "Processing..."
                       : mode === "login"
-                      ? `Sign In as ${
-                          selectedRole === "cabinet" ? "Cabinet" : selectedRole
+                        ? `Sign In as ${selectedRole === "cabinet" ? "Cabinet" : selectedRole
                         }`
-                      : `Register as ${
-                          selectedRole === "cabinet" ? "Cabinet" : selectedRole
+                        : `Register as ${selectedRole === "cabinet" ? "Cabinet" : selectedRole
                         }`}
                   </button>
                 </form>
@@ -411,6 +420,17 @@ const LoginPage = () => {
             </div>
           </div>
         </div>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            style: {
+              borderRadius: "10px",
+              background: "#374151",
+              color: "#fff",
+              border: "1px solid #4B5563",
+            },
+          }}
+        />
       </div>
     </div>
   );
