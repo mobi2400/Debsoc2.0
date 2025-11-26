@@ -125,7 +125,33 @@ export default function CabinetDashboard() {
   const handleMarkAttendance = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await cabinetApi.markAttendance(attendanceForm);
+      // Convert datetime-local format to ISO string
+      let sessionDateISO = attendanceForm.sessionDate;
+      if (sessionDateISO && !sessionDateISO.includes('Z') && !sessionDateISO.includes('+')) {
+        // If it's in datetime-local format (YYYY-MM-DDTHH:mm), convert to ISO
+        const date = new Date(sessionDateISO);
+        if (!isNaN(date.getTime())) {
+          sessionDateISO = date.toISOString();
+        }
+      }
+
+      // Validate that we have at least some data
+      if (!attendanceForm.sessionDate || !attendanceForm.motiontype || !attendanceForm.Chair) {
+        toast.error("Please fill in all required fields");
+        return;
+      }
+
+      // Prepare the data to send
+      const dataToSend = {
+        sessionDate: sessionDateISO,
+        motiontype: attendanceForm.motiontype.trim(),
+        Chair: attendanceForm.Chair.trim(),
+        attendanceData: attendanceForm.attendanceData.length > 0 
+          ? attendanceForm.attendanceData 
+          : [], // Allow empty array - backend will handle it
+      };
+
+      await cabinetApi.markAttendance(dataToSend);
       toast.success("Attendance marked successfully");
       setShowAttendanceModal(false);
       setAttendanceForm({
@@ -136,6 +162,7 @@ export default function CabinetDashboard() {
       });
       loadData();
     } catch (error: unknown) {
+      console.error("Error marking attendance:", error);
       toast.error(
         error instanceof Error ? error.message : "Failed to mark attendance"
       );
