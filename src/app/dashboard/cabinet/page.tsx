@@ -147,11 +147,20 @@ export default function CabinetDashboard() {
       const sessionId = sessionResponse.session.id;
       console.log("Session ID:", sessionId);
 
-      // Step 2: Mark Attendance (if there is attendance data)
-      if (attendanceForm.attendanceData.length > 0) {
+      // Step 2: Mark Attendance
+      // Ensure all members have a status. Default to "Absent" if not in the form data.
+      const completeAttendanceData = members.map(member => {
+        const existingRecord = attendanceForm.attendanceData.find(r => r.memberId === member.id);
+        return {
+          memberId: member.id,
+          status: existingRecord ? existingRecord.status : "Absent"
+        };
+      });
+
+      if (completeAttendanceData.length > 0) {
         const attendancePayload = {
           sessionId: sessionId,
-          attendanceData: attendanceForm.attendanceData
+          attendanceData: completeAttendanceData
         };
         console.log("Marking attendance with payload:", attendancePayload);
         await cabinetApi.markAttendance(attendancePayload);
