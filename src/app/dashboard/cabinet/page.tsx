@@ -56,6 +56,9 @@ export default function CabinetDashboard() {
   const [isSendingFeedback, setIsSendingFeedback] = useState(false);
   const [isSendingMessage, setIsSendingMessage] = useState(false);
 
+  // Use a ref to prevent double submission immediately, as state updates are async
+  const isSubmittingRef = React.useRef(false);
+
   useEffect(() => {
     if (isLoading) return;
     if (!isAuthenticated) {
@@ -121,8 +124,11 @@ export default function CabinetDashboard() {
 
   const handleMarkAttendance = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isSubmittingAttendance) return;
+    if (isSubmittingAttendance || isSubmittingRef.current) return;
+
+    isSubmittingRef.current = true;
     setIsSubmittingAttendance(true);
+
     try {
       // Convert datetime-local format to ISO string
       let sessionDateISO = attendanceForm.sessionDate;
@@ -148,9 +154,7 @@ export default function CabinetDashboard() {
       };
 
       const sessionResponse = await cabinetApi.createSession(sessionData);
-      console.log("Session created response:", sessionResponse);
       const sessionId = sessionResponse.session.id;
-      console.log("Session ID:", sessionId);
 
       // Step 2: Mark Attendance
       // Ensure all members have a status. Default to "Absent" if not in the form data.
@@ -167,7 +171,6 @@ export default function CabinetDashboard() {
           sessionId: sessionId,
           attendanceData: completeAttendanceData
         };
-        console.log("Marking attendance with payload:", attendancePayload);
         await cabinetApi.markAttendance(attendancePayload);
       }
 
@@ -201,13 +204,17 @@ export default function CabinetDashboard() {
       });
     } finally {
       setIsSubmittingAttendance(false);
+      isSubmittingRef.current = false;
     }
   };
 
   const handleGiveFeedback = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isSendingFeedback) return;
+    if (isSendingFeedback || isSubmittingRef.current) return;
+
+    isSubmittingRef.current = true;
     setIsSendingFeedback(true);
+
     try {
       await cabinetApi.giveFeedback(
         feedbackForm.feedback,
@@ -222,13 +229,17 @@ export default function CabinetDashboard() {
       );
     } finally {
       setIsSendingFeedback(false);
+      isSubmittingRef.current = false;
     }
   };
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isSendingMessage) return;
+    if (isSendingMessage || isSubmittingRef.current) return;
+
+    isSubmittingRef.current = true;
     setIsSendingMessage(true);
+
     try {
       await cabinetApi.sendMessageToPresident(
         messageForm.message,
@@ -243,6 +254,7 @@ export default function CabinetDashboard() {
       );
     } finally {
       setIsSendingMessage(false);
+      isSubmittingRef.current = false;
     }
   };
 

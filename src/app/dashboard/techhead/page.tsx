@@ -18,6 +18,9 @@ export default function TechHeadDashboard() {
   const [loading, setLoading] = useState(true);
   const [verifying, setVerifying] = useState<string | null>(null);
 
+  // Use a ref to prevent double submission immediately, as state updates are async
+  const isSubmittingRef = React.useRef(false);
+
   useEffect(() => {
     if (isLoading) return;
     if (!isAuthenticated) {
@@ -54,8 +57,13 @@ export default function TechHeadDashboard() {
     type: "president" | "cabinet" | "member",
     id: string
   ) => {
+    // Check if any verification is in progress using the ref
+    if (isSubmittingRef.current) return;
+
+    isSubmittingRef.current = true;
+    setVerifying(id);
+
     try {
-      setVerifying(id);
       if (type === "president") {
         await techHeadApi.verifyPresident(id);
         toast.success("President verified successfully");
@@ -73,6 +81,7 @@ export default function TechHeadDashboard() {
       );
     } finally {
       setVerifying(null);
+      isSubmittingRef.current = false;
     }
   };
 

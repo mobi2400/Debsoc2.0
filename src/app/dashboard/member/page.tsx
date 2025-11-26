@@ -39,6 +39,9 @@ export default function MemberDashboard() {
   });
   const [isSendingMessage, setIsSendingMessage] = useState(false);
 
+  // Use a ref to prevent double submission immediately, as state updates are async
+  const isSubmittingRef = React.useRef(false);
+
   useEffect(() => {
     if (isLoading) return;
     if (!isAuthenticated) {
@@ -96,8 +99,11 @@ export default function MemberDashboard() {
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isSendingMessage) return;
+    if (isSendingMessage || isSubmittingRef.current) return;
+
+    isSubmittingRef.current = true;
     setIsSendingMessage(true);
+
     try {
       await memberApi.sendMessageToPresident(
         messageForm.message,
@@ -113,6 +119,7 @@ export default function MemberDashboard() {
       );
     } finally {
       setIsSendingMessage(false);
+      isSubmittingRef.current = false;
     }
   };
 

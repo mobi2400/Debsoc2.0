@@ -50,6 +50,9 @@ export default function PresidentDashboard() {
   const [isAssigningTask, setIsAssigningTask] = useState(false);
   const [isSendingFeedback, setIsSendingFeedback] = useState(false);
 
+  // Use a ref to prevent double submission immediately, as state updates are async
+  const isSubmittingRef = React.useRef(false);
+
   useEffect(() => {
     if (isLoading) return;
     if (!isAuthenticated) {
@@ -109,8 +112,11 @@ export default function PresidentDashboard() {
 
   const handleAssignTask = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isAssigningTask) return;
+    if (isAssigningTask || isSubmittingRef.current) return;
+
+    isSubmittingRef.current = true;
     setIsAssigningTask(true);
+
     try {
       await presidentApi.assignTask({
         name: taskForm.name,
@@ -139,13 +145,17 @@ export default function PresidentDashboard() {
       );
     } finally {
       setIsAssigningTask(false);
+      isSubmittingRef.current = false;
     }
   };
 
   const handleGiveFeedback = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isSendingFeedback) return;
+    if (isSendingFeedback || isSubmittingRef.current) return;
+
+    isSubmittingRef.current = true;
     setIsSendingFeedback(true);
+
     try {
       await presidentApi.giveFeedback(
         feedbackForm.feedback,
@@ -161,6 +171,7 @@ export default function PresidentDashboard() {
       );
     } finally {
       setIsSendingFeedback(false);
+      isSubmittingRef.current = false;
     }
   };
 
