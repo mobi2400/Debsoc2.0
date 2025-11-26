@@ -13,8 +13,11 @@ import {
   MessageSquare,
   FileText,
   Plus,
+  X,
 } from "lucide-react";
 import UnverifiedView from "@/components/UnverifiedView";
+
+export const dynamic = "force-dynamic";
 
 export default function CabinetDashboard() {
   const { user, logout, isAuthenticated, isVerified, isLoading } = useAuth();
@@ -358,126 +361,154 @@ export default function CabinetDashboard() {
                   </button>
 
                   {showAttendanceModal && (
-                    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto text-left">
-                      <div className="bg-gray-800 rounded-xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-gray-700 shadow-2xl animate-pop-in">
-                        <h3 className="text-xl font-bold text-white mb-4">
-                          Create Session & Mark Attendance
-                        </h3>
-                        <form
-                          onSubmit={handleMarkAttendance}
-                          className="space-y-4"
+                    <div className="fixed inset-0 z-[100] bg-gray-900 overflow-y-auto animate-pop-in">
+                      <div className="min-h-screen px-4 py-8 md:py-12">
+                        <button
+                          onClick={() => setShowAttendanceModal(false)}
+                          className="fixed top-6 right-6 p-3 bg-gray-800 hover:bg-gray-700 rounded-full text-gray-400 hover:text-white transition-colors z-50 shadow-lg border border-gray-700"
                         >
-                          <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-1">
-                              Session Date
-                            </label>
-                            <input
-                              type="datetime-local"
-                              value={attendanceForm.sessionDate}
-                              onChange={(e) =>
-                                setAttendanceForm({
-                                  ...attendanceForm,
-                                  sessionDate: e.target.value,
-                                })
-                              }
-                              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                              required
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-1">
-                              Motion Type
-                            </label>
-                            <input
-                              type="text"
-                              value={attendanceForm.motiontype}
-                              onChange={(e) =>
-                                setAttendanceForm({
-                                  ...attendanceForm,
-                                  motiontype: e.target.value,
-                                })
-                              }
-                              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                              required
-                              placeholder="e.g. THW ban..."
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-1">
-                              Chair
-                            </label>
-                            <input
-                              type="text"
-                              value={attendanceForm.Chair}
-                              onChange={(e) =>
-                                setAttendanceForm({
-                                  ...attendanceForm,
-                                  Chair: e.target.value,
-                                })
-                              }
-                              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                              required
-                              placeholder="Name of the Chair"
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-2">
-                              Member Attendance
-                            </label>
-                            <div className="space-y-2 max-h-64 overflow-y-auto pr-2 custom-scrollbar">
-                              {members.map((member) => {
-                                const attendance =
-                                  attendanceForm.attendanceData.find(
-                                    (a) => a.memberId === member.id
-                                  );
-                                return (
-                                  <div
-                                    key={member.id}
-                                    className="flex items-center justify-between bg-gray-700/50 rounded-lg p-3 hover:bg-gray-700 transition-colors"
-                                  >
-                                    <div>
-                                      <p className="text-white font-medium">
-                                        {member.name}
-                                      </p>
-                                      <p className="text-gray-400 text-sm">
-                                        {member.email}
-                                      </p>
-                                    </div>
-                                    <button
-                                      type="button"
-                                      onClick={() =>
-                                        toggleMemberAttendance(member.id)
-                                      }
-                                      className={`px-4 py-2 rounded-lg font-medium transition-all transform active:scale-95 ${attendance?.status === "Present"
-                                        ? "bg-green-600 text-white shadow-lg shadow-green-600/20"
-                                        : attendance?.status === "Absent"
-                                          ? "bg-red-600 text-white shadow-lg shadow-red-600/20"
-                                          : "bg-gray-600 text-gray-300 hover:bg-gray-500"
-                                        }`}
-                                    >
-                                      {attendance?.status || "Mark"}
-                                    </button>
+                          <X className="w-6 h-6" />
+                        </button>
+
+                        <div className="container mx-auto max-w-5xl">
+
+                          <div className="p-8">
+                            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                              <div className="p-2 bg-blue-500/20 rounded-lg">
+                                <Calendar className="w-6 h-6 text-blue-400" />
+                              </div>
+                              Create Session & Mark Attendance
+                            </h3>
+
+                            <form onSubmit={handleMarkAttendance} className="space-y-8">
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                  <label className="block text-sm font-medium text-gray-300">
+                                    Session Date & Time
+                                  </label>
+                                  <input
+                                    type="datetime-local"
+                                    value={attendanceForm.sessionDate}
+                                    onChange={(e) =>
+                                      setAttendanceForm({
+                                        ...attendanceForm,
+                                        sessionDate: e.target.value,
+                                      })
+                                    }
+                                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                                    required
+                                  />
+                                </div>
+
+                                <div className="space-y-2">
+                                  <label className="block text-sm font-medium text-gray-300">
+                                    Motion Type
+                                  </label>
+                                  <input
+                                    type="text"
+                                    value={attendanceForm.motiontype}
+                                    onChange={(e) =>
+                                      setAttendanceForm({
+                                        ...attendanceForm,
+                                        motiontype: e.target.value,
+                                      })
+                                    }
+                                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                                    required
+                                    placeholder="e.g. THW ban..."
+                                  />
+                                </div>
+
+                                <div className="space-y-2 md:col-span-2">
+                                  <label className="block text-sm font-medium text-gray-300">
+                                    Chair
+                                  </label>
+                                  <input
+                                    type="text"
+                                    value={attendanceForm.Chair}
+                                    onChange={(e) =>
+                                      setAttendanceForm({
+                                        ...attendanceForm,
+                                        Chair: e.target.value,
+                                      })
+                                    }
+                                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                                    required
+                                    placeholder="Name of the Chair"
+                                  />
+                                </div>
+                              </div>
+
+                              <div className="space-y-3">
+                                <div className="flex items-center justify-between">
+                                  <label className="block text-sm font-medium text-gray-300">
+                                    Member Attendance
+                                  </label>
+                                  <span className="text-xs text-gray-500">
+                                    {attendanceForm.attendanceData.filter(a => a.status === 'Present').length} Present
+                                  </span>
+                                </div>
+
+                                <div className="bg-gray-800/50 rounded-xl border border-gray-700 p-4 max-h-[400px] overflow-y-auto custom-scrollbar">
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    {members.map((member) => {
+                                      const attendance = attendanceForm.attendanceData.find(
+                                        (a) => a.memberId === member.id
+                                      );
+                                      const isPresent = attendance?.status === "Present";
+
+                                      return (
+                                        <div
+                                          key={member.id}
+                                          onClick={() => toggleMemberAttendance(member.id)}
+                                          className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all border ${isPresent
+                                            ? "bg-blue-600/10 border-blue-500/50 hover:bg-blue-600/20"
+                                            : "bg-gray-700/30 border-gray-700 hover:bg-gray-700/50"
+                                            }`}
+                                        >
+                                          <div className="flex items-center space-x-3 overflow-hidden">
+                                            <div className={`w-2 h-2 rounded-full flex-shrink-0 ${isPresent ? "bg-blue-500" : "bg-gray-600"}`} />
+                                            <div className="min-w-0">
+                                              <p className={`font-medium truncate ${isPresent ? "text-white" : "text-gray-400"}`}>
+                                                {member.name}
+                                              </p>
+                                              <p className="text-xs text-gray-500 truncate">
+                                                {member.email}
+                                              </p>
+                                            </div>
+                                          </div>
+
+                                          <div className={`px-3 py-1 rounded text-xs font-medium transition-colors ${isPresent
+                                            ? "bg-blue-500 text-white"
+                                            : "bg-gray-700 text-gray-400"
+                                            }`}>
+                                            {isPresent ? "Present" : "Absent"}
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
                                   </div>
-                                );
-                              })}
-                            </div>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center gap-4 pt-4 border-t border-gray-800">
+                                <button
+                                  type="button"
+                                  onClick={() => setShowAttendanceModal(false)}
+                                  className="px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl text-gray-300 font-medium transition-colors"
+                                >
+                                  Cancel
+                                </button>
+                                <button
+                                  type="submit"
+                                  className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl text-white font-bold shadow-lg shadow-blue-500/20 transition-all transform hover:scale-[1.02]"
+                                >
+                                  Submit Session Report
+                                </button>
+                              </div>
+                            </form>
                           </div>
-                          <div className="flex space-x-3 pt-4">
-                            <button
-                              type="submit"
-                              className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg text-white font-bold shadow-lg shadow-blue-500/20 transition-all"
-                            >
-                              Submit Attendance
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => setShowAttendanceModal(false)}
-                              className="flex-1 px-4 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium transition-colors"
-                            >
-                              Cancel
-                            </button>
-                          </div>
-                        </form>
+                        </div>
                       </div>
                     </div>
                   )}

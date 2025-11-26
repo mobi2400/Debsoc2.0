@@ -18,6 +18,8 @@ import {
 } from "lucide-react";
 import UnverifiedView from "@/components/UnverifiedView";
 
+export const dynamic = "force-dynamic";
+
 export default function MemberDashboard() {
   const { user, logout, isAuthenticated, isVerified } = useAuth();
   const router = useRouter();

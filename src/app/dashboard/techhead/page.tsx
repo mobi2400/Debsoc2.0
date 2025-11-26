@@ -1,15 +1,17 @@
 "use client";
-import React, {useState, useEffect} from "react";
-import {useRouter} from "next/navigation";
-import {useAuth} from "@/contexts/AuthContext";
-import {techHeadApi, UnverifiedUsers} from "@/lib/api";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import { techHeadApi, UnverifiedUsers } from "@/lib/api";
 import Navbar from "@/components/Navbar";
-import {Toaster} from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
-import {Settings, Users, CheckCircle, LogOut, Crown, User} from "lucide-react";
+import { Settings, Users, CheckCircle, LogOut, Crown, User } from "lucide-react";
+
+export const dynamic = "force-dynamic";
 
 export default function TechHeadDashboard() {
-  const {user, logout, isAuthenticated, isLoading} = useAuth();
+  const { user, logout, isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
   const [unverifiedUsers, setUnverifiedUsers] =
     useState<UnverifiedUsers | null>(null);
