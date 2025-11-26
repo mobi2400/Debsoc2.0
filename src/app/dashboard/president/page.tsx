@@ -47,6 +47,8 @@ export default function PresidentDashboard() {
     feedback: "",
     memberId: "",
   });
+  const [isAssigningTask, setIsAssigningTask] = useState(false);
+  const [isSendingFeedback, setIsSendingFeedback] = useState(false);
 
   useEffect(() => {
     if (isLoading) return;
@@ -107,6 +109,8 @@ export default function PresidentDashboard() {
 
   const handleAssignTask = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isAssigningTask) return;
+    setIsAssigningTask(true);
     try {
       await presidentApi.assignTask({
         name: taskForm.name,
@@ -133,11 +137,15 @@ export default function PresidentDashboard() {
       toast.error(
         error instanceof Error ? error.message : "Failed to assign task"
       );
+    } finally {
+      setIsAssigningTask(false);
     }
   };
 
   const handleGiveFeedback = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSendingFeedback) return;
+    setIsSendingFeedback(true);
     try {
       await presidentApi.giveFeedback(
         feedbackForm.feedback,
@@ -151,6 +159,8 @@ export default function PresidentDashboard() {
       toast.error(
         error instanceof Error ? error.message : "Failed to send feedback"
       );
+    } finally {
+      setIsSendingFeedback(false);
     }
   };
 
@@ -461,9 +471,10 @@ export default function PresidentDashboard() {
                             </button>
                             <button
                               type="submit"
-                              className="flex-1 px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:opacity-90 rounded-lg text-white font-medium"
+                              disabled={isAssigningTask}
+                              className="flex-1 px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:opacity-90 rounded-lg text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                              Assign Task
+                              {isAssigningTask ? "Assigning..." : "Assign Task"}
                             </button>
                           </div>
                         </form>
@@ -591,9 +602,10 @@ export default function PresidentDashboard() {
                             </button>
                             <button
                               type="submit"
-                              className="flex-1 px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:opacity-90 rounded-lg text-white font-medium"
+                              disabled={isSendingFeedback}
+                              className="flex-1 px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:opacity-90 rounded-lg text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                              Send Feedback
+                              {isSendingFeedback ? "Sending..." : "Send Feedback"}
                             </button>
                           </div>
                         </form>
@@ -714,7 +726,7 @@ export default function PresidentDashboard() {
             </>
           )}
         </div>
-      </div >
+      </div>
       <Toaster
         position="top-right"
         toastOptions={{

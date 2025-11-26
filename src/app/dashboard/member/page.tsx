@@ -37,6 +37,7 @@ export default function MemberDashboard() {
     message: "",
     presidentId: "",
   });
+  const [isSendingMessage, setIsSendingMessage] = useState(false);
 
   useEffect(() => {
     if (isLoading) return;
@@ -95,6 +96,8 @@ export default function MemberDashboard() {
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSendingMessage) return;
+    setIsSendingMessage(true);
     try {
       await memberApi.sendMessageToPresident(
         messageForm.message,
@@ -108,6 +111,8 @@ export default function MemberDashboard() {
       toast.error(
         error instanceof Error ? error.message : "Failed to send message"
       );
+    } finally {
+      setIsSendingMessage(false);
     }
   };
 
@@ -427,9 +432,10 @@ export default function MemberDashboard() {
                             </button>
                             <button
                               type="submit"
-                              className="flex-1 px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:opacity-90 rounded-lg text-white font-medium"
+                              disabled={isSendingMessage}
+                              className="flex-1 px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:opacity-90 rounded-lg text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                              Send Message
+                              {isSendingMessage ? "Sending..." : "Send Message"}
                             </button>
                           </div>
                         </form>

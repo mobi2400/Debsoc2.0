@@ -52,6 +52,9 @@ export default function CabinetDashboard() {
     message: "",
     presidentId: "",
   });
+  const [isSubmittingAttendance, setIsSubmittingAttendance] = useState(false);
+  const [isSendingFeedback, setIsSendingFeedback] = useState(false);
+  const [isSendingMessage, setIsSendingMessage] = useState(false);
 
   useEffect(() => {
     if (isLoading) return;
@@ -118,6 +121,8 @@ export default function CabinetDashboard() {
 
   const handleMarkAttendance = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmittingAttendance) return;
+    setIsSubmittingAttendance(true);
     try {
       // Convert datetime-local format to ISO string
       let sessionDateISO = attendanceForm.sessionDate;
@@ -194,11 +199,15 @@ export default function CabinetDashboard() {
       toast.error(errorMessage, {
         duration: 5000, // Show for 5 seconds to read the full error
       });
+    } finally {
+      setIsSubmittingAttendance(false);
     }
   };
 
   const handleGiveFeedback = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSendingFeedback) return;
+    setIsSendingFeedback(true);
     try {
       await cabinetApi.giveFeedback(
         feedbackForm.feedback,
@@ -211,11 +220,15 @@ export default function CabinetDashboard() {
       toast.error(
         error instanceof Error ? error.message : "Failed to send feedback"
       );
+    } finally {
+      setIsSendingFeedback(false);
     }
   };
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSendingMessage) return;
+    setIsSendingMessage(true);
     try {
       await cabinetApi.sendMessageToPresident(
         messageForm.message,
@@ -228,6 +241,8 @@ export default function CabinetDashboard() {
       toast.error(
         error instanceof Error ? error.message : "Failed to send message"
       );
+    } finally {
+      setIsSendingMessage(false);
     }
   };
 
@@ -721,9 +736,10 @@ export default function CabinetDashboard() {
                     </button>
                     <button
                       type="submit"
-                      className="w-full md:flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl text-white font-bold shadow-lg shadow-blue-500/20 transition-all transform hover:scale-[1.02]"
+                      disabled={isSubmittingAttendance}
+                      className="w-full md:flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl text-white font-bold shadow-lg shadow-blue-500/20 transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Submit Session Report
+                      {isSubmittingAttendance ? "Submitting..." : "Submit Session Report"}
                     </button>
                   </div>
                 </form>
@@ -793,9 +809,10 @@ export default function CabinetDashboard() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium"
+                  disabled={isSendingFeedback}
+                  className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Send Feedback
+                  {isSendingFeedback ? "Sending..." : "Send Feedback"}
                 </button>
               </div>
             </form>
@@ -864,9 +881,10 @@ export default function CabinetDashboard() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium"
+                  disabled={isSendingMessage}
+                  className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Send Message
+                  {isSendingMessage ? "Sending..." : "Send Message"}
                 </button>
               </div>
             </form>
