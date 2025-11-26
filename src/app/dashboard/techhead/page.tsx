@@ -20,10 +20,16 @@ export default function TechHeadDashboard() {
 
   useEffect(() => {
     if (isLoading) return;
-    if (!isAuthenticated || user?.role !== "TechHead") {
+    if (!isAuthenticated) {
       router.push("/login");
       return;
     }
+
+    if (user?.role !== "TechHead") {
+      router.push("/login");
+      return;
+    }
+
     loadUnverifiedUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, user, isLoading]);

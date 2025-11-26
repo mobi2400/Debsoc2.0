@@ -50,10 +50,16 @@ export default function PresidentDashboard() {
 
   useEffect(() => {
     if (isLoading) return;
-    if (!isAuthenticated || user?.role !== "President") {
+    if (!isAuthenticated) {
       router.push("/login");
       return;
     }
+
+    if (user?.role !== "President") {
+      router.push("/login");
+      return;
+    }
+
     loadDashboard();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, user, isVerified, isLoading]);

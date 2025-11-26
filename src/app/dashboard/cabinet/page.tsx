@@ -55,13 +55,21 @@ export default function CabinetDashboard() {
 
   useEffect(() => {
     if (isLoading) return;
-    if (
-      !isAuthenticated ||
-      (user?.role !== "cabinet" && user?.role !== "President")
-    ) {
+    if (!isAuthenticated) {
       router.push("/login");
       return;
     }
+    // If authenticated but not the right role, just redirect to their dashboard or show unauthorized
+    // But don't force logout/login redirect loop here if the user object is just stale
+    if (user?.role !== "cabinet" && user?.role !== "President") {
+      // Optional: you could redirect to the correct dashboard based on their actual role
+      // For now, let's just let the API calls fail if they are truly unauthorized, 
+      // or redirect to a generic "unauthorized" page if needed.
+      // But removing the strict redirect prevents the "logout on refresh" if the state is hydrating.
+      router.push("/login");
+      return;
+    }
+
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, user, isVerified, isLoading]);

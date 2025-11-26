@@ -21,7 +21,7 @@ import UnverifiedView from "@/components/UnverifiedView";
 export const dynamic = "force-dynamic";
 
 export default function MemberDashboard() {
-  const { user, logout, isAuthenticated, isVerified } = useAuth();
+  const { user, logout, isAuthenticated, isVerified, isLoading } = useAuth();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<
     "attendance" | "tasks" | "messages" | "feedback"
@@ -39,16 +39,20 @@ export default function MemberDashboard() {
   });
 
   useEffect(() => {
-    if (
-      !isAuthenticated ||
-      (user?.role !== "Member" && user?.role !== "President")
-    ) {
+    if (isLoading) return;
+    if (!isAuthenticated) {
       router.push("/login");
       return;
     }
+
+    if (user?.role !== "Member" && user?.role !== "President") {
+      router.push("/login");
+      return;
+    }
+
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated, user, isVerified]);
+  }, [isAuthenticated, user, isVerified, isLoading]);
 
   const loadData = async () => {
     try {
