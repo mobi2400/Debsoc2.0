@@ -146,8 +146,8 @@ export default function CabinetDashboard() {
         sessionDate: sessionDateISO,
         motiontype: attendanceForm.motiontype.trim(),
         Chair: attendanceForm.Chair.trim(),
-        attendanceData: attendanceForm.attendanceData.length > 0 
-          ? attendanceForm.attendanceData 
+        attendanceData: attendanceForm.attendanceData.length > 0
+          ? attendanceForm.attendanceData
           : [], // Allow empty array - backend will handle it
       };
 
@@ -387,158 +387,7 @@ export default function CabinetDashboard() {
                     <span>Create New Session</span>
                   </button>
 
-                  {showAttendanceModal && (
-                    <div className="fixed inset-0 z-[100] bg-gray-900 overflow-y-auto animate-pop-in">
-                      <div className="min-h-screen px-4 py-8 md:py-12">
-                        <button
-                          onClick={() => setShowAttendanceModal(false)}
-                          className="fixed top-6 right-6 p-3 bg-gray-800 hover:bg-gray-700 rounded-full text-gray-400 hover:text-white transition-colors z-50 shadow-lg border border-gray-700"
-                        >
-                          <X className="w-6 h-6" />
-                        </button>
 
-                        <div className="container mx-auto max-w-5xl">
-
-                          <div className="p-8">
-                            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                              <div className="p-2 bg-blue-500/20 rounded-lg">
-                                <Calendar className="w-6 h-6 text-blue-400" />
-                              </div>
-                              Create Session & Mark Attendance
-                            </h3>
-
-                            <form onSubmit={handleMarkAttendance} className="space-y-8">
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="space-y-2">
-                                  <label className="block text-sm font-medium text-gray-300">
-                                    Session Date & Time
-                                  </label>
-                                  <input
-                                    type="datetime-local"
-                                    value={attendanceForm.sessionDate}
-                                    onChange={(e) =>
-                                      setAttendanceForm({
-                                        ...attendanceForm,
-                                        sessionDate: e.target.value,
-                                      })
-                                    }
-                                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                                    required
-                                  />
-                                </div>
-
-                                <div className="space-y-2">
-                                  <label className="block text-sm font-medium text-gray-300">
-                                    Motion Type
-                                  </label>
-                                  <input
-                                    type="text"
-                                    value={attendanceForm.motiontype}
-                                    onChange={(e) =>
-                                      setAttendanceForm({
-                                        ...attendanceForm,
-                                        motiontype: e.target.value,
-                                      })
-                                    }
-                                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                                    required
-                                    placeholder="e.g. THW ban..."
-                                  />
-                                </div>
-
-                                <div className="space-y-2 md:col-span-2">
-                                  <label className="block text-sm font-medium text-gray-300">
-                                    Chair
-                                  </label>
-                                  <input
-                                    type="text"
-                                    value={attendanceForm.Chair}
-                                    onChange={(e) =>
-                                      setAttendanceForm({
-                                        ...attendanceForm,
-                                        Chair: e.target.value,
-                                      })
-                                    }
-                                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                                    required
-                                    placeholder="Name of the Chair"
-                                  />
-                                </div>
-                              </div>
-
-                              <div className="space-y-3">
-                                <div className="flex items-center justify-between">
-                                  <label className="block text-sm font-medium text-gray-300">
-                                    Member Attendance
-                                  </label>
-                                  <span className="text-xs text-gray-500">
-                                    {attendanceForm.attendanceData.filter(a => a.status === 'Present').length} Present
-                                  </span>
-                                </div>
-
-                                <div className="bg-gray-800/50 rounded-xl border border-gray-700 p-4 max-h-[400px] overflow-y-auto custom-scrollbar">
-                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                    {members.map((member) => {
-                                      const attendance = attendanceForm.attendanceData.find(
-                                        (a) => a.memberId === member.id
-                                      );
-                                      const isPresent = attendance?.status === "Present";
-
-                                      return (
-                                        <div
-                                          key={member.id}
-                                          onClick={() => toggleMemberAttendance(member.id)}
-                                          className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all border ${isPresent
-                                            ? "bg-blue-600/10 border-blue-500/50 hover:bg-blue-600/20"
-                                            : "bg-gray-700/30 border-gray-700 hover:bg-gray-700/50"
-                                            }`}
-                                        >
-                                          <div className="flex items-center space-x-3 overflow-hidden">
-                                            <div className={`w-2 h-2 rounded-full flex-shrink-0 ${isPresent ? "bg-blue-500" : "bg-gray-600"}`} />
-                                            <div className="min-w-0">
-                                              <p className={`font-medium truncate ${isPresent ? "text-white" : "text-gray-400"}`}>
-                                                {member.name}
-                                              </p>
-                                              <p className="text-xs text-gray-500 truncate">
-                                                {member.email}
-                                              </p>
-                                            </div>
-                                          </div>
-
-                                          <div className={`px-3 py-1 rounded text-xs font-medium transition-colors ${isPresent
-                                            ? "bg-blue-500 text-white"
-                                            : "bg-gray-700 text-gray-400"
-                                            }`}>
-                                            {isPresent ? "Present" : "Absent"}
-                                          </div>
-                                        </div>
-                                      );
-                                    })}
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div className="flex items-center gap-4 pt-4 border-t border-gray-800">
-                                <button
-                                  type="button"
-                                  onClick={() => setShowAttendanceModal(false)}
-                                  className="px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl text-gray-300 font-medium transition-colors"
-                                >
-                                  Cancel
-                                </button>
-                                <button
-                                  type="submit"
-                                  className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl text-white font-bold shadow-lg shadow-blue-500/20 transition-all transform hover:scale-[1.02]"
-                                >
-                                  Submit Session Report
-                                </button>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
                 </div>
               )}
 
@@ -557,75 +406,7 @@ export default function CabinetDashboard() {
                       <span>New Feedback</span>
                     </button>
                   </div>
-                  {showFeedbackModal && (
-                    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                      <div className="bg-gray-800 rounded-xl p-6 w-full max-w-md">
-                        <h3 className="text-xl font-bold text-white mb-4">
-                          Give Feedback to Member
-                        </h3>
-                        <form
-                          onSubmit={handleGiveFeedback}
-                          className="space-y-4"
-                        >
-                          <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-1">
-                              Select Member
-                            </label>
-                            <select
-                              value={feedbackForm.memberId}
-                              onChange={(e) =>
-                                setFeedbackForm({
-                                  ...feedbackForm,
-                                  memberId: e.target.value,
-                                })
-                              }
-                              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                              required
-                            >
-                              <option value="">Select Member...</option>
-                              {members.map((member) => (
-                                <option key={member.id} value={member.id}>
-                                  {member.name}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-1">
-                              Feedback
-                            </label>
-                            <textarea
-                              value={feedbackForm.feedback}
-                              onChange={(e) =>
-                                setFeedbackForm({
-                                  ...feedbackForm,
-                                  feedback: e.target.value,
-                                })
-                              }
-                              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                              rows={4}
-                              required
-                            />
-                          </div>
-                          <div className="flex space-x-3">
-                            <button
-                              type="submit"
-                              className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium"
-                            >
-                              Send Feedback
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => setShowFeedbackModal(false)}
-                              className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium"
-                            >
-                              Cancel
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  )}
+
                   <div className="mt-8">
                     <h3 className="text-lg font-bold text-white mb-4">
                       Sent Feedback History
@@ -672,76 +453,7 @@ export default function CabinetDashboard() {
                         <span>New Message</span>
                       </button>
                     </div>
-                    {showMessageModal && (
-                      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                        <div className="bg-gray-800 rounded-xl p-6 w-full max-w-md">
-                          <h3 className="text-xl font-bold text-white mb-4">
-                            Send Anonymous Message
-                          </h3>
-                          <form
-                            onSubmit={handleSendMessage}
-                            className="space-y-4"
-                          >
-                            <div>
-                              <label className="block text-sm font-medium text-gray-300 mb-1">
-                                Select President
-                              </label>
-                              <select
-                                value={messageForm.presidentId}
-                                onChange={(e) =>
-                                  setMessageForm({
-                                    ...messageForm,
-                                    presidentId: e.target.value,
-                                  })
-                                }
-                                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white mb-4"
-                                required
-                              >
-                                <option value="">Select President...</option>
-                                {presidents.map((president) => (
-                                  <option key={president.id} value={president.id}>
-                                    {president.name} - {president.email}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-300 mb-1">
-                                Message
-                              </label>
-                              <textarea
-                                value={messageForm.message}
-                                onChange={(e) =>
-                                  setMessageForm({
-                                    ...messageForm,
-                                    message: e.target.value,
-                                  })
-                                }
-                                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                rows={4}
-                                required
-                                placeholder="Type your anonymous message to the President..."
-                              />
-                            </div>
-                            <div className="flex space-x-3">
-                              <button
-                                type="submit"
-                                className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium"
-                              >
-                                Send Message
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => setShowMessageModal(false)}
-                                className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium"
-                              >
-                                Cancel
-                              </button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    )}
+
                     <div className="mt-4 p-4 bg-blue-600/20 border border-blue-600/50 rounded-lg">
                       <p className="text-blue-300 text-sm">
                         💡 Your messages are sent anonymously. The President will
@@ -840,6 +552,300 @@ export default function CabinetDashboard() {
           )}
         </div >
       </div >
+      {/* Modals moved to root to fix stacking context issues */}
+      {showAttendanceModal && (
+        <div className="fixed inset-0 z-[100] bg-gray-900 overflow-y-auto animate-pop-in">
+          <div className="min-h-screen px-4 py-8 md:py-12">
+            <button
+              onClick={() => setShowAttendanceModal(false)}
+              className="fixed top-6 right-6 p-3 bg-gray-800 hover:bg-gray-700 rounded-full text-gray-400 hover:text-white transition-colors z-50 shadow-lg border border-gray-700"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="container mx-auto max-w-5xl">
+              <div className="p-8">
+                <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                  <div className="p-2 bg-blue-500/20 rounded-lg">
+                    <Calendar className="w-6 h-6 text-blue-400" />
+                  </div>
+                  Create Session & Mark Attendance
+                </h3>
+
+                <form onSubmit={handleMarkAttendance} className="space-y-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="block text-sm font-medium text-gray-300">
+                        Session Date & Time
+                      </label>
+                      <input
+                        type="datetime-local"
+                        value={attendanceForm.sessionDate}
+                        onChange={(e) =>
+                          setAttendanceForm({
+                            ...attendanceForm,
+                            sessionDate: e.target.value,
+                          })
+                        }
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="block text-sm font-medium text-gray-300">
+                        Motion Type
+                      </label>
+                      <input
+                        type="text"
+                        value={attendanceForm.motiontype}
+                        onChange={(e) =>
+                          setAttendanceForm({
+                            ...attendanceForm,
+                            motiontype: e.target.value,
+                          })
+                        }
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                        required
+                        placeholder="e.g. THW ban..."
+                      />
+                    </div>
+
+                    <div className="space-y-2 md:col-span-2">
+                      <label className="block text-sm font-medium text-gray-300">
+                        Chair
+                      </label>
+                      <input
+                        type="text"
+                        value={attendanceForm.Chair}
+                        onChange={(e) =>
+                          setAttendanceForm({
+                            ...attendanceForm,
+                            Chair: e.target.value,
+                          })
+                        }
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                        required
+                        placeholder="Name of the Chair"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <label className="block text-sm font-medium text-gray-300">
+                        Member Attendance
+                      </label>
+                      <span className="text-xs text-gray-500">
+                        {attendanceForm.attendanceData.filter(a => a.status === 'Present').length} Present
+                      </span>
+                    </div>
+
+                    <div className="bg-gray-800/50 rounded-xl border border-gray-700 p-4 max-h-[400px] overflow-y-auto custom-scrollbar">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {members.map((member) => {
+                          const attendance = attendanceForm.attendanceData.find(
+                            (a) => a.memberId === member.id
+                          );
+                          const isPresent = attendance?.status === "Present";
+
+                          return (
+                            <div
+                              key={member.id}
+                              onClick={() => toggleMemberAttendance(member.id)}
+                              className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all border ${isPresent
+                                ? "bg-blue-600/10 border-blue-500/50 hover:bg-blue-600/20"
+                                : "bg-gray-700/30 border-gray-700 hover:bg-gray-700/50"
+                                }`}
+                            >
+                              <div className="flex items-center space-x-3 overflow-hidden">
+                                <div className={`w-2 h-2 rounded-full flex-shrink-0 ${isPresent ? "bg-blue-500" : "bg-gray-600"}`} />
+                                <div className="min-w-0">
+                                  <p className={`font-medium truncate ${isPresent ? "text-white" : "text-gray-400"}`}>
+                                    {member.name}
+                                  </p>
+                                  <p className="text-xs text-gray-500 truncate">
+                                    {member.email}
+                                  </p>
+                                </div>
+                              </div>
+
+                              <div className={`px-3 py-1 rounded text-xs font-medium transition-colors ${isPresent
+                                ? "bg-blue-500 text-white"
+                                : "bg-gray-700 text-gray-400"
+                                }`}>
+                                {isPresent ? "Present" : "Absent"}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-4 pt-4 border-t border-gray-800">
+                    <button
+                      type="button"
+                      onClick={() => setShowAttendanceModal(false)}
+                      className="px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl text-gray-300 font-medium transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl text-white font-bold shadow-lg shadow-blue-500/20 transition-all transform hover:scale-[1.02]"
+                    >
+                      Submit Session Report
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showFeedbackModal && (
+        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center">
+          <div className="bg-gray-800 rounded-xl p-6 w-full max-w-md shadow-2xl border border-gray-700 animate-pop-in">
+            <h3 className="text-xl font-bold text-white mb-4">
+              Give Feedback to Member
+            </h3>
+            <form
+              onSubmit={handleGiveFeedback}
+              className="space-y-4"
+            >
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1">
+                  Select Member
+                </label>
+                <select
+                  value={feedbackForm.memberId}
+                  onChange={(e) =>
+                    setFeedbackForm({
+                      ...feedbackForm,
+                      memberId: e.target.value,
+                    })
+                  }
+                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                  required
+                >
+                  <option value="">Select Member...</option>
+                  {members.map((member) => (
+                    <option key={member.id} value={member.id}>
+                      {member.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1">
+                  Feedback
+                </label>
+                <textarea
+                  value={feedbackForm.feedback}
+                  onChange={(e) =>
+                    setFeedbackForm({
+                      ...feedbackForm,
+                      feedback: e.target.value,
+                    })
+                  }
+                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                  rows={4}
+                  required
+                />
+              </div>
+              <div className="flex space-x-3">
+                <button
+                  type="submit"
+                  className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium"
+                >
+                  Send Feedback
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowFeedbackModal(false)}
+                  className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {showMessageModal && (
+        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center">
+          <div className="bg-gray-800 rounded-xl p-6 w-full max-w-md shadow-2xl border border-gray-700 animate-pop-in">
+            <h3 className="text-xl font-bold text-white mb-4">
+              Send Anonymous Message
+            </h3>
+            <form
+              onSubmit={handleSendMessage}
+              className="space-y-4"
+            >
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1">
+                  Select President
+                </label>
+                <select
+                  value={messageForm.presidentId}
+                  onChange={(e) =>
+                    setMessageForm({
+                      ...messageForm,
+                      presidentId: e.target.value,
+                    })
+                  }
+                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white mb-4 focus:ring-2 focus:ring-blue-500 outline-none"
+                  required
+                >
+                  <option value="">Select President...</option>
+                  {presidents.map((president) => (
+                    <option key={president.id} value={president.id}>
+                      {president.name} - {president.email}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1">
+                  Message
+                </label>
+                <textarea
+                  value={messageForm.message}
+                  onChange={(e) =>
+                    setMessageForm({
+                      ...messageForm,
+                      message: e.target.value,
+                    })
+                  }
+                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                  rows={4}
+                  required
+                  placeholder="Type your anonymous message to the President..."
+                />
+              </div>
+              <div className="flex space-x-3">
+                <button
+                  type="submit"
+                  className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium"
+                >
+                  Send Message
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowMessageModal(false)}
+                  className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       <Toaster
         position="top-right"
         toastOptions={{
