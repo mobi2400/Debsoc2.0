@@ -355,28 +355,54 @@ export default function PresidentDashboard() {
                     </button>
                   </div>
                   {showTaskModal && (
-                    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                      <div className="bg-gray-800 rounded-xl p-6 w-full max-w-md animate-pop-in">
-                        <h3 className="text-xl font-bold text-white mb-4">
-                          Assign New Task
-                        </h3>
+                    <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-fadeIn overflow-y-auto">
+                      <div className="bg-gray-800/90 backdrop-blur-xl rounded-2xl p-6 w-full max-w-2xl shadow-2xl border border-gray-700/50 animate-pop-in my-8">
+                        <div className="flex items-center justify-between mb-5">
+                          <h3 className="text-2xl font-bold text-white flex items-center gap-3">
+                            <div className="p-2 bg-yellow-500/20 rounded-lg">
+                              <Plus className="w-6 h-6 text-yellow-400" />
+                            </div>
+                            Assign New Task
+                          </h3>
+                        </div>
                         <form onSubmit={handleAssignTask} className="space-y-4">
-                          <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-1">
-                              Task Name
-                            </label>
-                            <input
-                              type="text"
-                              value={taskForm.name}
-                              onChange={(e) =>
-                                setTaskForm({ ...taskForm, name: e.target.value })
-                              }
-                              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                              required
-                            />
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                Task Name
+                              </label>
+                              <input
+                                type="text"
+                                value={taskForm.name}
+                                onChange={(e) =>
+                                  setTaskForm({ ...taskForm, name: e.target.value })
+                                }
+                                className="w-full px-4 py-2.5 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all hover:bg-gray-700/70"
+                                required
+                                placeholder="Enter task name"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                Deadline
+                              </label>
+                              <input
+                                type="datetime-local"
+                                value={taskForm.deadline}
+                                onChange={(e) =>
+                                  setTaskForm({
+                                    ...taskForm,
+                                    deadline: e.target.value,
+                                  })
+                                }
+                                className="w-full px-4 py-2.5 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all hover:bg-gray-700/70"
+                                required
+                              />
+                            </div>
                           </div>
+
                           <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-1">
+                            <label className="block text-sm font-semibold text-gray-300 mb-2">
                               Description
                             </label>
                             <textarea
@@ -387,105 +413,100 @@ export default function PresidentDashboard() {
                                   description: e.target.value,
                                 })
                               }
-                              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                              className="w-full px-4 py-2.5 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all resize-none hover:bg-gray-700/70"
                               rows={3}
                               required
+                              placeholder="Describe the task..."
                             />
                           </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-1">
-                              Deadline
-                            </label>
-                            <input
-                              type="datetime-local"
-                              value={taskForm.deadline}
-                              onChange={(e) =>
-                                setTaskForm({
-                                  ...taskForm,
-                                  deadline: e.target.value,
-                                })
-                              }
-                              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                              required
-                            />
+
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                Assign To
+                              </label>
+                              <select
+                                value={taskForm.assignType}
+                                onChange={(e) =>
+                                  setTaskForm({
+                                    ...taskForm,
+                                    assignType: e.target.value as
+                                      | "cabinet"
+                                      | "member",
+                                  })
+                                }
+                                className="w-full px-4 py-2.5 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all hover:bg-gray-700/70"
+                              >
+                                <option value="cabinet">Cabinet</option>
+                                <option value="member">Member</option>
+                              </select>
+                            </div>
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                Select{" "}
+                                {taskForm.assignType === "cabinet"
+                                  ? "Cabinet Member"
+                                  : "Member"}
+                              </label>
+                              <select
+                                value={
+                                  taskForm.assignType === "cabinet"
+                                    ? taskForm.assignedToId
+                                    : taskForm.assignedToMemberId
+                                }
+                                onChange={(e) =>
+                                  setTaskForm({
+                                    ...taskForm,
+                                    assignedToId:
+                                      taskForm.assignType === "cabinet"
+                                        ? e.target.value
+                                        : "",
+                                    assignedToMemberId:
+                                      taskForm.assignType === "member"
+                                        ? e.target.value
+                                        : "",
+                                  })
+                                }
+                                className="w-full px-4 py-2.5 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all hover:bg-gray-700/70"
+                                required
+                              >
+                                <option value="">Select...</option>
+                                {taskForm.assignType === "cabinet"
+                                  ? cabinet.map((cab) => (
+                                    <option key={cab.id} value={cab.id}>
+                                      {cab.name} - {cab.position}
+                                    </option>
+                                  ))
+                                  : members.map((member) => (
+                                    <option key={member.id} value={member.id}>
+                                      {member.name}
+                                    </option>
+                                  ))}
+                              </select>
+                            </div>
                           </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-1">
-                              Assign To
-                            </label>
-                            <select
-                              value={taskForm.assignType}
-                              onChange={(e) =>
-                                setTaskForm({
-                                  ...taskForm,
-                                  assignType: e.target.value as
-                                    | "cabinet"
-                                    | "member",
-                                })
-                              }
-                              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                            >
-                              <option value="cabinet">Cabinet</option>
-                              <option value="member">Member</option>
-                            </select>
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-1">
-                              Select{" "}
-                              {taskForm.assignType === "cabinet"
-                                ? "Cabinet Member"
-                                : "Member"}
-                            </label>
-                            <select
-                              value={
-                                taskForm.assignType === "cabinet"
-                                  ? taskForm.assignedToId
-                                  : taskForm.assignedToMemberId
-                              }
-                              onChange={(e) =>
-                                setTaskForm({
-                                  ...taskForm,
-                                  assignedToId:
-                                    taskForm.assignType === "cabinet"
-                                      ? e.target.value
-                                      : "",
-                                  assignedToMemberId:
-                                    taskForm.assignType === "member"
-                                      ? e.target.value
-                                      : "",
-                                })
-                              }
-                              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                              required
-                            >
-                              <option value="">Select...</option>
-                              {taskForm.assignType === "cabinet"
-                                ? cabinet.map((cab) => (
-                                  <option key={cab.id} value={cab.id}>
-                                    {cab.name} - {cab.position}
-                                  </option>
-                                ))
-                                : members.map((member) => (
-                                  <option key={member.id} value={member.id}>
-                                    {member.name}
-                                  </option>
-                                ))}
-                            </select>
-                          </div>
-                          <div className="flex flex-col-reverse md:flex-row space-y-3 space-y-reverse md:space-y-0 md:space-x-3">
+
+                          <div className="flex flex-col-reverse md:flex-row gap-3 pt-2">
                             <button
                               type="button"
                               onClick={() => setShowTaskModal(false)}
-                              className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium"
+                              className="flex-1 px-6 py-3 bg-gray-700/50 hover:bg-gray-600/50 rounded-xl text-white font-semibold transition-all border border-gray-600 hover:border-gray-500"
                             >
                               Cancel
                             </button>
                             <button
                               type="submit"
                               disabled={isAssigningTask}
-                              className="flex-1 px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:opacity-90 rounded-lg text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                              className="flex-1 px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 rounded-xl text-white font-bold shadow-lg shadow-yellow-500/25 transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                             >
-                              {isAssigningTask ? "Assigning..." : "Assign Task"}
+                              {isAssigningTask ? (
+                                <span className="flex items-center justify-center gap-2">
+                                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                  Assigning...
+                                </span>
+                              ) : (
+                                "Assign Task"
+                              )}
                             </button>
                           </div>
                         </form>
@@ -554,17 +575,22 @@ export default function PresidentDashboard() {
                     </button>
                   </div>
                   {showFeedbackModal && (
-                    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                      <div className="bg-gray-800 rounded-xl p-6 w-full max-w-md animate-pop-in">
-                        <h3 className="text-xl font-bold text-white mb-4">
-                          Give Feedback to Member
-                        </h3>
+                    <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-fadeIn">
+                      <div className="bg-gray-800/90 backdrop-blur-xl rounded-2xl p-8 w-full max-w-lg shadow-2xl border border-gray-700/50 animate-pop-in">
+                        <div className="flex items-center justify-between mb-6">
+                          <h3 className="text-2xl font-bold text-white flex items-center gap-3">
+                            <div className="p-2 bg-yellow-500/20 rounded-lg">
+                              <MessageSquare className="w-6 h-6 text-yellow-400" />
+                            </div>
+                            Give Feedback to Member
+                          </h3>
+                        </div>
                         <form
                           onSubmit={handleGiveFeedback}
-                          className="space-y-4"
+                          className="space-y-5"
                         >
                           <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-1">
+                            <label className="block text-sm font-semibold text-gray-300 mb-2">
                               Select Member
                             </label>
                             <select
@@ -575,7 +601,7 @@ export default function PresidentDashboard() {
                                   memberId: e.target.value,
                                 })
                               }
-                              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                              className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all hover:bg-gray-700/70"
                               required
                             >
                               <option value="">Select Member...</option>
@@ -587,8 +613,8 @@ export default function PresidentDashboard() {
                             </select>
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-1">
-                              Feedback
+                            <label className="block text-sm font-semibold text-gray-300 mb-2">
+                              Feedback Message
                             </label>
                             <textarea
                               value={feedbackForm.feedback}
@@ -598,31 +624,40 @@ export default function PresidentDashboard() {
                                   feedback: e.target.value,
                                 })
                               }
-                              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                              rows={4}
+                              className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all resize-none hover:bg-gray-700/70"
+                              rows={5}
                               required
+                              placeholder="Write your feedback here..."
                             />
                           </div>
-                          <div className="flex flex-col-reverse md:flex-row space-y-3 space-y-reverse md:space-y-0 md:space-x-3">
+                          <div className="flex flex-col-reverse md:flex-row gap-3 pt-2">
                             <button
                               type="button"
                               onClick={() => setShowFeedbackModal(false)}
-                              className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium"
+                              className="flex-1 px-6 py-3 bg-gray-700/50 hover:bg-gray-600/50 rounded-xl text-white font-semibold transition-all border border-gray-600 hover:border-gray-500"
                             >
                               Cancel
                             </button>
                             <button
                               type="submit"
                               disabled={isSendingFeedback}
-                              className="flex-1 px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:opacity-90 rounded-lg text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                              className="flex-1 px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 rounded-xl text-white font-bold shadow-lg shadow-yellow-500/25 transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                             >
-                              {isSendingFeedback ? "Sending..." : "Send Feedback"}
+                              {isSendingFeedback ? (
+                                <span className="flex items-center justify-center gap-2">
+                                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                  Sending...
+                                </span>
+                              ) : (
+                                "Send Feedback"
+                              )}
                             </button>
                           </div>
                         </form>
                       </div>
                     </div>
                   )}
+
                   <div className="mt-8">
                     <h3 className="text-lg font-bold text-white mb-4">
                       Sent Feedback History
@@ -650,94 +685,99 @@ export default function PresidentDashboard() {
                       )}
                     </div>
                   </div>
-                </div>
-              )}
+                </div >
+              )
+              }
 
               {/* Sessions Tab */}
-              {activeTab === "sessions" && (
-                <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-4 md:p-6">
-                  <h2 className="text-xl font-bold text-white mb-4">
-                    Session Reports
-                  </h2>
-                  <div className="space-y-4">
-                    {sessions.length === 0 ? (
-                      <p className="text-gray-400">No sessions found</p>
-                    ) : (
-                      sessions.map((session) => (
-                        <div
-                          key={session.id}
-                          className="bg-gray-700/50 rounded-lg p-4"
-                        >
-                          <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
-                            <p className="text-white font-medium">
-                              {session.motiontype}
-                            </p>
+              {
+                activeTab === "sessions" && (
+                  <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-4 md:p-6">
+                    <h2 className="text-xl font-bold text-white mb-4">
+                      Session Reports
+                    </h2>
+                    <div className="space-y-4">
+                      {sessions.length === 0 ? (
+                        <p className="text-gray-400">No sessions found</p>
+                      ) : (
+                        sessions.map((session) => (
+                          <div
+                            key={session.id}
+                            className="bg-gray-700/50 rounded-lg p-4"
+                          >
+                            <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
+                              <p className="text-white font-medium">
+                                {session.motiontype}
+                              </p>
+                              <p className="text-gray-400 text-sm">
+                                {new Date(
+                                  session.sessionDate
+                                ).toLocaleDateString()}
+                              </p>
+                            </div>
                             <p className="text-gray-400 text-sm">
-                              {new Date(
-                                session.sessionDate
-                              ).toLocaleDateString()}
+                              Chair: {session.Chair}
                             </p>
+                            {session.attendance && (
+                              <p className="text-gray-400 text-sm mt-2">
+                                Attendance:{" "}
+                                {
+                                  session.attendance.filter(
+                                    (a) => a.status === "Present"
+                                  ).length
+                                }{" "}
+                                present,{" "}
+                                {
+                                  session.attendance.filter(
+                                    (a) => a.status === "Absent"
+                                  ).length
+                                }{" "}
+                                absent
+                              </p>
+                            )}
                           </div>
-                          <p className="text-gray-400 text-sm">
-                            Chair: {session.Chair}
-                          </p>
-                          {session.attendance && (
-                            <p className="text-gray-400 text-sm mt-2">
-                              Attendance:{" "}
-                              {
-                                session.attendance.filter(
-                                  (a) => a.status === "Present"
-                                ).length
-                              }{" "}
-                              present,{" "}
-                              {
-                                session.attendance.filter(
-                                  (a) => a.status === "Absent"
-                                ).length
-                              }{" "}
-                              absent
-                            </p>
-                          )}
-                        </div>
-                      ))
-                    )}
+                        ))
+                      )}
+                    </div>
                   </div>
-                </div>
-              )}
+                )
+              }
               {/* Messages Tab */}
-              {activeTab === "messages" && (
-                <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-4 md:p-6">
-                  <h2 className="text-xl font-bold text-white mb-4">
-                    Anonymous Messages
-                  </h2>
-                  <div className="space-y-4">
-                    {messages.length === 0 ? (
-                      <p className="text-gray-400">No messages found</p>
-                    ) : (
-                      messages.map((msg) => (
-                        <div
-                          key={msg.id}
-                          className="bg-gray-700/50 rounded-lg p-4"
-                        >
-                          <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
-                            <span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs uppercase font-bold self-start">
-                              From {msg.senderType}
-                            </span>
-                            <p className="text-gray-400 text-sm">
-                              {new Date(msg.createdAt).toLocaleDateString()}
-                            </p>
+              {
+                activeTab === "messages" && (
+                  <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-4 md:p-6">
+                    <h2 className="text-xl font-bold text-white mb-4">
+                      Anonymous Messages
+                    </h2>
+                    <div className="space-y-4">
+                      {messages.length === 0 ? (
+                        <p className="text-gray-400">No messages found</p>
+                      ) : (
+                        messages.map((msg) => (
+                          <div
+                            key={msg.id}
+                            className="bg-gray-700/50 rounded-lg p-4"
+                          >
+                            <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
+                              <span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs uppercase font-bold self-start">
+                                From {msg.senderType}
+                              </span>
+                              <p className="text-gray-400 text-sm">
+                                {new Date(msg.createdAt).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <p className="text-white">{msg.message}</p>
                           </div>
-                          <p className="text-white">{msg.message}</p>
-                        </div>
-                      ))
-                    )}
+                        ))
+                      )}
+                    </div>
                   </div>
-                </div>
-              )}
+                )
+              }
             </>
           )}
-        </div>
-      </div>
+        </div >
+      </div >
       <Toaster
         position="top-right"
         toastOptions={{
