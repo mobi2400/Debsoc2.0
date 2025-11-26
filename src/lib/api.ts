@@ -114,22 +114,22 @@ const apiCall = async <T>(
   });
 
   if (!response.ok) {
-    let errorData: { message?: string; error?: string; [key: string]: unknown };
+    let errorData: { message?: string; error?: string;[key: string]: unknown };
     try {
       errorData = await response.json();
     } catch {
       errorData = { message: "An error occurred" };
     }
-    
+
     // Include detailed error information if available
     const errorMessage = errorData.message || errorData.error || `HTTP error! status: ${response.status}`;
     const fullError = new Error(errorMessage) as Error & { details?: typeof errorData };
-    
+
     // Attach additional error details for debugging
     if (errorData.error) {
       fullError.details = errorData;
     }
-    
+
     throw fullError;
   }
 
@@ -261,12 +261,20 @@ export const cabinetApi = {
       body: JSON.stringify({ email, password }),
     });
   },
-  markAttendance: async (data: {
+  createSession: async (data: {
     sessionDate: string;
     motiontype: string;
     Chair: string;
-    attendanceData: Array<{ memberId: string; status: "Present" | "Absent" }>;
   }): Promise<{ message: string; session: Session }> => {
+    return apiCall("/cabinet/session/create", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+  },
+  markAttendance: async (data: {
+    sessionId: string;
+    attendanceData: Array<{ memberId: string; status: "Present" | "Absent" }>;
+  }): Promise<{ message: string; count: number }> => {
     return apiCall("/cabinet/attendance/mark", {
       method: "POST",
       body: JSON.stringify(data),

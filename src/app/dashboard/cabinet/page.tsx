@@ -127,18 +127,26 @@ export default function CabinetDashboard() {
         return;
       }
 
-      // Prepare the data to send
-      const dataToSend = {
+      // Step 1: Create Session
+      const sessionData = {
         sessionDate: sessionDateISO,
         motiontype: attendanceForm.motiontype.trim(),
         Chair: attendanceForm.Chair.trim(),
-        attendanceData: attendanceForm.attendanceData.length > 0
-          ? attendanceForm.attendanceData
-          : [], // Allow empty array - backend will handle it
       };
 
-      await cabinetApi.markAttendance(dataToSend);
-      toast.success("Attendance marked successfully");
+      const sessionResponse = await cabinetApi.createSession(sessionData);
+      const sessionId = sessionResponse.session.id;
+
+      // Step 2: Mark Attendance (if there is attendance data)
+      if (attendanceForm.attendanceData.length > 0) {
+        const attendanceData = {
+          sessionId: sessionId,
+          attendanceData: attendanceForm.attendanceData
+        };
+        await cabinetApi.markAttendance(attendanceData);
+      }
+
+      toast.success("Session created and attendance marked successfully");
       setShowAttendanceModal(false);
       setAttendanceForm({
         sessionDate: "",
@@ -148,10 +156,10 @@ export default function CabinetDashboard() {
       });
       loadData();
     } catch (error: unknown) {
-      console.error("Error marking attendance:", error);
+      console.error("Error creating session or marking attendance:", error);
 
       // Extract detailed error message
-      let errorMessage = "Failed to mark attendance";
+      let errorMessage = "Failed to create session";
       if (error instanceof Error) {
         errorMessage = error.message;
         // Check if there are additional details
