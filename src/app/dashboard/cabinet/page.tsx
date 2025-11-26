@@ -339,22 +339,27 @@ export default function CabinetDashboard() {
 
               {/* Attendance Tab */}
               {activeTab === "attendance" && (
-                <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-xl font-bold text-white">
-                      Mark Session Attendance
-                    </h2>
-                    <button
-                      onClick={() => setShowAttendanceModal(true)}
-                      className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium transition-colors flex items-center space-x-2"
-                    >
-                      <Plus className="w-4 h-4" />
-                      <span>New Session</span>
-                    </button>
+                <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-12 text-center">
+                  <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-blue-500/30">
+                    <Calendar className="w-10 h-10 text-blue-400" />
                   </div>
+                  <h2 className="text-3xl font-bold text-white mb-3">
+                    Mark Session Attendance
+                  </h2>
+                  <p className="text-gray-400 mb-8 max-w-lg mx-auto text-lg">
+                    Start a new debate session, record the motion, appoint a chair, and track member attendance efficiently.
+                  </p>
+                  <button
+                    onClick={() => setShowAttendanceModal(true)}
+                    className="group px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl text-white font-bold text-lg transition-all transform hover:scale-105 hover:shadow-xl hover:shadow-blue-500/25 flex items-center space-x-3 mx-auto"
+                  >
+                    <Plus className="w-6 h-6 group-hover:rotate-90 transition-transform" />
+                    <span>Create New Session</span>
+                  </button>
+
                   {showAttendanceModal && (
-                    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 overflow-y-auto">
-                      <div className="bg-gray-800 rounded-xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+                    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto text-left">
+                      <div className="bg-gray-800 rounded-xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-gray-700 shadow-2xl animate-pop-in">
                         <h3 className="text-xl font-bold text-white mb-4">
                           Create Session & Mark Attendance
                         </h3>
@@ -375,7 +380,7 @@ export default function CabinetDashboard() {
                                   sessionDate: e.target.value,
                                 })
                               }
-                              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                               required
                             />
                           </div>
@@ -392,8 +397,9 @@ export default function CabinetDashboard() {
                                   motiontype: e.target.value,
                                 })
                               }
-                              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                               required
+                              placeholder="e.g. THW ban..."
                             />
                           </div>
                           <div>
@@ -409,15 +415,16 @@ export default function CabinetDashboard() {
                                   Chair: e.target.value,
                                 })
                               }
-                              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                               required
+                              placeholder="Name of the Chair"
                             />
                           </div>
                           <div>
                             <label className="block text-sm font-medium text-gray-300 mb-2">
                               Member Attendance
                             </label>
-                            <div className="space-y-2 max-h-64 overflow-y-auto">
+                            <div className="space-y-2 max-h-64 overflow-y-auto pr-2 custom-scrollbar">
                               {members.map((member) => {
                                 const attendance =
                                   attendanceForm.attendanceData.find(
@@ -426,7 +433,7 @@ export default function CabinetDashboard() {
                                 return (
                                   <div
                                     key={member.id}
-                                    className="flex items-center justify-between bg-gray-700/50 rounded-lg p-3"
+                                    className="flex items-center justify-between bg-gray-700/50 rounded-lg p-3 hover:bg-gray-700 transition-colors"
                                   >
                                     <div>
                                       <p className="text-white font-medium">
@@ -441,11 +448,11 @@ export default function CabinetDashboard() {
                                       onClick={() =>
                                         toggleMemberAttendance(member.id)
                                       }
-                                      className={`px-4 py-2 rounded-lg font-medium transition-colors ${attendance?.status === "Present"
-                                        ? "bg-green-600 text-white"
+                                      className={`px-4 py-2 rounded-lg font-medium transition-all transform active:scale-95 ${attendance?.status === "Present"
+                                        ? "bg-green-600 text-white shadow-lg shadow-green-600/20"
                                         : attendance?.status === "Absent"
-                                          ? "bg-red-600 text-white"
-                                          : "bg-gray-600 text-gray-300"
+                                          ? "bg-red-600 text-white shadow-lg shadow-red-600/20"
+                                          : "bg-gray-600 text-gray-300 hover:bg-gray-500"
                                         }`}
                                     >
                                       {attendance?.status || "Mark"}
@@ -455,17 +462,17 @@ export default function CabinetDashboard() {
                               })}
                             </div>
                           </div>
-                          <div className="flex space-x-3">
+                          <div className="flex space-x-3 pt-4">
                             <button
                               type="submit"
-                              className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium"
+                              className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg text-white font-bold shadow-lg shadow-blue-500/20 transition-all"
                             >
                               Submit Attendance
                             </button>
                             <button
                               type="button"
                               onClick={() => setShowAttendanceModal(false)}
-                              className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium"
+                              className="flex-1 px-4 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium transition-colors"
                             >
                               Cancel
                             </button>
@@ -591,201 +598,201 @@ export default function CabinetDashboard() {
                 </div>
               )}
 
-{/* Messages Tab */ }
-{
-  activeTab === "messages" && (
-    <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold text-white">
-          Send Message to President
-        </h2>
-        <button
-          onClick={() => setShowMessageModal(true)}
-          className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium transition-colors flex items-center space-x-2"
-        >
-          <Plus className="w-4 h-4" />
-          <span>New Message</span>
-        </button>
-      </div>
-      {showMessageModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-gray-800 rounded-xl p-6 w-full max-w-md">
-            <h3 className="text-xl font-bold text-white mb-4">
-              Send Anonymous Message
-            </h3>
-            <form
-              onSubmit={handleSendMessage}
-              className="space-y-4"
-            >
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
-                  Select President
-                </label>
-                <select
-                  value={messageForm.presidentId}
-                  onChange={(e) =>
-                    setMessageForm({
-                      ...messageForm,
-                      presidentId: e.target.value,
-                    })
-                  }
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white mb-4"
-                  required
-                >
-                  <option value="">Select President...</option>
-                  {presidents.map((president) => (
-                    <option key={president.id} value={president.id}>
-                      {president.name} - {president.email}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
-                  Message
-                </label>
-                <textarea
-                  value={messageForm.message}
-                  onChange={(e) =>
-                    setMessageForm({
-                      ...messageForm,
-                      message: e.target.value,
-                    })
-                  }
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                  rows={4}
-                  required
-                  placeholder="Type your anonymous message to the President..."
-                />
-              </div>
-              <div className="flex space-x-3">
-                <button
-                  type="submit"
-                  className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium"
-                >
-                  Send Message
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowMessageModal(false)}
-                  className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-      <div className="mt-4 p-4 bg-blue-600/20 border border-blue-600/50 rounded-lg">
-        <p className="text-blue-300 text-sm">
-          💡 Your messages are sent anonymously. The President will
-          not know who sent them.
-        </p>
-        <p className="text-blue-300 text-xs mt-2">
-          Note: Please ensure you have the correct President ID.
-          Contact TechHead if you need assistance.
-        </p>
-      </div>
-      <div className="mt-8">
-        <h3 className="text-lg font-bold text-white mb-4">
-          Sent Messages History
-        </h3>
-        <div className="space-y-4">
-          {sentMessages.length === 0 ? (
-            <p className="text-gray-400">No messages sent yet</p>
-          ) : (
-            sentMessages.map((msg) => (
-              <div
-                key={msg.id}
-                className="bg-gray-700/50 rounded-lg p-4"
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <p className="text-white font-medium">
-                    To: {presidents.find(p => p.id === msg.presidentId)?.name || 'Unknown President'}
-                  </p>
-                  <p className="text-gray-400 text-sm">
-                    {new Date(msg.createdAt).toLocaleDateString()}
-                  </p>
-                </div>
-                <p className="text-gray-300">{msg.message}</p>
-              </div>
-            ))
-          )}
-        </div>
-      </div>
-    </div>
-  )
-}
+              {/* Messages Tab */}
+              {
+                activeTab === "messages" && (
+                  <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <h2 className="text-xl font-bold text-white">
+                        Send Message to President
+                      </h2>
+                      <button
+                        onClick={() => setShowMessageModal(true)}
+                        className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium transition-colors flex items-center space-x-2"
+                      >
+                        <Plus className="w-4 h-4" />
+                        <span>New Message</span>
+                      </button>
+                    </div>
+                    {showMessageModal && (
+                      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                        <div className="bg-gray-800 rounded-xl p-6 w-full max-w-md">
+                          <h3 className="text-xl font-bold text-white mb-4">
+                            Send Anonymous Message
+                          </h3>
+                          <form
+                            onSubmit={handleSendMessage}
+                            className="space-y-4"
+                          >
+                            <div>
+                              <label className="block text-sm font-medium text-gray-300 mb-1">
+                                Select President
+                              </label>
+                              <select
+                                value={messageForm.presidentId}
+                                onChange={(e) =>
+                                  setMessageForm({
+                                    ...messageForm,
+                                    presidentId: e.target.value,
+                                  })
+                                }
+                                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white mb-4"
+                                required
+                              >
+                                <option value="">Select President...</option>
+                                {presidents.map((president) => (
+                                  <option key={president.id} value={president.id}>
+                                    {president.name} - {president.email}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-gray-300 mb-1">
+                                Message
+                              </label>
+                              <textarea
+                                value={messageForm.message}
+                                onChange={(e) =>
+                                  setMessageForm({
+                                    ...messageForm,
+                                    message: e.target.value,
+                                  })
+                                }
+                                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                                rows={4}
+                                required
+                                placeholder="Type your anonymous message to the President..."
+                              />
+                            </div>
+                            <div className="flex space-x-3">
+                              <button
+                                type="submit"
+                                className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium"
+                              >
+                                Send Message
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setShowMessageModal(false)}
+                                className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium"
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    )}
+                    <div className="mt-4 p-4 bg-blue-600/20 border border-blue-600/50 rounded-lg">
+                      <p className="text-blue-300 text-sm">
+                        💡 Your messages are sent anonymously. The President will
+                        not know who sent them.
+                      </p>
+                      <p className="text-blue-300 text-xs mt-2">
+                        Note: Please ensure you have the correct President ID.
+                        Contact TechHead if you need assistance.
+                      </p>
+                    </div>
+                    <div className="mt-8">
+                      <h3 className="text-lg font-bold text-white mb-4">
+                        Sent Messages History
+                      </h3>
+                      <div className="space-y-4">
+                        {sentMessages.length === 0 ? (
+                          <p className="text-gray-400">No messages sent yet</p>
+                        ) : (
+                          sentMessages.map((msg) => (
+                            <div
+                              key={msg.id}
+                              className="bg-gray-700/50 rounded-lg p-4"
+                            >
+                              <div className="flex items-center justify-between mb-2">
+                                <p className="text-white font-medium">
+                                  To: {presidents.find(p => p.id === msg.presidentId)?.name || 'Unknown President'}
+                                </p>
+                                <p className="text-gray-400 text-sm">
+                                  {new Date(msg.createdAt).toLocaleDateString()}
+                                </p>
+                              </div>
+                              <p className="text-gray-300">{msg.message}</p>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
 
-{/* Sessions Tab */ }
-{
-  activeTab === "sessions" && (
-    <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6">
-      <h2 className="text-xl font-bold text-white mb-4">
-        Session Reports
-      </h2>
-      <div className="space-y-4">
-        {sessions.length === 0 ? (
-          <p className="text-gray-400">No sessions found</p>
-        ) : (
-          sessions.map((session) => (
-            <div
-              key={session.id}
-              className="bg-gray-700/50 rounded-lg p-4"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-white font-medium">
-                  {session.motiontype}
-                </p>
-                <p className="text-gray-400 text-sm">
-                  {new Date(
-                    session.sessionDate
-                  ).toLocaleDateString()}
-                </p>
-              </div>
-              <p className="text-gray-400 text-sm">
-                Chair: {session.Chair}
-              </p>
-              {session.attendance && (
-                <p className="text-gray-400 text-sm mt-2">
-                  Attendance:{" "}
-                  {
-                    session.attendance.filter(
-                      (a) => a.status === "Present"
-                    ).length
-                  }{" "}
-                  present,{" "}
-                  {
-                    session.attendance.filter(
-                      (a) => a.status === "Absent"
-                    ).length
-                  }{" "}
-                  absent
-                </p>
-              )}
-            </div>
-          ))
-        )}
-      </div>
-    </div>
-  )
-}
+              {/* Sessions Tab */}
+              {
+                activeTab === "sessions" && (
+                  <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6">
+                    <h2 className="text-xl font-bold text-white mb-4">
+                      Session Reports
+                    </h2>
+                    <div className="space-y-4">
+                      {sessions.length === 0 ? (
+                        <p className="text-gray-400">No sessions found</p>
+                      ) : (
+                        sessions.map((session) => (
+                          <div
+                            key={session.id}
+                            className="bg-gray-700/50 rounded-lg p-4"
+                          >
+                            <div className="flex items-center justify-between mb-2">
+                              <p className="text-white font-medium">
+                                {session.motiontype}
+                              </p>
+                              <p className="text-gray-400 text-sm">
+                                {new Date(
+                                  session.sessionDate
+                                ).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <p className="text-gray-400 text-sm">
+                              Chair: {session.Chair}
+                            </p>
+                            {session.attendance && (
+                              <p className="text-gray-400 text-sm mt-2">
+                                Attendance:{" "}
+                                {
+                                  session.attendance.filter(
+                                    (a) => a.status === "Present"
+                                  ).length
+                                }{" "}
+                                present,{" "}
+                                {
+                                  session.attendance.filter(
+                                    (a) => a.status === "Absent"
+                                  ).length
+                                }{" "}
+                                absent
+                              </p>
+                            )}
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                )
+              }
             </>
           )}
         </div >
       </div >
-  <Toaster
-    position="top-right"
-    toastOptions={{
-      style: {
-        borderRadius: "10px",
-        background: "#374151",
-        color: "#fff",
-        border: "1px solid #4B5563",
-      },
-    }}
-  />
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          style: {
+            borderRadius: "10px",
+            background: "#374151",
+            color: "#fff",
+            border: "1px solid #4B5563",
+          },
+        }}
+      />
     </>
   );
 }
