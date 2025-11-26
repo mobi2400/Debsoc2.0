@@ -163,9 +163,23 @@ export default function CabinetDashboard() {
       loadData();
     } catch (error: unknown) {
       console.error("Error marking attendance:", error);
-      toast.error(
-        error instanceof Error ? error.message : "Failed to mark attendance"
-      );
+      
+      // Extract detailed error message
+      let errorMessage = "Failed to mark attendance";
+      if (error instanceof Error) {
+        errorMessage = error.message;
+        // Check if there are additional details
+        if ((error as any).details) {
+          const details = (error as any).details;
+          if (details.error) {
+            errorMessage = `${errorMessage}: ${details.error}`;
+          }
+        }
+      }
+      
+      toast.error(errorMessage, {
+        duration: 5000, // Show for 5 seconds to read the full error
+      });
     }
   };
 

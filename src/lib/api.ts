@@ -114,10 +114,23 @@ const apiCall = async <T>(
   });
 
   if (!response.ok) {
-    const error = await response
-      .json()
-      .catch(() => ({ message: "An error occurred" }));
-    throw new Error(error.message || `HTTP error! status: ${response.status}`);
+    let errorData;
+    try {
+      errorData = await response.json();
+    } catch {
+      errorData = { message: "An error occurred" };
+    }
+    
+    // Include detailed error information if available
+    const errorMessage = errorData.message || errorData.error || `HTTP error! status: ${response.status}`;
+    const fullError = new Error(errorMessage);
+    
+    // Attach additional error details for debugging
+    if (errorData.error) {
+      (fullError as any).details = errorData;
+    }
+    
+    throw fullError;
   }
 
   return response.json();
