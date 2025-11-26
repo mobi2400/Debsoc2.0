@@ -135,15 +135,18 @@ export default function CabinetDashboard() {
       };
 
       const sessionResponse = await cabinetApi.createSession(sessionData);
+      console.log("Session created response:", sessionResponse);
       const sessionId = sessionResponse.session.id;
+      console.log("Session ID:", sessionId);
 
       // Step 2: Mark Attendance (if there is attendance data)
       if (attendanceForm.attendanceData.length > 0) {
-        const attendanceData = {
+        const attendancePayload = {
           sessionId: sessionId,
           attendanceData: attendanceForm.attendanceData
         };
-        await cabinetApi.markAttendance(attendanceData);
+        console.log("Marking attendance with payload:", attendancePayload);
+        await cabinetApi.markAttendance(attendancePayload);
       }
 
       toast.success("Session created and attendance marked successfully");
