@@ -53,6 +53,20 @@ export default function PresidentDashboard() {
   // Use a ref to prevent double submission immediately, as state updates are async
   const isSubmittingRef = React.useRef(false);
 
+  // Scroll to top when task modal opens
+  useEffect(() => {
+    if (showTaskModal) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [showTaskModal]);
+
+  // Scroll to top when feedback modal opens
+  useEffect(() => {
+    if (showFeedbackModal) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [showFeedbackModal]);
+
   useEffect(() => {
     if (isLoading) return;
     if (!isAuthenticated) {
@@ -355,7 +369,7 @@ export default function PresidentDashboard() {
                     </button>
                   </div>
                   {showTaskModal && (
-                    <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-fadeIn overflow-y-auto">
+                    <div className="fixed inset-0 bg-black/70 backdrop-blur-xl flex items-center justify-center z-50 p-4 animate-fadeIn overflow-y-auto">
                       <div className="bg-gray-800/90 backdrop-blur-xl rounded-2xl p-6 w-full max-w-2xl shadow-2xl border border-gray-700/50 animate-pop-in my-8">
                         <div className="flex items-center justify-between mb-5">
                           <h3 className="text-2xl font-bold text-white flex items-center gap-3">
@@ -575,7 +589,7 @@ export default function PresidentDashboard() {
                     </button>
                   </div>
                   {showFeedbackModal && (
-                    <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-fadeIn">
+                    <div className="fixed inset-0 bg-black/70 backdrop-blur-xl flex items-center justify-center z-50 p-4 animate-fadeIn">
                       <div className="bg-gray-800/90 backdrop-blur-xl rounded-2xl p-8 w-full max-w-lg shadow-2xl border border-gray-700/50 animate-pop-in">
                         <div className="flex items-center justify-between mb-6">
                           <h3 className="text-2xl font-bold text-white flex items-center gap-3">
