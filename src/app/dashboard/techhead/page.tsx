@@ -86,10 +86,10 @@ export default function TechHeadDashboard() {
     <>
       <Navbar />
       <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 pt-20">
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-4 md:py-8">
           {/* Header */}
-          <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6 mb-6">
-            <div className="flex items-center justify-between">
+          <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-4 md:p-6 mb-6">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div className="flex items-center space-x-4">
                 <div className="p-3 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg">
                   <Settings className="w-6 h-6 text-white" />
@@ -101,8 +101,8 @@ export default function TechHeadDashboard() {
                   <p className="text-gray-400">User Verification Portal</p>
                 </div>
               </div>
-              <div className="flex items-center space-x-4">
-                <div className="text-right">
+              <div className="flex items-center justify-between md:justify-end gap-4 w-full md:w-auto">
+                <div className="text-left md:text-right">
                   <p className="text-white font-medium">{user?.name}</p>
                   <p className="text-gray-400 text-sm">{user?.email}</p>
                 </div>
@@ -124,7 +124,7 @@ export default function TechHeadDashboard() {
           ) : (
             <div className="space-y-6">
               {/* Unverified Presidents */}
-              <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6">
+              <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-4 md:p-6">
                 <div className="flex items-center space-x-3 mb-4">
                   <Crown className="w-6 h-6 text-yellow-500" />
                   <h2 className="text-xl font-bold text-white">
@@ -141,7 +141,7 @@ export default function TechHeadDashboard() {
                     {unverifiedUsers?.unverifiedPresidents.map((president) => (
                       <div
                         key={president.id}
-                        className="bg-gray-700/50 rounded-lg p-4 flex items-center justify-between"
+                        className="bg-gray-700/50 rounded-lg p-4 flex flex-col md:flex-row md:items-center justify-between gap-4"
                       >
                         <div>
                           <p className="text-white font-medium">
@@ -160,7 +160,7 @@ export default function TechHeadDashboard() {
                             handleVerify("president", president.id)
                           }
                           disabled={verifying === president.id}
-                          className="px-4 py-2 bg-green-600 hover:bg-green-700 disabled:opacity-50 rounded-lg text-white font-medium transition-colors flex items-center space-x-2"
+                          className="w-full md:w-auto px-4 py-2 bg-green-600 hover:bg-green-700 disabled:opacity-50 rounded-lg text-white font-medium transition-colors flex items-center justify-center space-x-2"
                         >
                           {verifying === president.id ? (
                             <>
@@ -181,7 +181,7 @@ export default function TechHeadDashboard() {
               </div>
 
               {/* Unverified Cabinet */}
-              <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6">
+              <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-4 md:p-6">
                 <div className="flex items-center space-x-3 mb-4">
                   <Users className="w-6 h-6 text-blue-500" />
                   <h2 className="text-xl font-bold text-white">
@@ -198,7 +198,7 @@ export default function TechHeadDashboard() {
                     {unverifiedUsers?.unverifiedCabinet.map((cabinet) => (
                       <div
                         key={cabinet.id}
-                        className="bg-gray-700/50 rounded-lg p-4 flex items-center justify-between"
+                        className="bg-gray-700/50 rounded-lg p-4 flex flex-col md:flex-row md:items-center justify-between gap-4"
                       >
                         <div>
                           <p className="text-white font-medium">
@@ -218,7 +218,7 @@ export default function TechHeadDashboard() {
                         <button
                           onClick={() => handleVerify("cabinet", cabinet.id)}
                           disabled={verifying === cabinet.id}
-                          className="px-4 py-2 bg-green-600 hover:bg-green-700 disabled:opacity-50 rounded-lg text-white font-medium transition-colors flex items-center space-x-2"
+                          className="w-full md:w-auto px-4 py-2 bg-green-600 hover:bg-green-700 disabled:opacity-50 rounded-lg text-white font-medium transition-colors flex items-center justify-center space-x-2"
                         >
                           {verifying === cabinet.id ? (
                             <>
@@ -239,7 +239,7 @@ export default function TechHeadDashboard() {
               </div>
 
               {/* Unverified Members */}
-              <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6">
+              <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-4 md:p-6">
                 <div className="flex items-center space-x-3 mb-4">
                   <User className="w-6 h-6 text-orange-500" />
                   <h2 className="text-xl font-bold text-white">
@@ -256,7 +256,7 @@ export default function TechHeadDashboard() {
                     {unverifiedUsers?.unverifiedMembers.map((member) => (
                       <div
                         key={member.id}
-                        className="bg-gray-700/50 rounded-lg p-4 flex items-center justify-between"
+                        className="bg-gray-700/50 rounded-lg p-4 flex flex-col md:flex-row md:items-center justify-between gap-4"
                       >
                         <div>
                           <p className="text-white font-medium">
@@ -273,7 +273,7 @@ export default function TechHeadDashboard() {
                         <button
                           onClick={() => handleVerify("member", member.id)}
                           disabled={verifying === member.id}
-                          className="px-4 py-2 bg-green-600 hover:bg-green-700 disabled:opacity-50 rounded-lg text-white font-medium transition-colors flex items-center space-x-2"
+                          className="w-full md:w-auto px-4 py-2 bg-green-600 hover:bg-green-700 disabled:opacity-50 rounded-lg text-white font-medium transition-colors flex items-center justify-center space-x-2"
                         >
                           {verifying === member.id ? (
                             <>

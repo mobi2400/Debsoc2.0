@@ -137,10 +137,10 @@ export default function MemberDashboard() {
     <>
       <Navbar />
       <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 pt-20">
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-4 md:py-8">
           {/* Header */}
-          <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6 mb-6">
-            <div className="flex items-center justify-between">
+          <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-4 md:p-6 mb-6">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div className="flex items-center space-x-4">
                 <div className="p-3 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg">
                   <UserIcon className="w-6 h-6 text-white" />
@@ -154,28 +154,30 @@ export default function MemberDashboard() {
                   </p>
                 </div>
               </div>
-              <div className="flex items-center space-x-4">
+              <div className="flex flex-col md:flex-row md:items-center gap-4">
                 {!isVerified && (
-                  <div className="px-3 py-1 bg-red-600/20 border border-red-600/50 rounded-lg">
+                  <div className="px-3 py-1 bg-red-600/20 border border-red-600/50 rounded-lg self-start md:self-auto">
                     <p className="text-red-400 text-sm">Not Verified</p>
                   </div>
                 )}
-                <div className="text-right">
-                  <p className="text-white font-medium">{user?.name}</p>
-                  <p className="text-gray-400 text-sm">{user?.email}</p>
+                <div className="flex items-center justify-between md:justify-end gap-4 w-full md:w-auto">
+                  <div className="text-left md:text-right">
+                    <p className="text-white font-medium">{user?.name}</p>
+                    <p className="text-gray-400 text-sm">{user?.email}</p>
+                  </div>
+                  <button
+                    onClick={logout}
+                    className="p-2 bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
+                  >
+                    <LogOut className="w-5 h-5 text-white" />
+                  </button>
                 </div>
-                <button
-                  onClick={logout}
-                  className="p-2 bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
-                >
-                  <LogOut className="w-5 h-5 text-white" />
-                </button>
               </div>
             </div>
           </div>
 
           {/* Tabs */}
-          <div className="flex space-x-2 mb-6 flex-wrap">
+          <div className="flex flex-wrap gap-2 mb-6">
             {[
               { id: "attendance", label: "Attendance", icon: Calendar },
               { id: "tasks", label: "Tasks", icon: FileText },
@@ -189,7 +191,7 @@ export default function MemberDashboard() {
                     tab.id as "attendance" | "tasks" | "messages" | "feedback"
                   )
                 }
-                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 mb-2 ${activeTab === tab.id
+                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 ${activeTab === tab.id
                   ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white"
                   : "bg-gray-800/50 text-gray-400 hover:text-white"
                   }`}
@@ -241,7 +243,7 @@ export default function MemberDashboard() {
                   </div>
 
                   {/* Attendance List */}
-                  <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6">
+                  <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-4 md:p-6">
                     <h2 className="text-xl font-bold text-white mb-4">
                       Attendance History
                     </h2>
@@ -256,7 +258,7 @@ export default function MemberDashboard() {
                             key={record.id}
                             className="bg-gray-700/50 rounded-lg p-4"
                           >
-                            <div className="flex items-center justify-between mb-2">
+                            <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
                               <div>
                                 <p className="text-white font-medium">
                                   {record.session?.motiontype || "Session"}
@@ -273,7 +275,7 @@ export default function MemberDashboard() {
                                     : "Date not available"}
                                 </p>
                               </div>
-                              <div className="flex items-center space-x-2">
+                              <div className="flex items-center space-x-2 self-start md:self-center">
                                 {record.status === "Present" ? (
                                   <div className="flex items-center space-x-1 px-3 py-1 bg-green-600/20 border border-green-600/50 rounded-lg">
                                     <CheckCircle className="w-4 h-4 text-green-400" />
@@ -301,7 +303,7 @@ export default function MemberDashboard() {
 
               {/* Tasks Tab */}
               {activeTab === "tasks" && (
-                <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6">
+                <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-4 md:p-6">
                   <h2 className="text-xl font-bold text-white mb-4">
                     Assigned Tasks
                   </h2>
@@ -314,12 +316,12 @@ export default function MemberDashboard() {
                           key={task.id}
                           className="bg-gray-700/50 rounded-lg p-4"
                         >
-                          <div className="flex items-start justify-between mb-2">
+                          <div className="flex flex-col md:flex-row md:items-start justify-between mb-2 gap-2">
                             <h3 className="text-white font-medium text-lg">
                               {task.name}
                             </h3>
                             <span
-                              className={`px-2 py-1 rounded text-xs ${new Date(task.deadline) < new Date()
+                              className={`px-2 py-1 rounded text-xs self-start ${new Date(task.deadline) < new Date()
                                 ? "bg-red-600/20 text-red-400"
                                 : new Date(task.deadline) <
                                   new Date(
@@ -347,22 +349,22 @@ export default function MemberDashboard() {
 
               {/* Messages Tab */}
               {activeTab === "messages" && (
-                <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6">
-                  <div className="flex items-center justify-between mb-4">
+                <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-4 md:p-6">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
                     <h2 className="text-xl font-bold text-white">
                       Send Message to President
                     </h2>
                     <button
                       onClick={() => setShowMessageModal(true)}
-                      className="px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:opacity-90 rounded-lg text-white font-medium transition-colors flex items-center space-x-2"
+                      className="w-full md:w-auto px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:opacity-90 rounded-lg text-white font-medium transition-colors flex items-center justify-center space-x-2"
                     >
                       <Plus className="w-4 h-4" />
                       <span>New Message</span>
                     </button>
                   </div>
                   {showMessageModal && (
-                    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                      <div className="bg-gray-800 rounded-xl p-6 w-full max-w-md">
+                    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+                      <div className="bg-gray-800 rounded-xl p-6 w-full max-w-md animate-pop-in">
                         <h3 className="text-xl font-bold text-white mb-4">
                           Send Anonymous Message
                         </h3>
@@ -411,19 +413,19 @@ export default function MemberDashboard() {
                               placeholder="Type your anonymous message to the President..."
                             />
                           </div>
-                          <div className="flex space-x-3">
-                            <button
-                              type="submit"
-                              className="flex-1 px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:opacity-90 rounded-lg text-white font-medium"
-                            >
-                              Send Message
-                            </button>
+                          <div className="flex flex-col-reverse md:flex-row space-y-3 space-y-reverse md:space-y-0 md:space-x-3">
                             <button
                               type="button"
                               onClick={() => setShowMessageModal(false)}
                               className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium"
                             >
                               Cancel
+                            </button>
+                            <button
+                              type="submit"
+                              className="flex-1 px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:opacity-90 rounded-lg text-white font-medium"
+                            >
+                              Send Message
                             </button>
                           </div>
                         </form>
@@ -453,7 +455,7 @@ export default function MemberDashboard() {
                             key={msg.id}
                             className="bg-gray-700/50 rounded-lg p-4"
                           >
-                            <div className="flex items-center justify-between mb-2">
+                            <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
                               <p className="text-white font-medium">
                                 To: {presidents.find(p => p.id === msg.presidentId)?.name || 'Unknown President'}
                               </p>
@@ -472,7 +474,7 @@ export default function MemberDashboard() {
 
               {/* Feedback Tab */}
               {activeTab === "feedback" && (
-                <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6">
+                <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-4 md:p-6">
                   <h2 className="text-xl font-bold text-white mb-4">
                     Received Feedback
                   </h2>
