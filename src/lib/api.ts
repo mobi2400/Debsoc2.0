@@ -114,7 +114,7 @@ const apiCall = async <T>(
   });
 
   if (!response.ok) {
-    let errorData;
+    let errorData: { message?: string; error?: string; [key: string]: unknown };
     try {
       errorData = await response.json();
     } catch {
@@ -123,11 +123,11 @@ const apiCall = async <T>(
     
     // Include detailed error information if available
     const errorMessage = errorData.message || errorData.error || `HTTP error! status: ${response.status}`;
-    const fullError = new Error(errorMessage);
+    const fullError = new Error(errorMessage) as Error & { details?: typeof errorData };
     
     // Attach additional error details for debugging
     if (errorData.error) {
-      (fullError as any).details = errorData;
+      fullError.details = errorData;
     }
     
     throw fullError;

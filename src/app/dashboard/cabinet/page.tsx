@@ -99,20 +99,6 @@ export default function CabinetDashboard() {
         console.error("Failed to load history data", error);
         // Don't show toast for this to avoid annoying user if backend isn't updated yet
       }
-
-      const [tasksData, sessionsData, dashboardData, sentMessagesData, sentFeedbackData] = await Promise.all([
-        cabinetApi.getTasks(),
-        cabinetApi.getSessions(),
-        cabinetApi.getDashboard(),
-        cabinetApi.getSentMessages(),
-        cabinetApi.getSentFeedback(),
-      ]);
-      setTasks(tasksData.tasks);
-      setSessions(sessionsData.sessions);
-      setMembers(dashboardData.members);
-      setPresidents(dashboardData.presidents);
-      setSentMessages(sentMessagesData.messages);
-      setSentFeedback(sentFeedbackData.feedbacks);
     } catch (error: unknown) {
       toast.error(
         error instanceof Error ? error.message : "Failed to load data"
@@ -163,7 +149,7 @@ export default function CabinetDashboard() {
       loadData();
     } catch (error: unknown) {
       console.error("Error marking attendance:", error);
-      
+
       // Extract detailed error message
       let errorMessage = "Failed to mark attendance";
       if (error instanceof Error) {
@@ -176,7 +162,7 @@ export default function CabinetDashboard() {
           }
         }
       }
-      
+
       toast.error(errorMessage, {
         duration: 5000, // Show for 5 seconds to read the full error
       });
@@ -264,10 +250,10 @@ export default function CabinetDashboard() {
     <>
       <Navbar />
       <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 pt-20">
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-4 md:py-8">
           {/* Header */}
-          <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6 mb-6">
-            <div className="flex items-center justify-between">
+          <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-4 md:p-6 mb-6">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div className="flex items-center space-x-4">
                 <div className="p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg">
                   <Users className="w-6 h-6 text-white" />
@@ -281,28 +267,30 @@ export default function CabinetDashboard() {
                   </p>
                 </div>
               </div>
-              <div className="flex items-center space-x-4">
+              <div className="flex flex-col md:flex-row md:items-center gap-4">
                 {!isVerified && (
-                  <div className="px-3 py-1 bg-red-600/20 border border-red-600/50 rounded-lg">
+                  <div className="px-3 py-1 bg-red-600/20 border border-red-600/50 rounded-lg self-start md:self-auto">
                     <p className="text-red-400 text-sm">Not Verified</p>
                   </div>
                 )}
-                <div className="text-right">
-                  <p className="text-white font-medium">{user?.name}</p>
-                  <p className="text-gray-400 text-sm">{user?.email}</p>
+                <div className="flex items-center justify-between md:justify-end gap-4 w-full md:w-auto">
+                  <div className="text-left md:text-right">
+                    <p className="text-white font-medium">{user?.name}</p>
+                    <p className="text-gray-400 text-sm">{user?.email}</p>
+                  </div>
+                  <button
+                    onClick={logout}
+                    className="p-2 bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
+                  >
+                    <LogOut className="w-5 h-5 text-white" />
+                  </button>
                 </div>
-                <button
-                  onClick={logout}
-                  className="p-2 bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
-                >
-                  <LogOut className="w-5 h-5 text-white" />
-                </button>
               </div>
             </div>
           </div>
 
           {/* Tabs */}
-          <div className="flex space-x-2 mb-6 flex-wrap">
+          <div className="flex flex-wrap gap-2 mb-6">
             {[
               { id: "tasks", label: "Tasks", icon: FileText },
               { id: "attendance", label: "Mark Attendance", icon: Calendar },
@@ -322,7 +310,7 @@ export default function CabinetDashboard() {
                     | "sessions"
                   )
                 }
-                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 mb-2 ${activeTab === tab.id
+                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 ${activeTab === tab.id
                   ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white"
                   : "bg-gray-800/50 text-gray-400 hover:text-white"
                   }`}
@@ -342,7 +330,7 @@ export default function CabinetDashboard() {
             <>
               {/* Tasks Tab */}
               {activeTab === "tasks" && (
-                <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6">
+                <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-4 md:p-6">
                   <h2 className="text-xl font-bold text-white mb-4">
                     Assigned Tasks
                   </h2>
@@ -355,12 +343,12 @@ export default function CabinetDashboard() {
                           key={task.id}
                           className="bg-gray-700/50 rounded-lg p-4"
                         >
-                          <div className="flex items-start justify-between mb-2">
+                          <div className="flex flex-col md:flex-row md:items-start justify-between mb-2 gap-2">
                             <h3 className="text-white font-medium text-lg">
                               {task.name}
                             </h3>
                             <span
-                              className={`px-2 py-1 rounded text-xs ${new Date(task.deadline) < new Date()
+                              className={`px-2 py-1 rounded text-xs self-start ${new Date(task.deadline) < new Date()
                                 ? "bg-red-600/20 text-red-400"
                                 : "bg-green-600/20 text-green-400"
                                 }`}
@@ -383,38 +371,36 @@ export default function CabinetDashboard() {
 
               {/* Attendance Tab */}
               {activeTab === "attendance" && (
-                <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-12 text-center">
+                <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6 md:p-12 text-center">
                   <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-blue-500/30">
                     <Calendar className="w-10 h-10 text-blue-400" />
                   </div>
-                  <h2 className="text-3xl font-bold text-white mb-3">
+                  <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
                     Mark Session Attendance
                   </h2>
-                  <p className="text-gray-400 mb-8 max-w-lg mx-auto text-lg">
+                  <p className="text-gray-400 mb-8 max-w-lg mx-auto text-base md:text-lg">
                     Start a new debate session, record the motion, appoint a chair, and track member attendance efficiently.
                   </p>
                   <button
                     onClick={() => setShowAttendanceModal(true)}
-                    className="group px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl text-white font-bold text-lg transition-all transform hover:scale-105 hover:shadow-xl hover:shadow-blue-500/25 flex items-center space-x-3 mx-auto"
+                    className="w-full md:w-auto group px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl text-white font-bold text-lg transition-all transform hover:scale-105 hover:shadow-xl hover:shadow-blue-500/25 flex items-center justify-center space-x-3 mx-auto"
                   >
                     <Plus className="w-6 h-6 group-hover:rotate-90 transition-transform" />
                     <span>Create New Session</span>
                   </button>
-
-
                 </div>
               )}
 
               {/* Feedback Tab */}
               {activeTab === "feedback" && (
-                <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6">
-                  <div className="flex items-center justify-between mb-4">
+                <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-4 md:p-6">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
                     <h2 className="text-xl font-bold text-white">
                       Give Anonymous Feedback
                     </h2>
                     <button
                       onClick={() => setShowFeedbackModal(true)}
-                      className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium transition-colors flex items-center space-x-2"
+                      className="w-full md:w-auto px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium transition-colors flex items-center justify-center space-x-2"
                     >
                       <Plus className="w-4 h-4" />
                       <span>New Feedback</span>
@@ -434,7 +420,7 @@ export default function CabinetDashboard() {
                             key={fb.id}
                             className="bg-gray-700/50 rounded-lg p-4"
                           >
-                            <div className="flex items-center justify-between mb-2">
+                            <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
                               <p className="text-white font-medium">
                                 To: {members.find((m) => m.id === fb.memberId)?.name || "Unknown Member"}
                               </p>
@@ -454,14 +440,14 @@ export default function CabinetDashboard() {
               {/* Messages Tab */}
               {
                 activeTab === "messages" && (
-                  <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6">
-                    <div className="flex items-center justify-between mb-4">
+                  <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-4 md:p-6">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
                       <h2 className="text-xl font-bold text-white">
                         Send Message to President
                       </h2>
                       <button
                         onClick={() => setShowMessageModal(true)}
-                        className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium transition-colors flex items-center space-x-2"
+                        className="w-full md:w-auto px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium transition-colors flex items-center justify-center space-x-2"
                       >
                         <Plus className="w-4 h-4" />
                         <span>New Message</span>
@@ -491,7 +477,7 @@ export default function CabinetDashboard() {
                               key={msg.id}
                               className="bg-gray-700/50 rounded-lg p-4"
                             >
-                              <div className="flex items-center justify-between mb-2">
+                              <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
                                 <p className="text-white font-medium">
                                   To: {presidents.find(p => p.id === msg.presidentId)?.name || 'Unknown President'}
                                 </p>
@@ -512,7 +498,7 @@ export default function CabinetDashboard() {
               {/* Sessions Tab */}
               {
                 activeTab === "sessions" && (
-                  <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-6">
+                  <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-4 md:p-6">
                     <h2 className="text-xl font-bold text-white mb-4">
                       Session Reports
                     </h2>
@@ -525,7 +511,7 @@ export default function CabinetDashboard() {
                             key={session.id}
                             className="bg-gray-700/50 rounded-lg p-4"
                           >
-                            <div className="flex items-center justify-between mb-2">
+                            <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
                               <p className="text-white font-medium">
                                 {session.motiontype}
                               </p>
@@ -578,9 +564,9 @@ export default function CabinetDashboard() {
             </button>
 
             <div className="container mx-auto max-w-5xl">
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                  <div className="p-2 bg-blue-500/20 rounded-lg">
+              <div className="p-4 md:p-8">
+                <h3 className="text-2xl font-bold text-white mb-6 flex flex-col md:flex-row md:items-center gap-3">
+                  <div className="p-2 bg-blue-500/20 rounded-lg w-fit">
                     <Calendar className="w-6 h-6 text-blue-400" />
                   </div>
                   Create Session & Mark Attendance
@@ -697,17 +683,17 @@ export default function CabinetDashboard() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4 pt-4 border-t border-gray-800">
+                  <div className="flex flex-col-reverse md:flex-row items-center gap-4 pt-4 border-t border-gray-800">
                     <button
                       type="button"
                       onClick={() => setShowAttendanceModal(false)}
-                      className="px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl text-gray-300 font-medium transition-colors"
+                      className="w-full md:w-auto px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl text-gray-300 font-medium transition-colors"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl text-white font-bold shadow-lg shadow-blue-500/20 transition-all transform hover:scale-[1.02]"
+                      className="w-full md:flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl text-white font-bold shadow-lg shadow-blue-500/20 transition-all transform hover:scale-[1.02]"
                     >
                       Submit Session Report
                     </button>
@@ -720,7 +706,7 @@ export default function CabinetDashboard() {
       )}
 
       {showFeedbackModal && (
-        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center">
+        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-gray-800 rounded-xl p-6 w-full max-w-md shadow-2xl border border-gray-700 animate-pop-in">
             <h3 className="text-xl font-bold text-white mb-4">
               Give Feedback to Member
@@ -769,19 +755,19 @@ export default function CabinetDashboard() {
                   required
                 />
               </div>
-              <div className="flex space-x-3">
-                <button
-                  type="submit"
-                  className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium"
-                >
-                  Send Feedback
-                </button>
+              <div className="flex flex-col-reverse md:flex-row space-y-3 space-y-reverse md:space-y-0 md:space-x-3">
                 <button
                   type="button"
                   onClick={() => setShowFeedbackModal(false)}
                   className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium"
                 >
                   Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium"
+                >
+                  Send Feedback
                 </button>
               </div>
             </form>
@@ -790,7 +776,7 @@ export default function CabinetDashboard() {
       )}
 
       {showMessageModal && (
-        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center">
+        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-gray-800 rounded-xl p-6 w-full max-w-md shadow-2xl border border-gray-700 animate-pop-in">
             <h3 className="text-xl font-bold text-white mb-4">
               Send Anonymous Message
@@ -811,7 +797,7 @@ export default function CabinetDashboard() {
                       presidentId: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white mb-4 focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white mb-4"
                   required
                 >
                   <option value="">Select President...</option>
@@ -834,19 +820,13 @@ export default function CabinetDashboard() {
                       message: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
                   rows={4}
                   required
                   placeholder="Type your anonymous message to the President..."
                 />
               </div>
-              <div className="flex space-x-3">
-                <button
-                  type="submit"
-                  className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium"
-                >
-                  Send Message
-                </button>
+              <div className="flex flex-col-reverse md:flex-row space-y-3 space-y-reverse md:space-y-0 md:space-x-3">
                 <button
                   type="button"
                   onClick={() => setShowMessageModal(false)}
@@ -854,12 +834,17 @@ export default function CabinetDashboard() {
                 >
                   Cancel
                 </button>
+                <button
+                  type="submit"
+                  className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium"
+                >
+                  Send Message
+                </button>
               </div>
             </form>
           </div>
         </div>
       )}
-
       <Toaster
         position="top-right"
         toastOptions={{
