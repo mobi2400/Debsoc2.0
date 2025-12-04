@@ -4,6 +4,7 @@ import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { siteConfig } from "@/lib/metadata";
 import { Analytics } from '@vercel/analytics/next';
+import { ReactLenis } from "lenis/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -120,10 +121,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthProvider>
-          {children}
-        </AuthProvider>
-        <Analytics />
+        <ReactLenis root>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+          <Analytics />
+        </ReactLenis>
       </body>
     </html>
   );
