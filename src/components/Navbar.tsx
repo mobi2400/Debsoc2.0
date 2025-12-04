@@ -1,11 +1,11 @@
 "use client";
-import React, {useState, useEffect} from "react";
-import {Menu, X} from "lucide-react";
-import {useLenis} from "@studio-freight/react-lenis";
+import React, { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
+import { useLenis } from "lenis/react";
 import Link from "next/link";
 
 const Navbar = () => {
-  
+
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const lenis = useLenis();
 
@@ -18,14 +18,14 @@ const Navbar = () => {
 
     const section = document.getElementById(id);
     if (section && lenis) {
-      lenis.scrollTo(section, {offset: -80});
+      lenis.scrollTo(section, { offset: -80 });
     } else {
       console.warn(`Section with id "${id}" not found`);
     }
     closeMobileMenu();
   };
 
-  
+
 
   const toggleMobileMenu = () => {
     setIsMobileOpen((prev) => !prev);
@@ -134,16 +134,14 @@ const Navbar = () => {
       </nav>
 
       <div
-        className={`fixed inset-0 bg-black bg-opacity-50 z-[60] transition-opacity duration-300 md:hidden ${
-          isMobileOpen ? "opacity-100 visible" : "opacity-0 invisible"
-        }`}
+        className={`fixed inset-0 bg-black bg-opacity-50 z-[60] transition-opacity duration-300 md:hidden ${isMobileOpen ? "opacity-100 visible" : "opacity-0 invisible"
+          }`}
         onClick={closeMobileMenu}
       />
 
       <div
-        className={`fixed top-0 left-0 h-full w-80 bg-gradient-to-b from-gray-900 via-gray-800 to-black shadow-2xl z-[70] transition-transform duration-300 ease-out md:hidden ${
-          isMobileOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`fixed top-0 left-0 h-full w-80 bg-gradient-to-b from-gray-900 via-gray-800 to-black shadow-2xl z-[70] transition-transform duration-300 ease-out md:hidden ${isMobileOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         {/* Close button inside mobile menu */}
         <div className="absolute top-4 right-4 z-10">

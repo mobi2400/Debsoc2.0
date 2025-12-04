@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef, useCallback} from "react";
 import Image from "next/image";
 import {X, Instagram} from "lucide-react";
 import {teamMembers} from "../lib/teamData";
-import {useLenis} from "@studio-freight/react-lenis";
+import {useLenis} from "lenis/react";
 
 interface TeamMember {
   name: string;
