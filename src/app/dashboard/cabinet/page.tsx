@@ -762,40 +762,64 @@ export default function CabinetDashboard() {
       )}
 
       {showFeedbackModal && (
-        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-gray-800 rounded-xl p-6 w-full max-w-md shadow-2xl border border-gray-700 animate-pop-in">
-            <h3 className="text-xl font-bold text-white mb-4">
-              Give Feedback to Member
-            </h3>
-            <form
-              onSubmit={handleGiveFeedback}
-              className="space-y-4"
+        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-2xl flex items-center justify-center p-4 transition-all duration-300">
+          <div className="bg-gradient-to-b from-gray-900 to-black rounded-2xl p-8 w-full max-w-lg shadow-[0_0_50px_-12px_rgba(59,130,246,0.3)] border border-blue-500/30 animate-pop-in relative">
+            <button
+              onClick={() => setShowFeedbackModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
             >
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
-                  Select Member
-                </label>
-                <select
-                  value={feedbackForm.memberId}
-                  onChange={(e) =>
-                    setFeedbackForm({
-                      ...feedbackForm,
-                      memberId: e.target.value,
-                    })
-                  }
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 outline-none"
-                  required
-                >
-                  <option value="">Select Member...</option>
-                  {members.map((member) => (
-                    <option key={member.id} value={member.id}>
-                      {member.name}
-                    </option>
-                  ))}
-                </select>
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="flex items-center space-x-3 mb-6">
+              <div className="p-3 bg-blue-500/10 rounded-xl border border-blue-500/20">
+                <MessageSquare className="w-6 h-6 text-blue-500" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
+                <h3 className="text-2xl font-bold text-white">
+                  Give Feedback to Member
+                </h3>
+                <p className="text-gray-400 text-sm">
+                  Help them improve with constructive feedback
+                </p>
+              </div>
+            </div>
+
+            <form
+              onSubmit={handleGiveFeedback}
+              className="space-y-6"
+            >
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-300 ml-1">
+                  Select Member
+                </label>
+                <div className="relative">
+                  <select
+                    value={feedbackForm.memberId}
+                    onChange={(e) =>
+                      setFeedbackForm({
+                        ...feedbackForm,
+                        memberId: e.target.value,
+                      })
+                    }
+                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all appearance-none"
+                    required
+                  >
+                    <option value="">Select Member...</option>
+                    {members.map((member) => (
+                      <option key={member.id} value={member.id}>
+                        {member.name}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+                    <Users className="w-4 h-4" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-300 ml-1">
                   Feedback
                 </label>
                 <textarea
@@ -806,25 +830,34 @@ export default function CabinetDashboard() {
                       feedback: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 outline-none"
-                  rows={4}
+                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all resize-none"
+                  rows={5}
                   required
+                  placeholder="Type your feedback here..."
                 />
               </div>
-              <div className="flex flex-col-reverse md:flex-row space-y-3 space-y-reverse md:space-y-0 md:space-x-3">
+
+              <div className="flex flex-col-reverse md:flex-row gap-3 pt-2">
                 <button
                   type="button"
                   onClick={() => setShowFeedbackModal(false)}
-                  className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium"
+                  className="flex-1 px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl text-gray-300 font-medium transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSendingFeedback}
-                  className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl text-white font-bold shadow-lg shadow-blue-500/20 transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                 >
-                  {isSendingFeedback ? "Sending..." : "Send Feedback"}
+                  {isSendingFeedback ? (
+                    <span>Sending...</span>
+                  ) : (
+                    <>
+                      <span>Send Feedback</span>
+                      <MessageSquare className="w-4 h-4" />
+                    </>
+                  )}
                 </button>
               </div>
             </form>
@@ -833,41 +866,65 @@ export default function CabinetDashboard() {
       )}
 
       {showMessageModal && (
-        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-gray-800 rounded-xl p-6 w-full max-w-md shadow-2xl border border-gray-700 animate-pop-in">
-            <h3 className="text-xl font-bold text-white mb-4">
-              Send Anonymous Message
-            </h3>
-            <form
-              onSubmit={handleSendMessage}
-              className="space-y-4"
+        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-2xl flex items-center justify-center p-4 transition-all duration-300">
+          <div className="bg-gradient-to-b from-gray-900 to-black rounded-2xl p-8 w-full max-w-lg shadow-[0_0_50px_-12px_rgba(59,130,246,0.3)] border border-blue-500/30 animate-pop-in relative">
+            <button
+              onClick={() => setShowMessageModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
             >
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
-                  Select President
-                </label>
-                <select
-                  value={messageForm.presidentId}
-                  onChange={(e) =>
-                    setMessageForm({
-                      ...messageForm,
-                      presidentId: e.target.value,
-                    })
-                  }
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white mb-4"
-                  required
-                >
-                  <option value="">Select President...</option>
-                  {presidents.map((president) => (
-                    <option key={president.id} value={president.id}>
-                      {president.name} - {president.email}
-                    </option>
-                  ))}
-                </select>
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="flex items-center space-x-3 mb-6">
+              <div className="p-3 bg-blue-500/10 rounded-xl border border-blue-500/20">
+                <MessageSquare className="w-6 h-6 text-blue-500" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
-                  Message
+                <h3 className="text-2xl font-bold text-white">
+                  Send Anonymous Message
+                </h3>
+                <p className="text-gray-400 text-sm">
+                  Your identity will remain hidden
+                </p>
+              </div>
+            </div>
+
+            <form
+              onSubmit={handleSendMessage}
+              className="space-y-6"
+            >
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-300 ml-1">
+                  Select President
+                </label>
+                <div className="relative">
+                  <select
+                    value={messageForm.presidentId}
+                    onChange={(e) =>
+                      setMessageForm({
+                        ...messageForm,
+                        presidentId: e.target.value,
+                      })
+                    }
+                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all appearance-none"
+                    required
+                  >
+                    <option value="">Select President...</option>
+                    {presidents.map((president) => (
+                      <option key={president.id} value={president.id}>
+                        {president.name} - {president.email}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+                    <Users className="w-4 h-4" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-300 ml-1">
+                  Your Message
                 </label>
                 <textarea
                   value={messageForm.message}
@@ -877,26 +934,34 @@ export default function CabinetDashboard() {
                       message: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                  rows={4}
+                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all resize-none"
+                  rows={5}
                   required
-                  placeholder="Type your anonymous message to the President..."
+                  placeholder="Type your message here..."
                 />
               </div>
-              <div className="flex flex-col-reverse md:flex-row space-y-3 space-y-reverse md:space-y-0 md:space-x-3">
+
+              <div className="flex flex-col-reverse md:flex-row gap-3 pt-2">
                 <button
                   type="button"
                   onClick={() => setShowMessageModal(false)}
-                  className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium"
+                  className="flex-1 px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl text-gray-300 font-medium transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSendingMessage}
-                  className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 rounded-lg text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl text-white font-bold shadow-lg shadow-blue-500/20 transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                 >
-                  {isSendingMessage ? "Sending..." : "Send Message"}
+                  {isSendingMessage ? (
+                    <span>Sending...</span>
+                  ) : (
+                    <>
+                      <span>Send Message</span>
+                      <MessageSquare className="w-4 h-4" />
+                    </>
+                  )}
                 </button>
               </div>
             </form>

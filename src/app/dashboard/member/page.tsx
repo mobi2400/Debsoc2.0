@@ -378,83 +378,13 @@ export default function MemberDashboard() {
                       <span>New Message</span>
                     </button>
                   </div>
-                  {showMessageModal && (
-                    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                      <div className="bg-gray-800 rounded-xl p-6 w-full max-w-md animate-pop-in">
-                        <h3 className="text-xl font-bold text-white mb-4">
-                          Send Anonymous Message
-                        </h3>
-                        <form
-                          onSubmit={handleSendMessage}
-                          className="space-y-4"
-                        >
-                          <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-1">
-                              Select President
-                            </label>
-                            <select
-                              value={messageForm.presidentId}
-                              onChange={(e) =>
-                                setMessageForm({
-                                  ...messageForm,
-                                  presidentId: e.target.value,
-                                })
-                              }
-                              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white mb-4"
-                              required
-                            >
-                              <option value="">Select President...</option>
-                              {presidents.map((president) => (
-                                <option key={president.id} value={president.id}>
-                                  {president.name} - {president.email}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-1">
-                              Message
-                            </label>
-                            <textarea
-                              value={messageForm.message}
-                              onChange={(e) =>
-                                setMessageForm({
-                                  ...messageForm,
-                                  message: e.target.value,
-                                })
-                              }
-                              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                              rows={4}
-                              required
-                              placeholder="Type your anonymous message to the President..."
-                            />
-                          </div>
-                          <div className="flex flex-col-reverse md:flex-row space-y-3 space-y-reverse md:space-y-0 md:space-x-3">
-                            <button
-                              type="button"
-                              onClick={() => setShowMessageModal(false)}
-                              className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium"
-                            >
-                              Cancel
-                            </button>
-                            <button
-                              type="submit"
-                              disabled={isSendingMessage}
-                              className="flex-1 px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:opacity-90 rounded-lg text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                              {isSendingMessage ? "Sending..." : "Send Message"}
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  )}
-                  <div className="mt-4 p-4 bg-blue-600/20 border border-blue-600/50 rounded-lg">
-                    <p className="text-blue-300 text-sm">
+
+                  <div className="mt-4 p-4 bg-orange-600/20 border border-orange-600/50 rounded-lg">
+                    <p className="text-orange-300 text-sm">
                       💡 Your messages are sent anonymously. The President will
                       not know who sent them.
                     </p>
-                    <p className="text-blue-300 text-xs mt-2">
+                    <p className="text-orange-300 text-xs mt-2">
                       Note: Please ensure you have the correct President ID.
                       Contact TechHead if you need assistance.
                     </p>
@@ -534,6 +464,109 @@ export default function MemberDashboard() {
           )}
         </div>
       </div>
+      {showMessageModal && (
+        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-2xl flex items-center justify-center p-4 transition-all duration-300">
+          <div className="bg-gradient-to-b from-gray-900 to-black rounded-2xl p-8 w-full max-w-lg shadow-[0_0_50px_-12px_rgba(249,115,22,0.3)] border border-orange-500/30 animate-pop-in relative">
+            <button
+              onClick={() => setShowMessageModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+            >
+              <XCircle className="w-6 h-6" />
+            </button>
+
+            <div className="flex items-center space-x-3 mb-6">
+              <div className="p-3 bg-orange-500/10 rounded-xl border border-orange-500/20">
+                <MessageSquare className="w-6 h-6 text-orange-500" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-white">
+                  Send Anonymous Message
+                </h3>
+                <p className="text-gray-400 text-sm">
+                  Your identity will remain hidden
+                </p>
+              </div>
+            </div>
+
+            <form
+              onSubmit={handleSendMessage}
+              className="space-y-6"
+            >
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-300 ml-1">
+                  Select President
+                </label>
+                <div className="relative">
+                  <select
+                    value={messageForm.presidentId}
+                    onChange={(e) =>
+                      setMessageForm({
+                        ...messageForm,
+                        presidentId: e.target.value,
+                      })
+                    }
+                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500 outline-none transition-all appearance-none"
+                    required
+                  >
+                    <option value="">Select President...</option>
+                    {presidents.map((president) => (
+                      <option key={president.id} value={president.id}>
+                        {president.name}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+                    <UserIcon className="w-4 h-4" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-300 ml-1">
+                  Your Message
+                </label>
+                <textarea
+                  value={messageForm.message}
+                  onChange={(e) =>
+                    setMessageForm({
+                      ...messageForm,
+                      message: e.target.value,
+                    })
+                  }
+                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500 outline-none transition-all resize-none"
+                  rows={5}
+                  required
+                  placeholder="Type your message here..."
+                />
+              </div>
+
+              <div className="flex flex-col-reverse md:flex-row gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowMessageModal(false)}
+                  className="flex-1 px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl text-gray-300 font-medium transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSendingMessage}
+                  className="flex-1 px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 rounded-xl text-white font-bold shadow-lg shadow-orange-500/20 transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                >
+                  {isSendingMessage ? (
+                    <span>Sending...</span>
+                  ) : (
+                    <>
+                      <span>Send Message</span>
+                      <MessageSquare className="w-4 h-4" />
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
       <Toaster
         position="top-right"
         toastOptions={{

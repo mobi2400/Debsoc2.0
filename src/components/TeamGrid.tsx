@@ -1,8 +1,8 @@
-import React, {useState, useEffect, useRef, useCallback} from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
-import {X, Instagram} from "lucide-react";
-import {teamMembers} from "../lib/teamData";
-import {useLenis} from "lenis/react";
+import { X, Instagram } from "lucide-react";
+import { teamMembers } from "../lib/teamData";
+import { useLenis } from "lenis/react";
 
 interface TeamMember {
   name: string;
@@ -41,7 +41,7 @@ function TeamGrid() {
       }
       .modal-backdrop.entered {
         opacity: 1;
-        backdrop-filter: blur(12px);
+        backdrop-filter: blur(40px);
       }
       .modal-backdrop.exiting {
         opacity: 0;
@@ -170,9 +170,8 @@ function TeamGrid() {
       </h2>
 
       <div
-        className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mt-8 w-full px-8 ${
-          activeMember ? "pointer-events-none blur-sm" : ""
-        }`}
+        className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mt-8 w-full px-8 ${activeMember ? "pointer-events-none blur-sm" : ""
+          }`}
       >
         {combinedTeam.map((m, i) => (
           <div
@@ -210,16 +209,14 @@ function TeamGrid() {
       {activeMember && isModalVisible && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div
-            className={`modal-backdrop absolute inset-0 bg-black/70 ${
-              isModalAnimating ? "entering" : "entered"
-            }`}
+            className={`modal-backdrop absolute inset-0 bg-black/50 ${isModalAnimating ? "entering" : "entered"
+              }`}
             onClick={close}
           />
           <div
             ref={modalRef}
-            className={`modal-container modal-content relative w-11/12 sm:w-2/3 lg:w-1/3 max-h-[85vh] overflow-y-auto overscroll-contain bg-gradient-to-b from-gray-900 to-black border border-orange-600 rounded-3xl p-8 shadow-[0_0_40px_#f97316] ${
-              isModalAnimating ? "entering" : "entered"
-            }`}
+            className={`modal-container modal-content relative w-11/12 sm:w-2/3 lg:w-1/3 max-h-[85vh] overflow-y-auto overscroll-contain bg-gradient-to-b from-gray-900 to-black border border-orange-600 rounded-3xl p-8 shadow-[0_0_40px_#f97316] ${isModalAnimating ? "entering" : "entered"
+              }`}
             style={{
               scrollbarWidth: "none", // Firefox
               msOverflowStyle: "none", // IE/Edge
