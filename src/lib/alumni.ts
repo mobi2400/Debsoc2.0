@@ -74,7 +74,7 @@ export const reviews: Review[] = [
       "Joining DebSoc was the best decision I made. I walked in timid, unsure—and now, I speak with confidence in front of a room full of people. It’s a safe space for growth and passion alike.",
   },
   {
-    name: "PURUSHUTTAMKUMAR",
+    name: "PURUSHUTTAM KUMAR",
     position: "Batch of 2025 Alumni",
     text:
       "DebSoc is where I discovered my voice. From struggling with my first speech to winning intra-college tournaments, it's been a rewarding climb. This club pushes you to think deeply and speak boldly.",
