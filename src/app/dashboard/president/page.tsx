@@ -15,6 +15,7 @@ import {
   Plus,
   Crown,
   CheckCircle,
+  X,
 } from "lucide-react";
 import UnverifiedView from "@/components/UnverifiedView";
 
@@ -368,165 +369,7 @@ export default function PresidentDashboard() {
                       <span>New Task</span>
                     </button>
                   </div>
-                  {showTaskModal && (
-                    <div className="fixed inset-0 bg-black/70 backdrop-blur-xl flex items-center justify-center z-50 p-4 animate-fadeIn overflow-y-auto">
-                      <div className="bg-gray-800/90 backdrop-blur-xl rounded-2xl p-6 w-full max-w-2xl shadow-2xl border border-gray-700/50 animate-pop-in my-8">
-                        <div className="flex items-center justify-between mb-5">
-                          <h3 className="text-2xl font-bold text-white flex items-center gap-3">
-                            <div className="p-2 bg-yellow-500/20 rounded-lg">
-                              <Plus className="w-6 h-6 text-yellow-400" />
-                            </div>
-                            Assign New Task
-                          </h3>
-                        </div>
-                        <form onSubmit={handleAssignTask} className="space-y-4">
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                              <label className="block text-sm font-semibold text-gray-300 mb-2">
-                                Task Name
-                              </label>
-                              <input
-                                type="text"
-                                value={taskForm.name}
-                                onChange={(e) =>
-                                  setTaskForm({ ...taskForm, name: e.target.value })
-                                }
-                                className="w-full px-4 py-2.5 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all hover:bg-gray-700/70"
-                                required
-                                placeholder="Enter task name"
-                              />
-                            </div>
-                            <div>
-                              <label className="block text-sm font-semibold text-gray-300 mb-2">
-                                Deadline
-                              </label>
-                              <input
-                                type="datetime-local"
-                                value={taskForm.deadline}
-                                onChange={(e) =>
-                                  setTaskForm({
-                                    ...taskForm,
-                                    deadline: e.target.value,
-                                  })
-                                }
-                                className="w-full px-4 py-2.5 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all hover:bg-gray-700/70"
-                                required
-                              />
-                            </div>
-                          </div>
 
-                          <div>
-                            <label className="block text-sm font-semibold text-gray-300 mb-2">
-                              Description
-                            </label>
-                            <textarea
-                              value={taskForm.description}
-                              onChange={(e) =>
-                                setTaskForm({
-                                  ...taskForm,
-                                  description: e.target.value,
-                                })
-                              }
-                              className="w-full px-4 py-2.5 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all resize-none hover:bg-gray-700/70"
-                              rows={3}
-                              required
-                              placeholder="Describe the task..."
-                            />
-                          </div>
-
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                              <label className="block text-sm font-semibold text-gray-300 mb-2">
-                                Assign To
-                              </label>
-                              <select
-                                value={taskForm.assignType}
-                                onChange={(e) =>
-                                  setTaskForm({
-                                    ...taskForm,
-                                    assignType: e.target.value as
-                                      | "cabinet"
-                                      | "member",
-                                  })
-                                }
-                                className="w-full px-4 py-2.5 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all hover:bg-gray-700/70"
-                              >
-                                <option value="cabinet">Cabinet</option>
-                                <option value="member">Member</option>
-                              </select>
-                            </div>
-                            <div>
-                              <label className="block text-sm font-semibold text-gray-300 mb-2">
-                                Select{" "}
-                                {taskForm.assignType === "cabinet"
-                                  ? "Cabinet Member"
-                                  : "Member"}
-                              </label>
-                              <select
-                                value={
-                                  taskForm.assignType === "cabinet"
-                                    ? taskForm.assignedToId
-                                    : taskForm.assignedToMemberId
-                                }
-                                onChange={(e) =>
-                                  setTaskForm({
-                                    ...taskForm,
-                                    assignedToId:
-                                      taskForm.assignType === "cabinet"
-                                        ? e.target.value
-                                        : "",
-                                    assignedToMemberId:
-                                      taskForm.assignType === "member"
-                                        ? e.target.value
-                                        : "",
-                                  })
-                                }
-                                className="w-full px-4 py-2.5 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all hover:bg-gray-700/70"
-                                required
-                              >
-                                <option value="">Select...</option>
-                                {taskForm.assignType === "cabinet"
-                                  ? cabinet.map((cab) => (
-                                    <option key={cab.id} value={cab.id}>
-                                      {cab.name} - {cab.position}
-                                    </option>
-                                  ))
-                                  : members.map((member) => (
-                                    <option key={member.id} value={member.id}>
-                                      {member.name}
-                                    </option>
-                                  ))}
-                              </select>
-                            </div>
-                          </div>
-
-                          <div className="flex flex-col-reverse md:flex-row gap-3 pt-2">
-                            <button
-                              type="button"
-                              onClick={() => setShowTaskModal(false)}
-                              className="flex-1 px-6 py-3 bg-gray-700/50 hover:bg-gray-600/50 rounded-xl text-white font-semibold transition-all border border-gray-600 hover:border-gray-500"
-                            >
-                              Cancel
-                            </button>
-                            <button
-                              type="submit"
-                              disabled={isAssigningTask}
-                              className="flex-1 px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 rounded-xl text-white font-bold shadow-lg shadow-yellow-500/25 transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-                            >
-                              {isAssigningTask ? (
-                                <span className="flex items-center justify-center gap-2">
-                                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                                  Assigning...
-                                </span>
-                              ) : (
-                                "Assign Task"
-                              )}
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  )}
 
                   <div className="mt-8">
                     <h3 className="text-lg font-bold text-white mb-4">
@@ -588,89 +431,7 @@ export default function PresidentDashboard() {
                       <span>New Feedback</span>
                     </button>
                   </div>
-                  {showFeedbackModal && (
-                    <div className="fixed inset-0 bg-black/70 backdrop-blur-xl flex items-center justify-center z-50 p-4 animate-fadeIn">
-                      <div className="bg-gray-800/90 backdrop-blur-xl rounded-2xl p-8 w-full max-w-lg shadow-2xl border border-gray-700/50 animate-pop-in">
-                        <div className="flex items-center justify-between mb-6">
-                          <h3 className="text-2xl font-bold text-white flex items-center gap-3">
-                            <div className="p-2 bg-yellow-500/20 rounded-lg">
-                              <MessageSquare className="w-6 h-6 text-yellow-400" />
-                            </div>
-                            Give Feedback to Member
-                          </h3>
-                        </div>
-                        <form
-                          onSubmit={handleGiveFeedback}
-                          className="space-y-5"
-                        >
-                          <div>
-                            <label className="block text-sm font-semibold text-gray-300 mb-2">
-                              Select Member
-                            </label>
-                            <select
-                              value={feedbackForm.memberId}
-                              onChange={(e) =>
-                                setFeedbackForm({
-                                  ...feedbackForm,
-                                  memberId: e.target.value,
-                                })
-                              }
-                              className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all hover:bg-gray-700/70"
-                              required
-                            >
-                              <option value="">Select Member...</option>
-                              {members.map((member) => (
-                                <option key={member.id} value={member.id}>
-                                  {member.name}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                          <div>
-                            <label className="block text-sm font-semibold text-gray-300 mb-2">
-                              Feedback Message
-                            </label>
-                            <textarea
-                              value={feedbackForm.feedback}
-                              onChange={(e) =>
-                                setFeedbackForm({
-                                  ...feedbackForm,
-                                  feedback: e.target.value,
-                                })
-                              }
-                              className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all resize-none hover:bg-gray-700/70"
-                              rows={5}
-                              required
-                              placeholder="Write your feedback here..."
-                            />
-                          </div>
-                          <div className="flex flex-col-reverse md:flex-row gap-3 pt-2">
-                            <button
-                              type="button"
-                              onClick={() => setShowFeedbackModal(false)}
-                              className="flex-1 px-6 py-3 bg-gray-700/50 hover:bg-gray-600/50 rounded-xl text-white font-semibold transition-all border border-gray-600 hover:border-gray-500"
-                            >
-                              Cancel
-                            </button>
-                            <button
-                              type="submit"
-                              disabled={isSendingFeedback}
-                              className="flex-1 px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 rounded-xl text-white font-bold shadow-lg shadow-yellow-500/25 transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-                            >
-                              {isSendingFeedback ? (
-                                <span className="flex items-center justify-center gap-2">
-                                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                                  Sending...
-                                </span>
-                              ) : (
-                                "Send Feedback"
-                              )}
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  )}
+
 
                   <div className="mt-8">
                     <h3 className="text-lg font-bold text-white mb-4">
@@ -792,6 +553,289 @@ export default function PresidentDashboard() {
           )}
         </div >
       </div >
+
+      {/* Modals moved to root to fix stacking context issues */}
+      {showTaskModal && (
+        <div className="fixed inset-0 z-[100] bg-gray-900 overflow-y-auto animate-pop-in">
+          <div className="min-h-screen px-4 py-8 md:py-12">
+            <button
+              onClick={() => setShowTaskModal(false)}
+              className="fixed top-6 right-6 p-3 bg-gray-800 hover:bg-gray-700 rounded-full text-gray-400 hover:text-white transition-colors z-50 shadow-lg border border-gray-700"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="container mx-auto max-w-4xl">
+              <div className="p-4 md:p-8">
+                <h3 className="text-2xl font-bold text-white mb-6 flex flex-col md:flex-row md:items-center gap-3">
+                  <div className="p-2 bg-yellow-500/20 rounded-lg w-fit">
+                    <Plus className="w-6 h-6 text-yellow-400" />
+                  </div>
+                  Assign New Task
+                </h3>
+
+                <form onSubmit={handleAssignTask} className="space-y-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="block text-sm font-medium text-gray-300">
+                        Task Name
+                      </label>
+                      <input
+                        type="text"
+                        value={taskForm.name}
+                        onChange={(e) =>
+                          setTaskForm({ ...taskForm, name: e.target.value })
+                        }
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all"
+                        required
+                        placeholder="Enter task name"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="block text-sm font-medium text-gray-300">
+                        Deadline
+                      </label>
+                      <input
+                        type="datetime-local"
+                        value={taskForm.deadline}
+                        onChange={(e) =>
+                          setTaskForm({
+                            ...taskForm,
+                            deadline: e.target.value,
+                          })
+                        }
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-300">
+                      Description
+                    </label>
+                    <textarea
+                      value={taskForm.description}
+                      onChange={(e) =>
+                        setTaskForm({
+                          ...taskForm,
+                          description: e.target.value,
+                        })
+                      }
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all resize-none"
+                      rows={4}
+                      required
+                      placeholder="Describe the task..."
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="block text-sm font-medium text-gray-300">
+                        Assign To
+                      </label>
+                      <div className="relative">
+                        <select
+                          value={taskForm.assignType}
+                          onChange={(e) =>
+                            setTaskForm({
+                              ...taskForm,
+                              assignType: e.target.value as
+                                | "cabinet"
+                                | "member",
+                            })
+                          }
+                          className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all appearance-none"
+                        >
+                          <option value="cabinet">Cabinet</option>
+                          <option value="member">Member</option>
+                        </select>
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+                          <Users className="w-4 h-4" />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="block text-sm font-medium text-gray-300">
+                        Select{" "}
+                        {taskForm.assignType === "cabinet"
+                          ? "Cabinet Member"
+                          : "Member"}
+                      </label>
+                      <div className="relative">
+                        <select
+                          value={
+                            taskForm.assignType === "cabinet"
+                              ? taskForm.assignedToId
+                              : taskForm.assignedToMemberId
+                          }
+                          onChange={(e) =>
+                            setTaskForm({
+                              ...taskForm,
+                              assignedToId:
+                                taskForm.assignType === "cabinet"
+                                  ? e.target.value
+                                  : "",
+                              assignedToMemberId:
+                                taskForm.assignType === "member"
+                                  ? e.target.value
+                                  : "",
+                            })
+                          }
+                          className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all appearance-none"
+                          required
+                        >
+                          <option value="">Select...</option>
+                          {taskForm.assignType === "cabinet"
+                            ? cabinet.map((cab) => (
+                              <option key={cab.id} value={cab.id}>
+                                {cab.name} - {cab.position}
+                              </option>
+                            ))
+                            : members.map((member) => (
+                              <option key={member.id} value={member.id}>
+                                {member.name}
+                              </option>
+                            ))}
+                        </select>
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+                          <Users className="w-4 h-4" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col-reverse md:flex-row items-center gap-4 pt-4 border-t border-gray-800">
+                    <button
+                      type="button"
+                      onClick={() => setShowTaskModal(false)}
+                      className="w-full md:w-auto px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl text-gray-300 font-medium transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={isAssigningTask}
+                      className="w-full md:flex-1 px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 rounded-xl text-white font-bold shadow-lg shadow-yellow-500/20 transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isAssigningTask ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          Assigning...
+                        </span>
+                      ) : (
+                        "Assign Task"
+                      )}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showFeedbackModal && (
+        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-2xl flex items-center justify-center p-4 transition-all duration-300">
+          <div className="bg-gradient-to-b from-gray-900 to-black rounded-2xl p-8 w-full max-w-lg shadow-[0_0_50px_-12px_rgba(234,179,8,0.3)] border border-yellow-500/30 animate-pop-in relative">
+            <button
+              onClick={() => setShowFeedbackModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="flex items-center space-x-3 mb-6">
+              <div className="p-3 bg-yellow-500/10 rounded-xl border border-yellow-500/20">
+                <MessageSquare className="w-6 h-6 text-yellow-500" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-white">
+                  Give Feedback to Member
+                </h3>
+                <p className="text-gray-400 text-sm">
+                  Help them improve with constructive feedback
+                </p>
+              </div>
+            </div>
+
+            <form
+              onSubmit={handleGiveFeedback}
+              className="space-y-6"
+            >
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-300 ml-1">
+                  Select Member
+                </label>
+                <div className="relative">
+                  <select
+                    value={feedbackForm.memberId}
+                    onChange={(e) =>
+                      setFeedbackForm({
+                        ...feedbackForm,
+                        memberId: e.target.value,
+                      })
+                    }
+                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500 outline-none transition-all appearance-none"
+                    required
+                  >
+                    <option value="">Select Member...</option>
+                    {members.map((member) => (
+                      <option key={member.id} value={member.id}>
+                        {member.name}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+                    <Users className="w-4 h-4" />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 ml-1 mb-2">
+                  Feedback Message
+                </label>
+                <textarea
+                  value={feedbackForm.feedback}
+                  onChange={(e) =>
+                    setFeedbackForm({
+                      ...feedbackForm,
+                      feedback: e.target.value,
+                    })
+                  }
+                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-xl text-white focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500 outline-none transition-all resize-none"
+                  rows={5}
+                  required
+                  placeholder="Write your feedback here..."
+                />
+              </div>
+              <div className="flex flex-col-reverse md:flex-row gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowFeedbackModal(false)}
+                  className="flex-1 px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-xl text-gray-300 font-medium transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSendingFeedback}
+                  className="flex-1 px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 rounded-xl text-white font-bold shadow-lg shadow-yellow-500/25 transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                >
+                  {isSendingFeedback ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Sending...
+                    </span>
+                  ) : (
+                    "Send Feedback"
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
       <Toaster
         position="top-right"
         toastOptions={{
