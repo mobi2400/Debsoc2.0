@@ -1,8 +1,8 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import {motion, AnimatePresence} from "framer-motion";
-import {Instagram, Mail, Facebook, Youtube} from "lucide-react";
-import {useOutsideClick} from "../hooks/use-outside-click";
+import { motion, AnimatePresence } from "framer-motion";
+import { Instagram, Mail, Facebook, Youtube } from "lucide-react";
+import { useOutsideClick } from "../hooks/use-outside-click";
 
 const HomeSection = () => {
   const [mainText, setMainText] = useState("");
@@ -123,19 +123,19 @@ const HomeSection = () => {
       className="relative h-[70vh] md:h-screen w-full overflow-hidden"
     >
       <Image
-        src="/homepage/M5.jpg"
+        src="/homepage/Debsoc-Group.jpeg"
         alt="group photo"
         fill
         priority
         quality={92}
         sizes="100vw"
-        className="absolute inset-0 w-full h-full object-cover object-center"
+        className="absolute inset-0 w-full h-full object-cover object-center scale-130"
       />
 
       <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center">
         <h1
           className="text-4xl md:text-7xl font-extrabold text-orange-500 px-4 flex items-center"
-          style={{fontFamily: "'Courier New', monospace"}}
+          style={{ fontFamily: "'Courier New', monospace" }}
         >
           <span className="whitespace-nowrap">{mainText}</span>
           {showMainCursor && <span className="animate-blink ml-1">|</span>}
@@ -163,8 +163,8 @@ const HomeSection = () => {
           <motion.button
             onClick={toggleConnect}
             className="px-6 py-2 bg-white/10 backdrop-blur-sm text-white font-medium rounded-lg border border-white/20 hover:bg-white/20 transition-all duration-300"
-            whileHover={{scale: 1.05}}
-            whileTap={{scale: 0.95}}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             Connect with us
           </motion.button>
@@ -173,10 +173,10 @@ const HomeSection = () => {
           <motion.button
             onClick={toggleConnect}
             className="mt-2 p-1 text-white/70 hover:text-white transition-colors duration-200"
-            animate={{rotate: isConnectOpen ? 180 : 0}}
-            transition={{duration: 0.3, ease: "easeInOut"}}
-            whileHover={{scale: 1.1}}
-            whileTap={{scale: 0.9}}
+            animate={{ rotate: isConnectOpen ? 180 : 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
               <path
@@ -191,10 +191,10 @@ const HomeSection = () => {
           <AnimatePresence>
             {isConnectOpen && (
               <motion.div
-                initial={{opacity: 0, y: -10}}
-                animate={{opacity: 1, y: 0}}
-                exit={{opacity: 0, y: -10}}
-                transition={{duration: 0.2}}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
                 className="absolute top-full mt-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-4 shadow-xl z-50"
               >
                 <div className="flex gap-3">
@@ -205,11 +205,11 @@ const HomeSection = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-200"
-                      initial={{opacity: 0, scale: 0.8}}
-                      animate={{opacity: 1, scale: 1}}
-                      transition={{delay: index * 0.05}}
-                      whileHover={{scale: 1.1}}
-                      whileTap={{scale: 0.95}}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: index * 0.05 }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
                     >
                       <social.icon className="w-5 h-5 text-white" />
                     </motion.a>
