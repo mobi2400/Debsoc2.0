@@ -528,11 +528,22 @@ export default function PresidentDashboard() {
                             className="bg-gray-700/50 rounded-lg p-4 relative group hover:bg-gray-700/80 focus:bg-gray-700/80 transition-all duration-300 outline-none cursor-pointer"
                             tabIndex={0}
                           >
-                            <div className="absolute left-1/2 bottom-full mb-2 -translate-x-1/2 w-72 bg-gray-800 border border-gray-600 rounded-xl shadow-2xl p-4 hidden group-hover:block group-focus:block z-50 pointer-events-none opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-200 backdrop-blur-3xl">
-                              <h4 className="text-lg font-bold text-white mb-2">Session Details</h4>
-                              <div className="space-y-2 text-sm">
-                                <p><span className="text-gray-400">Motion:</span> <span className="text-white">{session.motiontype}</span></p>
-                                <p><span className="text-gray-400">Chair:</span> <span className="text-white">{session.Chair}</span></p>
+                            <div className="absolute left-1/2 bottom-full mb-2 -translate-x-1/2 w-80 bg-gray-800 border border-gray-600 rounded-xl shadow-2xl p-4 hidden group-hover:block group-focus:block z-50 pointer-events-none opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-200 backdrop-blur-3xl max-h-96 overflow-y-auto">
+                              <h4 className="text-lg font-bold text-white mb-3">Session Details</h4>
+                              <div className="space-y-3 text-sm">
+                                <div>
+                                  <p><span className="text-gray-400">Motion:</span> <span className="text-white">{session.motiontype}</span></p>
+                                  <p><span className="text-gray-400">Chair:</span> <span className="text-white">{session.Chair}</span></p>
+                                </div>
+                                {session.attendance && session.attendance.length > 0 && (
+                                  <div className="border-t border-gray-700 pt-3">
+                                    <p className="text-gray-400 font-medium mb-2">Attendance Summary:</p>
+                                    <div className="flex gap-4 mb-2">
+                                      <span className="text-green-400">✓ {session.attendance.filter(a => a.status === "Present").length} Present</span>
+                                      <span className="text-red-400">✗ {session.attendance.filter(a => a.status === "Absent").length} Absent</span>
+                                    </div>
+                                  </div>
+                                )}
                               </div>
                             </div>
                             <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
