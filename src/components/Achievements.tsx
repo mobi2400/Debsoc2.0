@@ -98,9 +98,6 @@ const DesktopTrigger = memo(function DesktopTrigger({
                     onInView(index);
                 }
             },
-            // Use a thin "center band" of the viewport as the root.
-            // This avoids needing a large intersection ratio, which won't happen
-            // when the sticky UI occupies most of the screen.
             {threshold: 0, rootMargin: "-45% 0px -45% 0px"}
         );
 
