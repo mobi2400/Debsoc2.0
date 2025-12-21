@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import { memberApi, Task, Attendance, AnonymousFeedback, User, AnonymousMessage } from "@/lib/api";
+import { memberApi, leaderboardApi, Task, Attendance, AnonymousFeedback, User, AnonymousMessage, LeaderboardEntry } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
@@ -15,6 +15,8 @@ import {
   CheckCircle,
   XCircle,
   Plus,
+  Trophy,
+  BarChart2,
 } from "lucide-react";
 import UnverifiedView from "@/components/UnverifiedView";
 
@@ -24,13 +26,15 @@ export default function MemberDashboard() {
   const { user, logout, isAuthenticated, isVerified, isLoading } = useAuth();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<
-    "attendance" | "tasks" | "messages" | "feedback"
+    "attendance" | "tasks" | "messages" | "feedback" | "leaderboard"
   >("attendance");
   const [attendance, setAttendance] = useState<Attendance[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [feedbacks, setFeedbacks] = useState<AnonymousFeedback[]>([]);
   const [sentMessages, setSentMessages] = useState<AnonymousMessage[]>([]);
   const [presidents, setPresidents] = useState<User[]>([]);
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [leaderboardType, setLeaderboardType] = useState<"all-time" | "bi-monthly">("all-time");
   const [loading, setLoading] = useState(true);
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [messageForm, setMessageForm] = useState({
@@ -57,6 +61,22 @@ export default function MemberDashboard() {
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, user, isVerified, isLoading]);
+
+
+  useEffect(() => {
+    if (activeTab === "leaderboard") {
+      const fetchLeaderboard = async () => {
+        try {
+          const data = await leaderboardApi.getLeaderboard(leaderboardType);
+          setLeaderboard(data.leaderboard);
+        } catch (error) {
+          console.error("Failed to load leaderboard", error);
+          toast.error("Failed to load leaderboard");
+        }
+      };
+      fetchLeaderboard();
+    }
+  }, [activeTab, leaderboardType]);
 
   const loadData = async () => {
     try {
@@ -199,6 +219,7 @@ export default function MemberDashboard() {
               { id: "tasks", label: "Tasks", icon: FileText },
               { id: "messages", label: "Messages", icon: MessageSquare },
               { id: "feedback", label: "Feedback", icon: MessageSquare },
+              { id: "leaderboard", label: "Leaderboard", icon: Trophy },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -272,8 +293,38 @@ export default function MemberDashboard() {
                         {attendance.map((record) => (
                           <div
                             key={record.id}
-                            className="bg-gray-700/50 rounded-lg p-4"
+                            className="bg-gray-700/50 rounded-lg p-4 relative group hover:bg-gray-700/80 transition-all duration-300"
                           >
+                            {/* Hover Pop-out Details */}
+                            <div className="absolute left-1/2 -top-2 -translate-x-1/2 -translate-y-full w-[calc(100%-2rem)] md:w-80 bg-gray-800 border border-gray-600 rounded-xl shadow-2xl p-4 hidden group-hover:block z-50 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-200 backdrop-blur-3xl">
+                              <h4 className="text-lg font-bold text-white mb-3 leading-tight">{record.session?.motiontype || "Session Details"}</h4>
+                              <div className="space-y-2 text-sm">
+                                <div className="flex justify-between border-b border-gray-700 pb-1">
+                                  <span className="text-gray-400">Date</span>
+                                  <span className="text-gray-200 font-medium">
+                                    {record.session?.sessionDate
+                                      ? new Date(record.session.sessionDate).toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })
+                                      : "N/A"}
+                                  </span>
+                                </div>
+                                <div className="flex justify-between border-b border-gray-700 pb-1">
+                                  <span className="text-gray-400">Chair</span>
+                                  <span className="text-gray-200 font-medium">{record.session?.Chair || "N/A"}</span>
+                                </div>
+                                <div className="flex justify-between border-b border-gray-700 pb-1">
+                                  <span className="text-gray-400">Status</span>
+                                  <span className={`font-bold ${record.status === "Present" ? "text-green-400" : "text-red-400"}`}>
+                                    {record.status}
+                                  </span>
+                                </div>
+                                <div className="flex justify-between pt-1">
+                                  <span className="text-gray-400">Speaker Score</span>
+                                  <span className="text-blue-400 font-bold">{record.speakerScore ?? "N/A"}</span>
+                                </div>
+                              </div>
+                              {/* Arrow Tip */}
+                              <div className="absolute left-1/2 -bottom-2 -translate-x-1/2 w-4 h-4 bg-gray-800 border-r border-b border-gray-600 rotate-45"></div>
+                            </div>
                             <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
                               <div>
                                 <p className="text-white font-medium">
@@ -283,6 +334,12 @@ export default function MemberDashboard() {
                                   {record.session?.Chair &&
                                     `Chair: ${record.session.Chair}`}
                                 </p>
+                                {record.speakerScore !== undefined && record.speakerScore !== null && (
+                                  <p className="text-blue-400 text-sm font-medium mt-1 flex items-center gap-1">
+                                    <BarChart2 className="w-3 h-3" />
+                                    Score: {record.speakerScore}
+                                  </p>
+                                )}
                                 <p className="text-gray-500 text-xs mt-1">
                                   {record.session?.sessionDate
                                     ? new Date(
@@ -456,6 +513,85 @@ export default function MemberDashboard() {
                           </div>
                         </div>
                       ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Leaderboard Tab */}
+              {activeTab === "leaderboard" && (
+                <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-4 md:p-6">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="p-2 bg-yellow-500/20 rounded-lg">
+                        <Trophy className="w-6 h-6 text-yellow-500" />
+                      </div>
+                      <h2 className="text-xl font-bold text-white">Leaderboard</h2>
+                    </div>
+
+                    <div className="flex bg-gray-700/50 rounded-lg p-1">
+                      <button
+                        onClick={() => setLeaderboardType("all-time")}
+                        className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${leaderboardType === "all-time"
+                          ? "bg-gray-600 text-white shadow"
+                          : "text-gray-400 hover:text-white"
+                          }`}
+                      >
+                        All Time
+                      </button>
+                      <button
+                        onClick={() => setLeaderboardType("bi-monthly")}
+                        className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${leaderboardType === "bi-monthly"
+                          ? "bg-gray-600 text-white shadow"
+                          : "text-gray-400 hover:text-white"
+                          }`}
+                      >
+                        Bi-Monthly
+                      </button>
+                    </div>
+                  </div>
+
+                  {leaderboard.length === 0 ? (
+                    <p className="text-gray-400 text-center py-8">No leaderboard data available</p>
+                  ) : (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left border-collapse">
+                        <thead>
+                          <tr className="border-b border-gray-700 text-gray-400 text-sm">
+                            <th className="p-4 font-medium">Rank</th>
+                            <th className="p-4 font-medium">Name</th>
+                            <th className="p-4 font-medium">Total Score</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-700/50">
+                          {leaderboard.map((entry, index) => (
+                            <tr
+                              key={entry.id}
+                              className={`hover:bg-gray-700/30 transition-colors ${entry.name === user?.name ? "bg-orange-500/10 border-l-2 border-orange-500" : ""
+                                }`}
+                            >
+                              <td className="p-4">
+                                {(index + 1) === 1 && <Trophy className="w-5 h-5 text-yellow-500 inline mr-2" />}
+                                {(index + 1) === 2 && <Trophy className="w-5 h-5 text-gray-400 inline mr-2" />}
+                                {(index + 1) === 3 && <Trophy className="w-5 h-5 text-amber-700 inline mr-2" />}
+                                <span className={`font-bold ${(index + 1) === 1 ? "text-yellow-500" :
+                                  (index + 1) === 2 ? "text-gray-400" :
+                                    (index + 1) === 3 ? "text-amber-700" : "text-gray-300"
+                                  }`}>
+                                  #{index + 1}
+                                </span>
+                              </td>
+                              <td className="p-4 text-white font-medium">
+                                {entry.name}
+                                {entry.name === user?.name && <span className="ml-2 text-xs bg-orange-500/20 text-orange-400 px-2 py-0.5 rounded">You</span>}
+                              </td>
+                              <td className="p-4">
+                                <span className="font-bold text-blue-400">{entry.score.toFixed(1)}</span>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
                   )}
                 </div>
