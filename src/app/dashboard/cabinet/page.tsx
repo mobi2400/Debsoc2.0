@@ -648,7 +648,6 @@ export default function CabinetDashboard() {
                               <div className="space-y-2 text-sm">
                                 <p><span className="text-gray-400">Motion:</span> <span className="text-white">{session.motiontype}</span></p>
                                 <p><span className="text-gray-400">Chair:</span> <span className="text-white">{session.Chair}</span></p>
-                                <p className="text-xs text-yellow-500 italic mt-2 border-t border-gray-700 pt-2">Attendee list requires server restart.</p>
                               </div>
                             </div>
                             <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
