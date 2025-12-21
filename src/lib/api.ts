@@ -1,5 +1,5 @@
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "https://debsoc-backend.vercel.app/api";
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
 
 // Types
 export type Role = "TechHead" | "President" | "cabinet" | "Member";
@@ -47,9 +47,17 @@ export interface Attendance {
   sessionId: string;
   memberId: string;
   status: "Present" | "Absent";
+  speakerScore?: number;
   session?: Session;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface LeaderboardEntry {
+  rank: number;
+  name: string;
+  score: number;
+  sessions: number;
 }
 
 export interface AnonymousMessage {
@@ -136,6 +144,30 @@ const apiCall = async <T>(
   return response.json();
 };
 
+export interface VerifiedUsers {
+  verifiedPresidents: Array<{
+    id: string;
+    name: string;
+    email: string;
+    createdAt: string;
+  }>;
+  verifiedCabinet: Array<{
+    id: string;
+    name: string;
+    email: string;
+    position: string;
+    createdAt: string;
+  }>;
+  verifiedMembers: Array<{
+    id: string;
+    name: string;
+    email: string;
+    createdAt: string;
+  }>;
+}
+
+// ... existing code ...
+
 // TechHead API
 export const techHeadApi = {
   login: async (email: string, password: string): Promise<AuthResponse> => {
@@ -177,8 +209,62 @@ export const techHeadApi = {
       body: JSON.stringify({ memberId }),
     });
   },
+  unverifyPresident: async (
+    presidentId: string
+  ): Promise<{
+    message: string;
+    president: { id: string; name: string; isVerified: boolean };
+  }> => {
+    return apiCall(`/techhead/unverify/president`, {
+      method: "POST",
+      body: JSON.stringify({ presidentId }),
+    });
+  },
+  unverifyCabinet: async (
+    cabinetId: string
+  ): Promise<{
+    message: string;
+    cabinet: { id: string; name: string; isVerified: boolean };
+  }> => {
+    return apiCall(`/techhead/unverify/cabinet`, {
+      method: "POST",
+      body: JSON.stringify({ cabinetId }),
+    });
+  },
+  unverifyMember: async (
+    memberId: string
+  ): Promise<{
+    message: string;
+    member: { id: string; name: string; isVerified: boolean };
+  }> => {
+    return apiCall(`/techhead/unverify/member`, {
+      method: "POST",
+      body: JSON.stringify({ memberId }),
+    });
+  },
   getUnverifiedUsers: async (): Promise<UnverifiedUsers> => {
     return apiCall<UnverifiedUsers>("/techhead/unverified-users");
+  },
+  getVerifiedUsers: async (): Promise<VerifiedUsers> => {
+    return apiCall<VerifiedUsers>("/techhead/verified-users");
+  },
+  deletePresident: async (id: string): Promise<{ message: string }> => {
+    return apiCall("/techhead/delete/president", {
+      method: "DELETE",
+      body: JSON.stringify({ id }),
+    });
+  },
+  deleteCabinet: async (id: string): Promise<{ message: string }> => {
+    return apiCall("/techhead/delete/cabinet", {
+      method: "DELETE",
+      body: JSON.stringify({ id }),
+    });
+  },
+  deleteMember: async (id: string): Promise<{ message: string }> => {
+    return apiCall("/techhead/delete/member", {
+      method: "DELETE",
+      body: JSON.stringify({ id }),
+    });
   },
 };
 
@@ -366,5 +452,15 @@ export const memberApi = {
   },
   getPresidents: async (): Promise<{ presidents: User[] }> => {
     return apiCall<{ presidents: User[] }>("/member/presidents");
+  },
+};
+
+export const leaderboardApi = {
+  getLeaderboard: async (
+    type: "all-time" | "bi-monthly" = "all-time"
+  ): Promise<{ leaderboard: LeaderboardEntry[] }> => {
+    return apiCall<{ leaderboard: LeaderboardEntry[] }>(
+      `/leaderboard?type=${type}`
+    );
   },
 };
