@@ -560,33 +560,31 @@ export default function MemberDashboard() {
                           <tr className="border-b border-gray-700 text-gray-400 text-sm">
                             <th className="p-4 font-medium">Rank</th>
                             <th className="p-4 font-medium">Name</th>
-                            <th className="p-4 font-medium">Sessions</th>
                             <th className="p-4 font-medium">Total Score</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-700/50">
-                          {leaderboard.map((entry) => (
+                          {leaderboard.map((entry, index) => (
                             <tr
                               key={entry.id}
                               className={`hover:bg-gray-700/30 transition-colors ${entry.name === user?.name ? "bg-orange-500/10 border-l-2 border-orange-500" : ""
                                 }`}
                             >
                               <td className="p-4">
-                                {entry.rank === 1 && <Trophy className="w-5 h-5 text-yellow-500 inline mr-2" />}
-                                {entry.rank === 2 && <Trophy className="w-5 h-5 text-gray-400 inline mr-2" />}
-                                {entry.rank === 3 && <Trophy className="w-5 h-5 text-amber-700 inline mr-2" />}
-                                <span className={`font-bold ${entry.rank === 1 ? "text-yellow-500" :
-                                  entry.rank === 2 ? "text-gray-400" :
-                                    entry.rank === 3 ? "text-amber-700" : "text-gray-300"
+                                {(index + 1) === 1 && <Trophy className="w-5 h-5 text-yellow-500 inline mr-2" />}
+                                {(index + 1) === 2 && <Trophy className="w-5 h-5 text-gray-400 inline mr-2" />}
+                                {(index + 1) === 3 && <Trophy className="w-5 h-5 text-amber-700 inline mr-2" />}
+                                <span className={`font-bold ${(index + 1) === 1 ? "text-yellow-500" :
+                                  (index + 1) === 2 ? "text-gray-400" :
+                                    (index + 1) === 3 ? "text-amber-700" : "text-gray-300"
                                   }`}>
-                                  #{entry.rank}
+                                  #{index + 1}
                                 </span>
                               </td>
                               <td className="p-4 text-white font-medium">
                                 {entry.name}
                                 {entry.name === user?.name && <span className="ml-2 text-xs bg-orange-500/20 text-orange-400 px-2 py-0.5 rounded">You</span>}
                               </td>
-                              <td className="p-4 text-gray-300">{entry.sessions}</td>
                               <td className="p-4">
                                 <span className="font-bold text-blue-400">{entry.score.toFixed(1)}</span>
                               </td>
