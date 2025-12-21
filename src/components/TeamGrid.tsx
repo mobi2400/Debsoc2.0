@@ -3,6 +3,7 @@ import Image from "next/image";
 import { X, Instagram } from "lucide-react";
 import { teamMembers } from "../lib/teamData";
 import { useLenis } from "lenis/react";
+import { motion } from "framer-motion";
 
 interface TeamMember {
   name: string;
@@ -160,22 +161,48 @@ function TeamGrid() {
     : generalMembers.slice(0, 2);
   const combinedTeam = [...coreMembers, ...visibleMembers];
 
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
   return (
     <section
       id="team"
       className="relative min-h-screen flex flex-col items-center bg-gradient-to-br from-black via-gray-900 to-black py-12"
     >
-      <h2 className="text-orange-600 text-2xl md:text-3xl font-semibold mb-4">
+      <motion.h2
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="text-orange-600 text-2xl md:text-3xl font-semibold mb-4"
+      >
         TEAM MEMBERS
-      </h2>
+      </motion.h2>
 
-      <div
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-50px" }}
         className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mt-8 w-full px-8 ${activeMember ? "pointer-events-none blur-sm" : ""
           }`}
       >
         {combinedTeam.map((m, i) => (
-          <div
+          <motion.div
             key={i}
+            variants={item}
             onClick={() => openModal(m)}
             className="flex flex-col items-center bg-white/10 backdrop-blur-md border border-orange-600 rounded-2xl p-6 transition-all duration-300 hover:shadow-[0_0_25px_#f97316] cursor-pointer transform hover:scale-105"
           >
@@ -193,17 +220,21 @@ function TeamGrid() {
             <div className="text-orange-500 text-lg border-t border-orange-600 pt-2 w-full text-center">
               {m.position}
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {!showAllMembers && !isDesktop && (
-        <button
+        <motion.button
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
           className="mt-6 px-6 py-2 bg-orange-500 text-white rounded-full font-semibold shadow-lg hover:bg-orange-700 transition md:hidden"
           onClick={() => setShowAllMembers(true)}
         >
           View All Members
-        </button>
+        </motion.button>
       )}
 
       {activeMember && isModalVisible && (

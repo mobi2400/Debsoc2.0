@@ -1,11 +1,12 @@
-import React, {useEffect, useState, useCallback, useMemo} from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import Image from "next/image";
 import toast from "react-hot-toast";
+import { motion } from "framer-motion";
 
 function Quote() {
   const [quote, setQuote] = useState("Loading...");
   const [author, setAuthor] = useState("");
-  
+
 
   const staticQuotes = useMemo(() => [
     {
@@ -231,13 +232,27 @@ function Quote() {
     );
   };
 
+
+
   return (
     <section className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center px-6">
-      <div className="w-full max-w-6xl bg-white/5 backdrop-blur-md rounded-3xl border border-orange-500 p-10 grid grid-cols-1 md:grid-cols-2 gap-6 transition-shadow duration-500 delay-100 ease-in-out hover:shadow-[0_0_30px_#f97316]">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="w-full max-w-6xl bg-white/5 backdrop-blur-md rounded-3xl border border-orange-500 p-10 grid grid-cols-1 md:grid-cols-2 gap-6 transition-shadow duration-500 delay-100 ease-in-out hover:shadow-[0_0_30px_#f97316]"
+      >
         <div className="flex flex-col justify-center">
-          <h2 className="text-orange-500 text-2xl font-bold mb-6">
+          <motion.h2
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="text-orange-500 text-2xl font-bold mb-6"
+          >
             QUOTE OF THE DAY
-          </h2>
+          </motion.h2>
 
           <blockquote className="text-white text-xl italic leading-relaxed border-l-4 border-orange-500 pl-4 mb-4">
             {quote}
@@ -249,15 +264,23 @@ function Quote() {
             </p>
           )}
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={generateNewQuote}
-            className="mt-6 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-900 cursor-pointer"
+            className="mt-6 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-900 cursor-pointer"
           >
             New Quote
-          </button>
+          </motion.button>
         </div>
 
-        <div className="w-full md:w-auto md:h-64 relative">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4, duration: 0.6 }}
+          className="w-full md:w-auto md:h-64 relative"
+        >
           <Image
             src="/quote-image.jpg"
             alt="Quote"
@@ -267,8 +290,8 @@ function Quote() {
             sizes="(max-width:768px) 100vw, 400px"
             priority
           />
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
