@@ -293,10 +293,11 @@ export default function MemberDashboard() {
                         {attendance.map((record) => (
                           <div
                             key={record.id}
-                            className="bg-gray-700/50 rounded-lg p-4 relative group hover:bg-gray-700/80 transition-all duration-300"
+                            className="bg-gray-700/50 rounded-lg p-4 relative group hover:bg-gray-700/80 focus:bg-gray-700/80 transition-all duration-300 outline-none cursor-pointer"
+                            tabIndex={0}
                           >
                             {/* Hover Pop-out Details */}
-                            <div className="absolute left-1/2 -top-2 -translate-x-1/2 -translate-y-full w-[calc(100%-2rem)] md:w-80 bg-gray-800 border border-gray-600 rounded-xl shadow-2xl p-4 hidden group-hover:block z-50 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-200 backdrop-blur-3xl">
+                            <div className="absolute left-1/2 -top-2 -translate-x-1/2 -translate-y-full w-[calc(100%-2rem)] md:w-80 bg-gray-800 border border-gray-600 rounded-xl shadow-2xl p-4 hidden group-hover:block group-focus:block z-50 pointer-events-none opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-200 backdrop-blur-3xl">
                               <h4 className="text-lg font-bold text-white mb-3 leading-tight">{record.session?.motiontype || "Session Details"}</h4>
                               <div className="space-y-2 text-sm">
                                 <div className="flex justify-between border-b border-gray-700 pb-1">
