@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import { presidentApi, Task, Session, User, AnonymousMessage, AnonymousFeedback } from "@/lib/api";
+import { presidentApi, leaderboardApi, Task, Session, User, AnonymousMessage, AnonymousFeedback, LeaderboardEntry } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
@@ -16,6 +16,7 @@ import {
   Crown,
   CheckCircle,
   X,
+  Trophy,
 } from "lucide-react";
 import UnverifiedView from "@/components/UnverifiedView";
 
@@ -25,7 +26,7 @@ export default function PresidentDashboard() {
   const { user, logout, isAuthenticated, isVerified, isLoading } = useAuth();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<
-    "dashboard" | "tasks" | "feedback" | "sessions" | "messages"
+    "dashboard" | "tasks" | "feedback" | "sessions" | "messages" | "leaderboard"
   >("dashboard");
   const [tasks, setTasks] = useState<Task[]>([]);
   const [sessions, setSessions] = useState<Session[]>([]);
@@ -33,6 +34,8 @@ export default function PresidentDashboard() {
   const [cabinet, setCabinet] = useState<User[]>([]);
   const [messages, setMessages] = useState<AnonymousMessage[]>([]);
   const [sentFeedback, setSentFeedback] = useState<AnonymousFeedback[]>([]);
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [leaderboardType, setLeaderboardType] = useState<"all-time" | "bi-monthly">("all-time");
   const [loading, setLoading] = useState(true);
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
@@ -69,6 +72,21 @@ export default function PresidentDashboard() {
   }, [showFeedbackModal]);
 
   useEffect(() => {
+    if (activeTab === "leaderboard") {
+      const fetchLeaderboard = async () => {
+        try {
+          const data = await leaderboardApi.getLeaderboard(leaderboardType);
+          setLeaderboard(data.leaderboard);
+        } catch (error) {
+          console.error("Failed to load leaderboard", error);
+          toast.error("Failed to load leaderboard");
+        }
+      };
+      fetchLeaderboard();
+    }
+  }, [activeTab, leaderboardType]);
+
+  useEffect(() => {
     if (isLoading) return;
     if (!isAuthenticated) {
       router.push("/login");
@@ -90,16 +108,18 @@ export default function PresidentDashboard() {
 
       // Load core data
       try {
-        const [dashboardData, sessionsData, messagesData] =
+        const [dashboardData, sessionsData, messagesData, leaderboardData] =
           await Promise.all([
             presidentApi.getDashboard(),
             presidentApi.getSessions(),
             presidentApi.getMessages(),
+            leaderboardApi.getLeaderboard("all-time"),
           ]);
         setMembers(dashboardData.members);
         setCabinet(dashboardData.cabinet);
         setSessions(sessionsData.sessions);
         setMessages(messagesData.messages);
+        setLeaderboard(leaderboardData.leaderboard);
       } catch (error) {
         console.error("Failed to load core data", error);
         toast.error("Failed to load dashboard data");
@@ -255,6 +275,7 @@ export default function PresidentDashboard() {
               { id: "feedback", label: "Give Feedback", icon: MessageSquare },
               { id: "sessions", label: "Sessions", icon: Calendar },
               { id: "messages", label: "Messages", icon: MessageSquare },
+              { id: "leaderboard", label: "Leaderboard", icon: Trophy },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -297,27 +318,40 @@ export default function PresidentDashboard() {
                         {members.length}
                       </span>
                     </div>
-                    <div className="space-y-2 max-h-96 overflow-y-auto custom-scrollbar">
-                      {members.map((member) => (
-                        <div
-                          key={member.id}
-                          className="bg-gray-700/50 rounded-lg p-3"
-                        >
-                          <p className="text-white font-medium">
-                            {member.name}
-                          </p>
-                          <p className="text-gray-400 text-sm">
-                            {member.email}
-                          </p>
-                          {member.isVerified ? (
-                            <CheckCircle className="w-4 h-4 text-green-500 mt-1" />
-                          ) : (
-                            <span className="text-red-400 text-xs">
-                              Not Verified
-                            </span>
-                          )}
-                        </div>
-                      ))}
+                    <div className="space-y-2">
+                      {members.map((member) => {
+                        const stats = leaderboard.find((l) => l.id === member.id);
+                        const rank = stats ? leaderboard.findIndex((l) => l.id === member.id) + 1 : "N/A";
+                        return (
+                          <div
+                            key={member.id}
+                            className="bg-gray-700/50 rounded-lg p-3 relative group hover:bg-gray-700/80 focus:bg-gray-700/80 transition-all duration-300 outline-none cursor-pointer"
+                            tabIndex={0}
+                          >
+                            <div className="absolute left-1/2 bottom-full mb-2 -translate-x-1/2 w-64 bg-gray-800 border border-gray-600 rounded-xl shadow-2xl p-4 hidden group-hover:block group-focus:block z-50 pointer-events-none opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-200 backdrop-blur-3xl">
+                              <h4 className="text-lg font-bold text-white mb-2">{member.name}</h4>
+                              <div className="space-y-1 text-sm">
+                                <p className="flex justify-between"><span className="text-gray-400">Rank:</span> <span className="text-yellow-500 font-bold">#{rank}</span></p>
+                                <p className="flex justify-between"><span className="text-gray-400">Score:</span> <span className="text-blue-400 font-bold">{stats?.score.toFixed(1) || 0}</span></p>
+                                <p className="flex justify-between"><span className="text-gray-400">Attendance:</span> <span className="text-white font-bold">{stats?.sessions || 0}</span></p>
+                              </div>
+                            </div>
+                            <p className="text-white font-medium">
+                              {member.name}
+                            </p>
+                            <p className="text-gray-400 text-sm">
+                              {member.email}
+                            </p>
+                            {member.isVerified ? (
+                              <CheckCircle className="w-4 h-4 text-green-500 mt-1" />
+                            ) : (
+                              <span className="text-red-400 text-xs">
+                                Not Verified
+                              </span>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
 
@@ -329,26 +363,39 @@ export default function PresidentDashboard() {
                         {cabinet.length}
                       </span>
                     </div>
-                    <div className="space-y-2 max-h-96 overflow-y-auto custom-scrollbar">
-                      {cabinet.map((cab) => (
-                        <div
-                          key={cab.id}
-                          className="bg-gray-700/50 rounded-lg p-3"
-                        >
-                          <p className="text-white font-medium">{cab.name}</p>
-                          <p className="text-gray-400 text-sm">{cab.email}</p>
-                          <p className="text-gray-400 text-sm">
-                            Position: {cab.position}
-                          </p>
-                          {cab.isVerified ? (
-                            <CheckCircle className="w-4 h-4 text-green-500 mt-1" />
-                          ) : (
-                            <span className="text-red-400 text-xs">
-                              Not Verified
-                            </span>
-                          )}
-                        </div>
-                      ))}
+                    <div className="space-y-2">
+                      {cabinet.map((cab) => {
+                        const stats = leaderboard.find((l) => l.id === cab.id);
+                        const rank = stats ? leaderboard.findIndex((l) => l.id === cab.id) + 1 : "N/A";
+                        return (
+                          <div
+                            key={cab.id}
+                            className="bg-gray-700/50 rounded-lg p-3 relative group hover:bg-gray-700/80 focus:bg-gray-700/80 transition-all duration-300 outline-none cursor-pointer"
+                            tabIndex={0}
+                          >
+                            <div className="absolute left-1/2 bottom-full mb-2 -translate-x-1/2 w-64 bg-gray-800 border border-gray-600 rounded-xl shadow-2xl p-4 hidden group-hover:block group-focus:block z-50 pointer-events-none opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-200 backdrop-blur-3xl">
+                              <h4 className="text-lg font-bold text-white mb-2">{cab.name}</h4>
+                              <div className="space-y-1 text-sm">
+                                <p className="flex justify-between"><span className="text-gray-400">Rank:</span> <span className="text-yellow-500 font-bold">#{rank}</span></p>
+                                <p className="flex justify-between"><span className="text-gray-400">Score:</span> <span className="text-blue-400 font-bold">{stats?.score.toFixed(1) || 0}</span></p>
+                                <p className="flex justify-between"><span className="text-gray-400">Attendance:</span> <span className="text-white font-bold">{stats?.sessions || 0}</span></p>
+                              </div>
+                            </div>
+                            <p className="text-white font-medium">{cab.name}</p>
+                            <p className="text-gray-400 text-sm">{cab.email}</p>
+                            <p className="text-gray-400 text-sm">
+                              Position: {cab.position}
+                            </p>
+                            {cab.isVerified ? (
+                              <CheckCircle className="w-4 h-4 text-green-500 mt-1" />
+                            ) : (
+                              <span className="text-red-400 text-xs">
+                                Not Verified
+                              </span>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
@@ -478,8 +525,17 @@ export default function PresidentDashboard() {
                         sessions.map((session) => (
                           <div
                             key={session.id}
-                            className="bg-gray-700/50 rounded-lg p-4"
+                            className="bg-gray-700/50 rounded-lg p-4 relative group hover:bg-gray-700/80 focus:bg-gray-700/80 transition-all duration-300 outline-none cursor-pointer"
+                            tabIndex={0}
                           >
+                            <div className="absolute left-1/2 bottom-full mb-2 -translate-x-1/2 w-72 bg-gray-800 border border-gray-600 rounded-xl shadow-2xl p-4 hidden group-hover:block group-focus:block z-50 pointer-events-none opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-200 backdrop-blur-3xl">
+                              <h4 className="text-lg font-bold text-white mb-2">Session Details</h4>
+                              <div className="space-y-2 text-sm">
+                                <p><span className="text-gray-400">Motion:</span> <span className="text-white">{session.motiontype}</span></p>
+                                <p><span className="text-gray-400">Chair:</span> <span className="text-white">{session.Chair}</span></p>
+                                <p className="text-xs text-yellow-500 italic mt-2 border-t border-gray-700 pt-2">Attendee list requires server restart.</p>
+                              </div>
+                            </div>
                             <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
                               <p className="text-white font-medium">
                                 {session.motiontype}
@@ -549,6 +605,84 @@ export default function PresidentDashboard() {
                   </div>
                 )
               }
+              {/* Leaderboard Tab */}
+              {activeTab === "leaderboard" && (
+                <div className="bg-gray-800/50 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700/50 p-4 md:p-6">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="p-2 bg-yellow-500/20 rounded-lg">
+                        <Trophy className="w-6 h-6 text-yellow-500" />
+                      </div>
+                      <h2 className="text-xl font-bold text-white">Leaderboard</h2>
+                    </div>
+
+                    <div className="flex bg-gray-700/50 rounded-lg p-1">
+                      <button
+                        onClick={() => setLeaderboardType("all-time")}
+                        className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${leaderboardType === "all-time"
+                          ? "bg-gray-600 text-white shadow"
+                          : "text-gray-400 hover:text-white"
+                          }`}
+                      >
+                        All Time
+                      </button>
+                      <button
+                        onClick={() => setLeaderboardType("bi-monthly")}
+                        className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${leaderboardType === "bi-monthly"
+                          ? "bg-gray-600 text-white shadow"
+                          : "text-gray-400 hover:text-white"
+                          }`}
+                      >
+                        Bi-Monthly
+                      </button>
+                    </div>
+                  </div>
+
+                  {leaderboard.length === 0 ? (
+                    <p className="text-gray-400 text-center py-8">No leaderboard data available</p>
+                  ) : (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left border-collapse">
+                        <thead>
+                          <tr className="border-b border-gray-700 text-gray-400 text-sm">
+                            <th className="p-4 font-medium">Rank</th>
+                            <th className="p-4 font-medium">Name</th>
+                            <th className="p-4 font-medium">Total Score</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-700/50">
+                          {leaderboard.map((entry, index) => (
+                            <tr
+                              key={entry.id}
+                              className={`hover:bg-gray-700/30 transition-colors ${entry.name === user?.name ? "bg-yellow-500/10 border-l-2 border-yellow-500" : ""
+                                }`}
+                            >
+                              <td className="p-4">
+                                {(index + 1) === 1 && <Trophy className="w-5 h-5 text-yellow-500 inline mr-2" />}
+                                {(index + 1) === 2 && <Trophy className="w-5 h-5 text-gray-400 inline mr-2" />}
+                                {(index + 1) === 3 && <Trophy className="w-5 h-5 text-amber-700 inline mr-2" />}
+                                <span className={`font-bold ${(index + 1) === 1 ? "text-yellow-500" :
+                                  (index + 1) === 2 ? "text-gray-400" :
+                                    (index + 1) === 3 ? "text-amber-700" : "text-gray-300"
+                                  }`}>
+                                  #{index + 1}
+                                </span>
+                              </td>
+                              <td className="p-4 text-white font-medium">
+                                {entry.name}
+                                {entry.name === user?.name && <span className="ml-2 text-xs bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded">You</span>}
+                              </td>
+                              <td className="p-4">
+                                <span className="font-bold text-blue-400">{entry.score.toFixed(1)}</span>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              )}
             </>
           )}
         </div >
