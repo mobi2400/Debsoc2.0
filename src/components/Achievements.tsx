@@ -65,7 +65,7 @@ const AchievementSection = memo(function AchievementSection({
                         </div>
                     </div>
 
-                    <p className="text-[11px] md:text-xs uppercase tracking-[0.35em] text-white/60 mb-3 lg:mb-4">
+                    <p className="text-[11px] md:text-xs uppercase tracking-[0.35em] text-orange-400/80 mb-3 lg:mb-4">
                         Achievement {index + 1}
                     </p>
                     <h3 className="text-xl md:text-2xl font-bold text-white mb-4 leading-tight">
@@ -128,9 +128,11 @@ export function ExpandableCardDemo() {
             className="relative w-full min-h-screen bg-gradient-to-br from-black via-gray-900 to-black py-24"
         >
             <div className="max-w-7xl mx-auto px-4">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white text-center mb-16 tracking-wide">
-                    ACHIEVEMENTS
-                </h1>
+                <div className="sticky top-16 z-30 -mx-4 px-4 py-4 bg-gradient-to-b from-black/80 via-black/55 to-transparent backdrop-blur">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-orange-400 text-center tracking-wide">
+                        ACHIEVEMENTS
+                    </h1>
+                </div>
 
                 {/* Desktop: sticky two-card row + invisible scroll triggers */}
                 <div className="hidden lg:block">
@@ -138,7 +140,7 @@ export function ExpandableCardDemo() {
                         className="relative"
                         style={{height: `${achievements.length * 100}vh`}}
                     >
-                        <div className="sticky top-24">
+                        <div className="sticky top-40 z-10">
                             <div className="w-full max-w-6xl mx-auto px-2 sm:px-4">
                                 <div className="grid grid-cols-12 gap-8 items-stretch">
                                     {/* Image card */}
@@ -190,7 +192,7 @@ export function ExpandableCardDemo() {
                                             }}
                                             className="h-[68vh] rounded-2xl ring-1 ring-white/10 bg-black/20 px-8 py-8 flex flex-col"
                                         >
-                                            <p className="text-xs uppercase tracking-[0.35em] text-white/60 mb-4">
+                                            <p className="text-xs uppercase tracking-[0.35em] text-orange-400/80 mb-4">
                                                 Achievement {activeIndex + 1}
                                             </p>
                                             <h3 className="text-2xl font-bold text-white leading-tight mb-4">
