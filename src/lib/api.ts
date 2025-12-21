@@ -54,6 +54,7 @@ export interface Attendance {
 }
 
 export interface LeaderboardEntry {
+  id: string;
   rank: number;
   name: string;
   score: number;
@@ -359,7 +360,12 @@ export const cabinetApi = {
   },
   markAttendance: async (data: {
     sessionId: string;
-    attendanceData: Array<{ memberId: string; status: "Present" | "Absent" }>;
+    attendanceData: Array<{
+      memberId?: string;
+      cabinetId?: string;
+      status: "Present" | "Absent";
+      speakerScore?: number;
+    }>;
   }): Promise<{ message: string; count: number }> => {
     return apiCall("/cabinet/attendance/mark", {
       method: "POST",
@@ -408,6 +414,9 @@ export const cabinetApi = {
     return apiCall<{ feedbacks: AnonymousFeedback[] }>(
       "/cabinet/feedback/sent"
     );
+  },
+  getMyAttendance: async (): Promise<{ attendance: Attendance[] }> => {
+    return apiCall<{ attendance: Attendance[] }>("/cabinet/attendance/my");
   },
 };
 

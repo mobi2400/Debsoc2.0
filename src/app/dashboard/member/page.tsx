@@ -567,7 +567,7 @@ export default function MemberDashboard() {
                         <tbody className="divide-y divide-gray-700/50">
                           {leaderboard.map((entry) => (
                             <tr
-                              key={entry.rank}
+                              key={entry.id}
                               className={`hover:bg-gray-700/30 transition-colors ${entry.name === user?.name ? "bg-orange-500/10 border-l-2 border-orange-500" : ""
                                 }`}
                             >
