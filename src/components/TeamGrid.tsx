@@ -192,6 +192,7 @@ function TeamGrid() {
       </motion.h2>
 
       <motion.div
+        layout
         variants={container}
         initial="hidden"
         whileInView="show"
@@ -199,12 +200,16 @@ function TeamGrid() {
         className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mt-8 w-full px-8 ${activeMember ? "pointer-events-none blur-sm" : ""
           }`}
       >
-        {combinedTeam.map((m, i) => (
+        {combinedTeam.map((m) => (
           <motion.div
-            key={i}
+            layout
+            key={m.name}
             variants={item}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
             onClick={() => openModal(m)}
-            className="flex flex-col items-center bg-white/10 backdrop-blur-md border border-orange-600 rounded-2xl p-6 transition-all duration-300 hover:shadow-[0_0_25px_#f97316] cursor-pointer transform hover:scale-105"
+            className="flex flex-col items-center bg-white/10 backdrop-blur-md border border-orange-600 rounded-2xl p-6 transition-all duration-300 hover:shadow-[0_0_25px_#f97316] code-pointer transform hover:scale-105 cursor-pointer"
           >
             <Image
               src={m.avatar}
@@ -214,7 +219,7 @@ function TeamGrid() {
               quality={95}
               className="w-32 h-32 rounded-full object-cover border-4 border-orange-600 mb-6"
               sizes="128px"
-              priority={i < 4}
+              priority={false}
             />
             <h3 className="text-white text-xl font-bold mb-2">{m.name}</h3>
             <div className="text-orange-500 text-lg border-t border-orange-600 pt-2 w-full text-center">
