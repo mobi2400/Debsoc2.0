@@ -79,26 +79,26 @@ export const teamMembers = [
   },
   {
     name: "Vishal",
-    position: "Operational Executive",
+    position: "Operational Member",
     avatar: Vishal,
     description: "",
 
   },
     {
     name: "Srujan Raj",
-    position: "Operational Executive Member",
+    position: "Operational Member",
     avatar: SrujanRai,
     description: "Keep Learning!!!!!",
   },
     {
     name: "Nandini Sharma",
-    position: "Operational Executive Member",
+    position: "Operational Member",
     avatar: NandiniSharma,
     description: "Keep Learning!!!!!",
   },
     {
     name: "Kripa Chhajer",
-    position: "Operational Executive Member",
+    position: "Operational Member",
     avatar: KripaChhajer,
     description: "Keep Learning!!!!!",
   },
@@ -138,13 +138,13 @@ export const teamMembers = [
   },
     {
     name: "Pankhuri Singh",
-    position: "Social Media Executive Member",
+    position: "Social Media Member",
     avatar: PankhuriSingh,
     description: "Keep Learning!!!!!",
   },
     {
     name: "Kanani Utsav",
-    position: "Social Media Executive",
+    position: "Social Media Member",
     avatar: kananiUtsav,
     description: "Keep Learning!!!!!",
   },
@@ -170,25 +170,25 @@ export const teamMembers = [
 
   {
     name: "Anika Gupta",
-    position: "Content Executive Member",
+    position: "Content Member",
     avatar: AnikaGupta,
     description: "Keep Learning!!!!!",
   },
   {
     name: "Tanmay Shankar",
-    position: "Content Executive Member",
+    position: "Content Member",
     avatar: TanmayShankar,
     description: "Keep Learning!!!!!",
   },
   {
     name: "Pranathi N P",
-    position: "Content Executive Member",
+    position: "Content Member",
     avatar: PranathiNP,
     description: "Keep Learning!!!!!",
   },
   {
     name: "Mohammed Rayyan Khaleel",
-    position: "Content Executive Member",
+    position: "Content Member",
     avatar: MohammedRayyanKhaleel,
     description: "Keep Learning!!!!!",
   },
