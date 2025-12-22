@@ -40,6 +40,12 @@ export const teamMembers = [
     description:
       "Adi is one of the foundational people of the 25-26 batch of Debsoc. His work ethic, consistency and ability to manage things well under pressure is unparalleled. As one of the finest adjudicators in the soc, his feedback both within debates and beyond, has been among the most valuable anvone could receive.He's not just someone who gets things done; he leads by example and pushes others to do better. In this new cabinet, Adi will continue to be the rock he's always been someone who holds things together and raises the bar, just like he always has.",
   },
+    {
+    name: "Md Mobasshir Shakil Khan",
+    position: "Tech Head",
+    avatar: Mobi,
+    description: "Keep Learning!!!!!",
+  },
   {
     name: "Dhruv Kumar",
     position: "Operational Head",
@@ -67,6 +73,24 @@ export const teamMembers = [
     avatar: PrachiKumari,
     description:
       "A fun, chaotic drama queen and of course, a phenomenal debater.Prachi is one of those people in the SoC who started from the ground and rose into a beast. From struggling to build a case in her early days to now single-handedly framing arguments and 'putting her opp out of the debate'. Her growth has been nothing short of inspiring. From knowing nothing about IR or politics to now having such deep insights that she can confidently take workshops. She's come a long way.With an attitude of 'masti nahi rukni chahiye,' her ability to add humor in the most intense discussions while slaying tournaments is something only Prachi can pull off. The opposition is cooked the moment she says 'understand that' twice within the first minute of her speech and you know it's game over. Her grasp on debates and her connection with every person in the SoC is unmatched. Whether it's taking initiative, training juniors for tournaments, or conducting sessions she's everything you'd want in a leader.With her in the cabinet, even the biggest bumps are handled with laughter and ease.",
+  },
+    {
+    name: "Srujan Raj",
+    position: "Operational Executive",
+    avatar: SrujanRai,
+    description: "Keep Learning!!!!!",
+  },
+    {
+    name: "Nandini Sharma",
+    position: "Operational Executive",
+    avatar: NandiniSharma,
+    description: "Keep Learning!!!!!",
+  },
+    {
+    name: "Kripa Chhajer",
+    position: "Operational Executive",
+    avatar: KripaChhajer,
+    description: "Keep Learning!!!!!",
   },
   {
     name: "Vittala Chaithanya NM",
@@ -103,51 +127,35 @@ export const teamMembers = [
     description:
       "Ananya's creativity truly speaks through her work. Her creative work brings such a fresh and aesthetic touch to evervthing she does. Her attention to small details and willingness to experiment make her designs stand out effortlessly.There's a natural flow and thoughtfulness in her style that really lifts the vibe of our DebSoc page. Every piece she creates feels unique, clean, and full of personality iust like her approach to everything she does.",
   },
-  {
-    name: "Md Mobasshir Shakil Khan",
-    position: "Member",
-    avatar: Mobi,
+    {
+    name: "Pankhuri Singh",
+    position: "Social Media Executive",
+    avatar: PankhuriSingh,
     description: "Keep Learning!!!!!",
   },
+    {
+    name: "Kanani Utsav",
+    position: "Social Media Executive",
+    avatar: kananiUtsav,
+    description: "Keep Learning!!!!!",
+  },
+
   {
     name: "Rishikesh Chandra",
-    position: "Member",
+    position: "Content Team",
     avatar: RishikeshChandra,
     description: "Keep Learning!!!!!",
   },
-  {
-    name: "Srujan Raj",
-    position: "Member",
-    avatar: SrujanRai,
-    description: "Keep Learning!!!!!",
-  },
+
   {
     name: "Anika Gupta",
-    position: "Member",
+    position: "Content Team",
     avatar: AnikaGupta,
     description: "Keep Learning!!!!!",
   },
   {
-    name: "Kanani Utsav",
-    position: "Member",
-    avatar: kananiUtsav,
-    description: "Keep Learning!!!!!",
-  },
-  {
-    name: "Nandini Sharma",
-    position: "Member",
-    avatar: NandiniSharma,
-    description: "Keep Learning!!!!!",
-  },
-  {
-    name: "Pankhuri Singh",
-    position: "Member",
-    avatar: PankhuriSingh,
-    description: "Keep Learning!!!!!",
-  },
-  {
     name: "Tanmay Shankar",
-    position: "Member",
+    position: "Content Team",
     avatar: TanmayShankar,
     description: "Keep Learning!!!!!",
   },
@@ -159,25 +167,19 @@ export const teamMembers = [
   },
   {
     name: "Stuti Padhi",
-    position: "Member",
+    position: "Content Team",
     avatar: StutiPadhi,
     description: "Keep Learning!!!!!",
   },
   {
-    name: "Kripa Chhajer",
-    position: "Member",
-    avatar: KripaChhajer,
-    description: "Keep Learning!!!!!",
-  },
-  {
     name: "Pranathi N P",
-    position: "Member",
+    position: "Content Team",
     avatar: PranathiNP,
     description: "Keep Learning!!!!!",
   },
   {
     name: "Mohammed Rayyan Khaleel",
-    position: "Member",
+    position: "Content Team",
     avatar: MohammedRayyanKhaleel,
     description: "Keep Learning!!!!!",
   },
