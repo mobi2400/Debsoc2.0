@@ -1,5 +1,5 @@
 // For Next.js, images in public folder should be referenced as strings
-const Mobi = "/media/Mobi.jpg";
+const Mobi = "/media/Mobii.jpg";
 const AdityaKumarSingh = "/media/AdityaKumarSingh.jpg";
 const AnikaGupta = "/media/AnikaGupta.jpg";
 const kananiUtsav = "/media/KananiUtsav.jpg";
@@ -23,6 +23,8 @@ const KripaChhajer = "/media/KripaChhajer.jpg";
 const PranathiNP = "/media/PranathiNP.jpg";
 const MohammedRayyanKhaleel = "/media/MohammedRayyanKhaleel.jpg";
 const Nainika = "/media/Nainika.jpg";
+const AdvitiyaPandey =  "/media/AdvitiyaPandey.jpg";
+const Vishal =  "/media/Vishal.jpg";
 
 export const teamMembers = [
   {
@@ -44,7 +46,7 @@ export const teamMembers = [
     name: "Md Mobasshir Shakil Khan",
     position: "Tech Head",
     avatar: Mobi,
-    description: "Keep Learning!!!!!",
+    description: "",
   },
   {
     name: "Dhruv Kumar",
@@ -73,6 +75,20 @@ export const teamMembers = [
     avatar: PrachiKumari,
     description:
       "A fun, chaotic drama queen and of course, a phenomenal debater.Prachi is one of those people in the SoC who started from the ground and rose into a beast. From struggling to build a case in her early days to now single-handedly framing arguments and 'putting her opp out of the debate'. Her growth has been nothing short of inspiring. From knowing nothing about IR or politics to now having such deep insights that she can confidently take workshops. She's come a long way.With an attitude of 'masti nahi rukni chahiye,' her ability to add humor in the most intense discussions while slaying tournaments is something only Prachi can pull off. The opposition is cooked the moment she says 'understand that' twice within the first minute of her speech and you know it's game over. Her grasp on debates and her connection with every person in the SoC is unmatched. Whether it's taking initiative, training juniors for tournaments, or conducting sessions she's everything you'd want in a leader.With her in the cabinet, even the biggest bumps are handled with laughter and ease.",
+  },
+    {
+    name: "Piyush Ratn",
+    position: "Operational Executive",
+    avatar: PiyushRatn,
+    description:
+      "Pivush is one of the most curious and dedicated kids. From running around for sponsorships during Axiom to consistently showing up for sessions, he has displayed an exceptional sense of initiative.That habit of stepping up and saying, 'Ye main kar sakta hoon', is exactly what sets him apart and it's what will make him one of the finest members of this vear's cabinet. His drive, paired with a quiet emotional groundedness, is the kind of combination that'll take him far.",
+  },
+  {
+    name: "Vishal",
+    position: "Operational Executive",
+    avatar: Vishal,
+    description: "",
+
   },
     {
     name: "Srujan Raj",
@@ -106,19 +122,18 @@ export const teamMembers = [
     description:
       "'The new analysis that you bring in a debate is exceptional' - Sukesh Bhaiya and yes I think we all agree with it. Probably one of the best debaters in the club. He has a unique way of looking at things and his ability to dissect complex topics and present them clearly is commendable. This skill also lead him to being the 5th best team in RCL PD 24.Not only in debating, but he is always ready to help soc whenever needed. I do recall swinging with him, whether its Axiom or PD with the same utmost enthusiasm. This entire persona of his is what an ideal equity head should be like. He is always ready to help, always ready to listen, and break down complex issues into easy solutions. Keep up the great work, Owais!",
   },
+    {
+    name: "Advitiya Pandey",
+    position: "Equity Executive",
+    avatar: AdvitiyaPandey,
+    description:"",
+  },
   {
     name: "Nainika",
     position: "Equity Executive",
     avatar: Nainika,
     description:
       "Despite being in the junior batch, she still has the potential to lead people and keep them motivated. Her energy and enthusiasm are infectious, and she has a unique ability to bring people together and create a positive environment. The same goes for her debating skills. She has a natural talent for speaking and presenting her ideas clearly and confidently. Her ability to think on her feet and respond to arguments is impressive, and she has a bright future ahead of her in debating.",
-  },
-  {
-    name: "Piyush Ratn",
-    position: "Social Media Executive",
-    avatar: PiyushRatn,
-    description:
-      "Pivush is one of the most curious and dedicated kids. From running around for sponsorships during Axiom to consistently showing up for sessions, he has displayed an exceptional sense of initiative.That habit of stepping up and saying, 'Ye main kar sakta hoon', is exactly what sets him apart and it's what will make him one of the finest members of this vear's cabinet. His drive, paired with a quiet emotional groundedness, is the kind of combination that'll take him far.",
   },
   {
     name: "Ananya Singh",
