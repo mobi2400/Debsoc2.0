@@ -42,12 +42,6 @@ export const teamMembers = [
     description:
       "Adi is one of the foundational people of the 25-26 batch of Debsoc. His work ethic, consistency and ability to manage things well under pressure is unparalleled. As one of the finest adjudicators in the soc, his feedback both within debates and beyond, has been among the most valuable anvone could receive.He's not just someone who gets things done; he leads by example and pushes others to do better. In this new cabinet, Adi will continue to be the rock he's always been someone who holds things together and raises the bar, just like he always has.",
   },
-    {
-    name: "Md Mobasshir Shakil Khan",
-    position: "Tech Head",
-    avatar: Mobi,
-    description: "",
-  },
   {
     name: "Dhruv Kumar",
     position: "Operational Head",
@@ -137,7 +131,7 @@ export const teamMembers = [
   },
   {
     name: "Ananya Singh",
-    position: "Social Media Executive",
+    position: "Social Media Head",
     avatar: AnanyaSingh,
     description:
       "Ananya's creativity truly speaks through her work. Her creative work brings such a fresh and aesthetic touch to evervthing she does. Her attention to small details and willingness to experiment make her designs stand out effortlessly.There's a natural flow and thoughtfulness in her style that really lifts the vibe of our DebSoc page. Every piece she creates feels unique, clean, and full of personality iust like her approach to everything she does.",
@@ -154,48 +148,54 @@ export const teamMembers = [
     avatar: kananiUtsav,
     description: "Keep Learning!!!!!",
   },
+      {
+    name: "Md Mobasshir Shakil Khan",
+    position: "Tech Head",
+    avatar: Mobi,
+    description: "",
+  },
 
   {
     name: "Rishikesh Chandra",
-    position: "Content Team",
+    position: "Content Lead",
     avatar: RishikeshChandra,
+    description: "Keep Learning!!!!!",
+  },
+    {
+    name: "Stuti Padhi",
+    position: "Content Lead",
+    avatar: StutiPadhi,
     description: "Keep Learning!!!!!",
   },
 
   {
     name: "Anika Gupta",
-    position: "Content Team",
+    position: "Content Executive",
     avatar: AnikaGupta,
     description: "Keep Learning!!!!!",
   },
   {
     name: "Tanmay Shankar",
-    position: "Content Team",
+    position: "Content Executive",
     avatar: TanmayShankar,
     description: "Keep Learning!!!!!",
   },
   {
-    name: "Utkarsh Mishra",
-    position: "Member",
-    avatar: UtkarshMishra,
-    description: "Keep Learning!!!!!",
-  },
-  {
-    name: "Stuti Padhi",
-    position: "Content Team",
-    avatar: StutiPadhi,
-    description: "Keep Learning!!!!!",
-  },
-  {
     name: "Pranathi N P",
-    position: "Content Team",
+    position: "Content Executive",
     avatar: PranathiNP,
     description: "Keep Learning!!!!!",
   },
   {
     name: "Mohammed Rayyan Khaleel",
-    position: "Content Team",
+    position: "Content Executive",
     avatar: MohammedRayyanKhaleel,
+    description: "Keep Learning!!!!!",
+  },
+    {
+    name: "Utkarsh Mishra",
+    position: "Member",
+    avatar: UtkarshMishra,
     description: "Keep Learning!!!!!",
   },
 ];
