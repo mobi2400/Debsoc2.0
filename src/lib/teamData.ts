@@ -57,47 +57,47 @@ export const teamMembers = [
   },
   {
     name: "Srejoni Sarkar",
-    position: "Operational Executive",
+    position: "Operations Executive",
     avatar: SerojiniSarkar,
     description:
       "Srejoni is easily one of the most inauisitin. and hardworking members of the soc. Every session, every workshop, she shows up with a flood of questions, insights, and things to build on- it's genuinely impressive.If there's someone who'l do four sessions in a day 'just for practice', it's her. She's constantly pushing her limits, always looking to grow. Her dedication to the art of debating is something special. It's what will take her, and the soc, a long way forward.",
   },
   {
     name: "Prachi Kumari",
-    position: "Operational Executive",
+    position: "Operations Executive",
     avatar: PrachiKumari,
     description:
       "A fun, chaotic drama queen and of course, a phenomenal debater.Prachi is one of those people in the SoC who started from the ground and rose into a beast. From struggling to build a case in her early days to now single-handedly framing arguments and 'putting her opp out of the debate'. Her growth has been nothing short of inspiring. From knowing nothing about IR or politics to now having such deep insights that she can confidently take workshops. She's come a long way.With an attitude of 'masti nahi rukni chahiye,' her ability to add humor in the most intense discussions while slaying tournaments is something only Prachi can pull off. The opposition is cooked the moment she says 'understand that' twice within the first minute of her speech and you know it's game over. Her grasp on debates and her connection with every person in the SoC is unmatched. Whether it's taking initiative, training juniors for tournaments, or conducting sessions she's everything you'd want in a leader.With her in the cabinet, even the biggest bumps are handled with laughter and ease.",
   },
     {
     name: "Piyush Ratn",
-    position: "Operational Executive",
+    position: "Operations Executive",
     avatar: PiyushRatn,
     description:
       "Pivush is one of the most curious and dedicated kids. From running around for sponsorships during Axiom to consistently showing up for sessions, he has displayed an exceptional sense of initiative.That habit of stepping up and saying, 'Ye main kar sakta hoon', is exactly what sets him apart and it's what will make him one of the finest members of this vear's cabinet. His drive, paired with a quiet emotional groundedness, is the kind of combination that'll take him far.",
   },
   {
     name: "Vishal",
-    position: "Operational Executive",
+    position: "Operations Member",
     avatar: Vishal,
     description: "",
 
   },
     {
     name: "Srujan Raj",
-    position: "Operational Executive",
+    position: "Operations Member",
     avatar: SrujanRai,
     description: "Keep Learning!!!!!",
   },
     {
     name: "Nandini Sharma",
-    position: "Operational Executive",
+    position: "Operations Member",
     avatar: NandiniSharma,
     description: "Keep Learning!!!!!",
   },
     {
     name: "Kripa Chhajer",
-    position: "Operational Executive",
+    position: "Operations Member",
     avatar: KripaChhajer,
     description: "Keep Learning!!!!!",
   },
@@ -137,13 +137,13 @@ export const teamMembers = [
   },
     {
     name: "Pankhuri Singh",
-    position: "Social Media Executive",
+    position: "Social Media Member",
     avatar: PankhuriSingh,
     description: "Keep Learning!!!!!",
   },
     {
     name: "Kanani Utsav",
-    position: "Social Media Executive",
+    position: "Social Media Member",
     avatar: kananiUtsav,
     description: "Keep Learning!!!!!",
   },
@@ -169,25 +169,25 @@ export const teamMembers = [
 
   {
     name: "Anika Gupta",
-    position: "Content Executive",
+    position: "Content Member",
     avatar: AnikaGupta,
     description: "Keep Learning!!!!!",
   },
   {
     name: "Tanmay Shankar",
-    position: "Content Executive",
+    position: "Content Member",
     avatar: TanmayShankar,
     description: "Keep Learning!!!!!",
   },
   {
     name: "Pranathi N P",
-    position: "Content Executive",
+    position: "Content Member",
     avatar: PranathiNP,
     description: "Keep Learning!!!!!",
   },
   {
     name: "Mohammed Rayyan Khaleel",
-    position: "Content Executive",
+    position: "Content Member",
     avatar: MohammedRayyanKhaleel,
     description: "Keep Learning!!!!!",
   },
