@@ -8,25 +8,25 @@ const features = [
         icon: <FaGlobe className="w-8 h-8 text-black" />,
         title: "Weekly Sessions",
         description:
-            "Engage in regular on-campus sessions and test your mettle in international online spars with global debaters.",
+            "Participate in weekly practice sessions weekly with fellow members. Sharpen your skills across diverse topics and genres for consistent growth.",
     },
     {
         icon: <FaChalkboardTeacher className="w-8 h-8 text-black" />,
         title: "Mentorship Program",
         description:
-            "Accelerate your progress through exclusive workshops led by elite debaters and distinguished alumni.",
+            "Advance through structured mentorship within the community and access workshops led by world-renowned debaters and distinguished alumni",
     },
     {
         icon: <FaTrophy className="w-8 h-8 text-black" />,
-        title: "Competitive Edge",
+        title: "Tournament Exposure",
         description:
-            "Gain unmatched exposure by competing in premier national circuits and our own flagship tournaments.",
+            "Compete in premier Intervarsity tournaments at local, national, and international levels. Build experience across both online and offline circuits.",
     },
     {
         icon: <FaMicrophone className="w-8 h-8 text-black" />,
-        title: "Oratory Excellence",
+        title: "Practice & Oratory Training",
         description:
-            "Master the art of persuasion. Our sessions are crafted to transform your public speaking and critical thinking.",
+            "Elevate your preparation through cross-college practice sessions. Master public speaking and refine your persuasive abilities through targeted training",
     },
 ];
 
