@@ -124,7 +124,7 @@ export const teamMembers = [
   },
     {
     name: "Advitiya Pandey",
-    position: "Equity Executive",
+    position: "Equity Member",
     avatar: AdvitiyaPandey,
     description:"",
   },
