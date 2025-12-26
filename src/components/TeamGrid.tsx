@@ -183,21 +183,27 @@ function TeamGrid() {
           <div
             key={m.name}
             onClick={() => openModal(m)}
-            className="flex flex-col items-center bg-white/10 backdrop-blur-md border border-orange-600 rounded-2xl p-6 transition-all duration-300 hover:shadow-[0_0_25px_#f97316] code-pointer transform hover:scale-105 cursor-pointer"
+            className="group relative cursor-pointer overflow-hidden rounded-2xl border border-orange-600/30 shadow-lg transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_30px_#f97316] hover:border-orange-500 aspect-[3/4]"
           >
             <Image
               src={m.avatar}
               alt={m.name}
-              width={160}
-              height={160}
-              quality={95}
-              className="w-32 h-32 rounded-full object-cover border-4 border-orange-600 mb-6"
-              sizes="128px"
+              fill
+              className="object-cover transition-transform duration-700 group-hover:scale-110"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               priority={false}
             />
-            <h3 className="text-white text-xl font-bold mb-2">{m.name}</h3>
-            <div className="text-orange-500 text-lg border-t border-orange-600 pt-2 w-full text-center">
-              {m.position}
+            {/* Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-100 md:opacity-0 transition-opacity duration-300 md:group-hover:opacity-100" />
+
+            {/* Content Overlay */}
+            <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-100 md:opacity-0 transition-opacity duration-300 md:group-hover:opacity-100">
+              <h3 className="text-white text-2xl font-bold mb-1 translate-y-0 md:translate-y-4 transition-transform duration-300 md:group-hover:translate-y-0 drop-shadow-md">
+                {m.name}
+              </h3>
+              <p className="text-orange-400 font-semibold text-lg translate-y-0 md:translate-y-4 transition-transform duration-300 md:group-hover:translate-y-0 delay-75 drop-shadow-md">
+                {m.position}
+              </p>
             </div>
           </div>
         ))}
