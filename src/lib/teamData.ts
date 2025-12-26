@@ -128,6 +128,12 @@ export const teamMembers = [
     avatar: AdvitiyaPandey,
     description:"",
   },
+      {
+    name: "Stuti Padhi",
+    position: "Equity Member",
+    avatar: StutiPadhi,
+    description: "Keep Learning!!!!!",
+  },
   {
     name: "Ananya Singh",
     position: "Social Media Head",
@@ -160,16 +166,10 @@ export const teamMembers = [
     avatar: RishikeshChandra,
     description: "Keep Learning!!!!!",
   },
-    {
-    name: "Stuti Padhi",
-    position: "Content Lead",
-    avatar: StutiPadhi,
-    description: "Keep Learning!!!!!",
-  },
 
   {
     name: "Anika Gupta",
-    position: "Content Member",
+    position: "Content Lead",
     avatar: AnikaGupta,
     description: "Keep Learning!!!!!",
   },
