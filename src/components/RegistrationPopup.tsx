@@ -40,7 +40,7 @@ export default function RegistrationPopup() {
     };
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://debsoc-backend.vercel.app';
       const response = await fetch(`${apiUrl}/api/applicants`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
