@@ -5,6 +5,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { siteConfig } from "@/lib/metadata";
 import { Analytics } from '@vercel/analytics/next';
 import { ReactLenis } from "lenis/react";
+import RegistrationPopup from "../components/RegistrationPopup";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -124,6 +125,7 @@ export default function RootLayout({
         <ReactLenis root>
           <AuthProvider>
             {children}
+            <RegistrationPopup />
           </AuthProvider>
           <Analytics />
         </ReactLenis>
