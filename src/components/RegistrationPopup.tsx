@@ -109,7 +109,7 @@ export default function RegistrationPopup() {
 
                     <div className="w-full space-y-3 pt-4">
                       <a 
-                        href="https://chat.whatsapp.com/F7LPljCtCeUAQrcCpY7dXy" 
+                        href="https://chat.whatsapp.com/HpKmxLikwacHWPHaZqEW1q" 
                         target="_blank" 
                         rel="noreferrer"
                         className="w-full py-4 bg-[#25D366] text-white font-bold rounded-xl hover:bg-[#20bd5a] transition-colors flex justify-center items-center gap-2"
@@ -120,7 +120,7 @@ export default function RegistrationPopup() {
                       <button
                         type="button"
                         onClick={() => {
-                          navigator.clipboard.writeText("https://chat.whatsapp.com/F7LPljCtCeUAQrcCpY7dXy");
+                          navigator.clipboard.writeText("https://chat.whatsapp.com/HpKmxLikwacHWPHaZqEW1q");
                           toast.success("Link copied to clipboard!");
                         }}
                         className="w-full py-4 bg-stone-900 border border-stone-800 text-white font-semibold rounded-xl hover:bg-stone-800 transition-colors flex justify-center items-center gap-2"
