@@ -187,11 +187,11 @@ export default function RegistrationPopup() {
                     <AnimatePresence>
                       {isDropdownOpen && (
                         <motion.div
-                          initial={{ opacity: 0, y: -10 }}
+                          initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
+                          exit={{ opacity: 0, y: 10 }}
                           transition={{ duration: 0.15 }}
-                          className="absolute z-10 w-full mt-1 bg-stone-900 border border-stone-800 rounded-xl overflow-hidden shadow-2xl py-1 bottom-full mb-2 md:bottom-auto md:mb-0"
+                          className="absolute z-10 w-full bg-stone-900 border border-stone-800 rounded-xl overflow-hidden shadow-2xl py-1 bottom-full mb-2"
                         >
                           {interests.map((interest) => (
                             <button
