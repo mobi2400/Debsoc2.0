@@ -165,7 +165,7 @@ export default function RegistrationPopup() {
                   </div>
 
                   <div className="space-y-1 relative">
-                    <label className="text-xs font-semibold text-stone-400 uppercase tracking-wider">Other Interest</label>
+                    <label className="text-xs font-semibold text-stone-400 uppercase tracking-wider">Interest</label>
                     <input type="hidden" name="interest" value={selectedInterest} required />
                     
                     <button
